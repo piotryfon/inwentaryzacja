@@ -22,7 +22,10 @@
 					<a class="nav-link active" href="dodajsprzet.php">dodaj sprzęt</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" href="znajdzsprzet_edytuj.php">znajdź i edytuj</a>
+					<a class="nav-link active" href="edytuj_status.php">znajdź i edytuj</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" href="sprzet_tabela.php">sprzęt - tabela</a>
 				</li>
 			</ul>
 		</header>

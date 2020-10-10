@@ -1,20 +1,15 @@
 <?php
-
 require("connection.php");
-
-$query2 = "SELECT * FROM pracownicy";
-$query3 = "SELECT * FROM sprzet LEFT JOIN pracownicy 
-            ON sprzet.id_pracownika = pracownicy.id_pracownika";
-$result2 = mysqli_query($conn, $query2);
-$result3 = mysqli_query($conn, $query3);
-
+$query = "SELECT * FROM sprzet";
+$result = mysqli_query($conn, $query);
 ?>
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
-    <title>NewApi</title>
+    <title>sprzęt - tabela</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <style>
         table {
@@ -50,6 +45,7 @@ $result3 = mysqli_query($conn, $query3);
     <div class="container">
         <header>
             <ul class="nav justify-content-center">
+
                 <li class="nav-item">
                     <a class="nav-link active" href="index.php">str. gł</a>
                 </li>
@@ -67,66 +63,39 @@ $result3 = mysqli_query($conn, $query3);
                 </li>
             </ul>
         </header>
-        <h3>Inwentaryzacja</h3>
-        <hr>
         <div class="row">
             <div class="col-lg-10">
-                <h4>Użytkownicy</h4>
-                <table>
-                    <tr>
-                        <th>id pracownika</th>
-                        <th>login</th>
-                        <th>departament</th>
-                        <th>pokój</th>
-                    </tr>
-                    <?php
-                    while ($row = mysqli_fetch_array($result2)) {
-                        echo "<tr>";
-                        echo "<td>$row[id_pracownika]</td>";
-                        echo "<td>$row[login_pracownika]</td>";
-                        echo "<td>$row[departament]</td>";
-                        echo "<td>$row[pokoj]</td>";
-                        echo "</tr>";
-                    }
-                    ?>
-                </table>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-lg-10">
-                <h4>Sprzęt - pracownik</h4>
+                <h4>Sprzęt</h4>
                 <table>
                     <tr>
                         <th>rodzaj</th>
+                        <th>pin</th>
                         <th>model</th>
-                        <th>N/I</th>
-                        <th>S/N</th>
-                        <th>login</th>
-                        <th>status</th>
+                        <th>NI</th>
+                        <th>SN</th>
                     </tr>
                     <?php
-                    while ($row = mysqli_fetch_array($result3)) {
+                    while ($row = mysqli_fetch_array($result)) {
                         echo "<tr>";
                         echo "<td>$row[rodzaj]</td>";
+                        echo "<td>$row[pin]</td>";
                         echo "<td>$row[model]</td>";
                         echo "<td>$row[NI]</td>";
                         echo "<td>$row[SN]</td>";
-                        echo "<td>$row[login_pracownika]</td>";
-                        echo "<td>$row[status_sprz]</td>";
                         echo "</tr>";
                     }
+
                     ?>
                 </table>
+                    <?php
+                    
+                    ?>
             </div>
         </div>
     </div>
-
 </body>
 
 </html>
-
-
 <?php
 mysqli_close($conn);
 ?>

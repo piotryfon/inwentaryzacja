@@ -21,7 +21,10 @@
 					<a class="nav-link active" href="dodajsprzet.php">dodaj sprzęt</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" href="znajdzsprzet_edytuj.php">znajdź i edytuj</a>
+					<a class="nav-link active" href="edytuj_status.php">znajdź i edytuj</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" href="sprzet_tabela.php">sprzęt - tabela</a>
 				</li>
 			</ul>
 		</header>
@@ -55,6 +58,10 @@
 					</p>
 				</div>
 				<div class="col-md-4">
+					<p>
+						<label for="pin">pin</label><br>
+						<input type="text" name="pin" id="pin">
+					</p>
 					<p>
 						<label for="procesor">procesor</label><br>
 						<select id="procesor" name="procesor">
@@ -104,6 +111,7 @@
 
 		if (isset($_POST['submit'])) {
 			$rodzaj = mysqli_real_escape_string($conn, $_REQUEST['rodzaj']);
+			$pin = mysqli_real_escape_string($conn, $_REQUEST['pin']);
 			$model = mysqli_real_escape_string($conn, $_REQUEST['model']);
 			$sn = mysqli_real_escape_string($conn, $_REQUEST['sn']);
 			$ni = mysqli_real_escape_string($conn, $_REQUEST['ni']);
@@ -118,7 +126,8 @@
 
 				echo '<p>Zostawiłeś pusta pole</p>';
 			} else {
-				$sql = "INSERT INTO sprzet (rodzaj, model, SN, NI, procesor, ram, dysk, status_sprz, opis) VALUES ('$rodzaj', '$model','$sn', '$ni', '$procesor', '$ram', '$dysk', '$status','$opis')";
+				$sql = "INSERT INTO sprzet (rodzaj, pin, model, SN, NI, procesor, ram, dysk, status_sprz, opis) 
+				VALUES ('$rodzaj', '$pin', '$model','$sn', '$ni', '$procesor', '$ram', '$dysk', '$status','$opis')";
 				if (mysqli_query($conn, $sql)) {
 					echo '<h3>Rekord został dodany</h3>';
 				} else {
@@ -131,4 +140,5 @@
 
 	</div>
 </body>
+
 </html>

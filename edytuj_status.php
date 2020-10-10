@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Pobieranie danych z bazy</title>
+	<title>edytuj status sprzętu</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<style>
 
@@ -28,9 +28,12 @@
 				<li class="nav-item">
 					<a class="nav-link active" href="znajdzsprzet_edytuj.php">znajdź i edytuj</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link active" href="sprzet_tabela.php">sprzęt - tabela</a>
+				</li>
 			</ul>
 		</header>
-		<h4>Wyszukiwanie danych</h4>
+		<h4>Edycja statusu sprzętu.</h4>
 
 		<br>
 		<form method="POST">
@@ -38,7 +41,7 @@
 				<label for="opcja">Wybierz parametr:</label><br>
 				<select name="opcja" id="opcja">
 					<option value="NI">N/I sprzętu</option>
-					<option value="rodzaj">rodzaj sprzętu</option>
+					<option value="login_pracownika">login pracownika</option>
 				</select>
 			</div><br>
 			<div>
@@ -88,9 +91,21 @@
 					</div><br>
 					<div>
 						<div>
+							<label>pin<label>
+						</div>
+						<input type="text" name="pin" readonly value="<?php echo $row['pin'] ?>" />
+					</div><br>
+					<div>
+						<div>
 							<label>status<label>
 						</div>
-						<input type="text" name="status" value="<?php echo $row['status_sprz'] ?>" />
+						<select id="status" name="status">
+							<option><?php echo $row['status_sprz'] ?></option>
+							<option>wydany</option>
+							<option>pożyczony</option>
+							<option>magazyn</option>
+							<option>prezentacja</option>
+						</select>
 					</div><br>
 					<div>
 						<div>
@@ -101,12 +116,12 @@
 					</div><br>
 				</form>
 				<hr>
-	<?php
+		<?php
 			}
 		}
-		if(isset($_POST['zatwierdz'])){
+		if (isset($_POST['zatwierdz'])) {
 			$query_login = "SELECT login_pracownika FROM pracownicy WHERE login_pracownika = '$_POST[login_pracownika]'";
-        	$result = mysqli_query($conn, $query_login) or die(mysqli_error("Nieprawidłowe zapytanie"));
+			$result = mysqli_query($conn, $query_login) or die(mysqli_error("Nieprawidłowe zapytanie"));
 
 			if (mysqli_num_rows($result) == 0) {
 				echo '<h3>Nie ma takiego pracownika!</h3>';
@@ -125,7 +140,7 @@
 				}
 			}
 		}
-	?>
+		?>
 	</div>
 	<?php
 	mysqli_close($conn);
