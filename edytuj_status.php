@@ -26,7 +26,7 @@
 					<a class="nav-link active" href="dodajsprzet.php">dodaj sprzęt</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" href="znajdzsprzet_edytuj.php">znajdź i edytuj</a>
+					<a class="nav-link active" href="edytuj_status.php">znajdź i edytuj</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link active" href="sprzet_tabela.php">sprzęt - tabela</a>
@@ -132,7 +132,7 @@
 				$row_login_sprzet = mysqli_fetch_array($result_login_sprzet);
 				$row_na_int = (int)$row_login_sprzet['id_pracownika'];
 
-				$query_update = "UPDATE sprzet set id_pracownika = $row_na_int WHERE id_sprzetu ='" . $_POST['id_sprzetu'] . "'";
+				$query_update = "UPDATE sprzet SET id_pracownika = $row_na_int, status_sprz = '$_POST[status]' WHERE id_sprzetu ='" . $_POST['id_sprzetu'] . "'";
 
 				if (count($_POST) > 0) {
 					$result = mysqli_query($conn, $query_update);
