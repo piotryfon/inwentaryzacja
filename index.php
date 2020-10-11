@@ -65,6 +65,10 @@ $result3 = mysqli_query($conn, $query3);
                 <li class="nav-item">
                     <a class="nav-link active" href="sprzet_tabela.php">sprzęt - tabela</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="tonery/tonery_tabela.php">tonery</a>
+                </li>
+
             </ul>
         </header>
         <h3>Inwentaryzacja</h3>

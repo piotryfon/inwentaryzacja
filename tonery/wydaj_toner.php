@@ -29,11 +29,11 @@
 
             </ul>
         </header>
-        <h4>Dodaj toner</h4><br>
-        <form method="POST" action="dodaj_toner.php">
+        <h4>Wydaj toner</h4><br>
+        <form method="POST" action="wydaj_toner.php">
             <label>kod</label>
             <input type="text" name="kod">
-            <input type="submit" value="dodaj" name="dodaj" />
+            <input type="submit" value="wydaj toner" name="wydaj_toner" />
         </form>
         <?php
         $conn = mysqli_connect("localhost","root","","tonery_db"); 
@@ -41,7 +41,7 @@
             die("Brak połączenia z bazą: ".mysqli_connect_error());
         }
       
-        if(isset($_POST['dodaj'])){
+        if(isset($_POST['wydaj_toner'])){
 
             $query_is_value = "SELECT id FROM tonery_tab WHERE kod = '$_POST[kod]'";
             $result_is_value = mysqli_query($conn, $query_is_value);
@@ -50,10 +50,19 @@
                 echo "Kod nieprawidłowy";
             } 
             else {
-                $query_update = "UPDATE tonery_tab SET ilosc = ilosc+1 WHERE kod = '$_POST[kod]'";
-                $result_updete = mysqli_query($conn, $query_update);   
+
+                $query_ilosc = "SELECT ilosc from tonery_tab WHERE kod = '$_POST[kod]'";
+                $result_ilosc = mysqli_query($conn, $query_ilosc);
+                $row = mysqli_fetch_array($result_ilosc);
+                
+                if($row['ilosc'] < 1) {
+                    echo "Brak tonera!";
+                } else {
+                    $query_odejmij = "UPDATE tonery_tab SET ilosc = ilosc-1 WHERE kod = '$_POST[kod]'";
+                    $result_odejmij = mysqli_query($conn, $query_odejmij);   
                
-                header("location: dodano_toner.php");
+                    header("location: wydano_toner.php");
+                }  
             }
         }   
         mysqli_close($conn);
