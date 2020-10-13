@@ -21,11 +21,17 @@
 					<a class="nav-link active" href="dodajsprzet.php">dodaj sprzęt</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" href="edytuj_status.php">znajdź i edytuj</a>
+					<a class="nav-link active" href="edytuj_status.php">zmień status sprzętu</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link active" href="sprzet_tabela.php">sprzęt - tabela</a>
 				</li>
+				<li class="nav-item">
+                    <a class="nav-link active" href="pracownicy_tabela.php">pracownicy - tabela</a>
+				</li>
+				<li class="nav-item">
+                    <a class="nav-link active" href="sprzet_pracownik_tab.php">pracownicy/sprzęt - tabela</a>
+                </li>
 			</ul>
 		</header>
 		<h3>Dodaj sprzęt</h3>
@@ -91,9 +97,9 @@
 					<p>
 						<label for="status">status</label><br>
 						<select id="status" name="status">
+							<option>magazyn</option>
 							<option>wydany</option>
 							<option>pożyczony</option>
-							<option>magazyn</option>
 							<option>prezentacja</option>
 						</select>
 					</p>

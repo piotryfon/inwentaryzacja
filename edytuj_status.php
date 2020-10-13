@@ -26,14 +26,21 @@
 					<a class="nav-link active" href="dodajsprzet.php">dodaj sprzęt</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" href="edytuj_status.php">znajdź i edytuj</a>
+					<a class="nav-link active" href="edytuj_status.php">zmień status sprzętu</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link active" href="sprzet_tabela.php">sprzęt - tabela</a>
 				</li>
+				<li class="nav-item">
+                    <a class="nav-link active" href="pracownicy_tabela.php">pracownicy - tabela</a>
+				</li>
+				<li class="nav-item">
+                    <a class="nav-link active" href="sprzet_pracownik_tab.php">pracownicy/sprzęt - tabela</a>
+                </li>
 			</ul>
-		</header>
-		<h4>Edycja statusu sprzętu.</h4>
+		</header><br>
+		<h4>Edycja przypisania użytkownika do sprzętu.</h4> <hr>
+		<p>Tu możesz wyszukać sprzęt następnie przypisać do niego pracownika oraz zmienić status sprzętu.</p>
 
 		<br>
 		<form method="POST">
@@ -101,9 +108,9 @@
 						</div>
 						<select id="status" name="status">
 							<option><?php echo $row['status_sprz'] ?></option>
+							<option>magazyn</option>
 							<option>wydany</option>
 							<option>pożyczony</option>
-							<option>magazyn</option>
 							<option>prezentacja</option>
 						</select>
 					</div><br>

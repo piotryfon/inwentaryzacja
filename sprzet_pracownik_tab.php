@@ -1,15 +1,19 @@
 <?php
-require("connection.php");
-$query = "SELECT * FROM sprzet";
-$result = mysqli_query($conn, $query);
-?>
 
+require("connection.php");
+
+$query3 = "SELECT * FROM sprzet LEFT JOIN pracownicy 
+            ON sprzet.id_pracownika = pracownicy.id_pracownika";
+
+$result3 = mysqli_query($conn, $query3);
+
+?>
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
-    <title>sprzęt - tabela</title>
+    <title>sprzęt-pracownik</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <style>
         table {
@@ -45,7 +49,6 @@ $result = mysqli_query($conn, $query);
     <div class="container">
         <header>
             <ul class="nav justify-content-center">
-
                 <li class="nav-item">
                     <a class="nav-link active" href="index.php">str. gł</a>
                 </li>
@@ -67,42 +70,43 @@ $result = mysqli_query($conn, $query);
                 <li class="nav-item">
                     <a class="nav-link active" href="sprzet_pracownik_tab.php">pracownicy/sprzęt - tabela</a>
                 </li>
+
             </ul>
-                
         </header>
         <div class="row">
             <div class="col-lg-10">
-                <h4>Sprzęt</h4>
+                <h4>Sprzęt - pracownik</h4>
                 <table>
                     <tr>
                         <th>rodzaj</th>
-                        <th>pin</th>
                         <th>model</th>
-                        <th>NI</th>
-                        <th>SN</th>
+                        <th>N/I</th>
+                        <th>S/N</th>
+                        <th>login</th>
+                        <th>status</th>
                     </tr>
                     <?php
-                    while ($row = mysqli_fetch_array($result)) {
+                    while ($row = mysqli_fetch_array($result3)) {
                         echo "<tr>";
                         echo "<td>$row[rodzaj]</td>";
-                        echo "<td>$row[pin]</td>";
                         echo "<td>$row[model]</td>";
                         echo "<td>$row[NI]</td>";
                         echo "<td>$row[SN]</td>";
+                        echo "<td>$row[login_pracownika]</td>";
+                        echo "<td>$row[status_sprz]</td>";
                         echo "</tr>";
                     }
-
                     ?>
                 </table>
-                    <?php
-                    
-                    ?>
             </div>
         </div>
     </div>
+
 </body>
 
 </html>
+
+
 <?php
 mysqli_close($conn);
 ?>
