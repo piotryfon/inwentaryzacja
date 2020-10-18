@@ -59,7 +59,7 @@ $result3 = mysqli_query($conn, $query3);
         <h5>Tu możesz edytować dane:</h5>
             <ul>
                 <a href="edytuj_pracownika.php"><li>edytuj pracownika</li></a>
-                <a href="#"><li>edytuj sprzęt</li></a>
+                <a href="edytuj_sprzet.php"><li>edytuj sprzęt</li></a>
                 <a href="edytuj_status.php"><li>edytuj status sprzętu i przypisanie sprzętu do pracownika</li></a>
             </ul>
 
