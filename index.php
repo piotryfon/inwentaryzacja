@@ -1,14 +1,3 @@
-<?php
-
-require("connection.php");
-
-$query2 = "SELECT * FROM pracownicy";
-$query3 = "SELECT * FROM sprzet LEFT JOIN pracownicy 
-            ON sprzet.id_pracownika = pracownicy.id_pracownika";
-$result2 = mysqli_query($conn, $query2);
-$result3 = mysqli_query($conn, $query3);
-
-?>
 <!DOCTYPE html>
 <html>
 
@@ -17,7 +6,7 @@ $result3 = mysqli_query($conn, $query3);
     <title>NewApi</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <style>
-    
+
     </style>
 
 </head>
@@ -53,24 +42,25 @@ $result3 = mysqli_query($conn, $query3);
                 </li>
             </ul>
         </header>
-      
+
         <h3>Witamy na w aplikacji inwentaryzacyjnej Helpdesk</h3>
         <hr>
         <h5>Tu możesz edytować dane:</h5>
-            <ul>
-                <a href="edytuj_pracownika.php"><li>edytuj pracownika</li></a>
-                <a href="edytuj_sprzet.php"><li>edytuj sprzęt</li></a>
-                <a href="edytuj_status.php"><li>edytuj status sprzętu i przypisanie sprzętu do pracownika</li></a>
-            </ul>
+        <ul>
+            <a href="edytuj_pracownika.php">
+                <li>edytuj pracownika</li>
+            </a>
+            <a href="edytuj_sprzet.php">
+                <li>edytuj sprzęt</li>
+            </a>
+            <a href="edytuj_status.php">
+                <li>edytuj status sprzętu i przypisanie sprzętu do pracownika</li>
+            </a>
+        </ul>
 
-      
     </div>
 
 </body>
 
 </html>
 
-
-<?php
-mysqli_close($conn);
-?>
