@@ -6,7 +6,9 @@
 	<title>edytuj status sprzętu</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<style>
-
+		.green{
+			color: green;
+		}
 
 	</style>
 </head>
@@ -77,7 +79,7 @@
 
 			while ($row = mysqli_fetch_array($result)) {
 		?>
-				<form method="POST">
+				<form method="POST" action="edytuj_status.php">
 					<div>
 						<div>
 							<label>ID sprzętu<label>
@@ -106,7 +108,7 @@
 						<div>
 							<label>status<label>
 						</div>
-						<select id="status" name="status">
+						<select id="status" name="status" class="green">
 							<option><?php echo $row['status_sprz'] ?></option>
 							<option>magazyn</option>
 							<option>wydany</option>
@@ -118,8 +120,13 @@
 						<div>
 							<label>login<label>
 						</div>
-						<input type="text" name="login_pracownika" value="<?php echo $row['login_pracownika'] ?>" />
-						<input class="btn btn-primary" type="submit" value="zatwierdz" name="zatwierdz">
+						<input type="text" readonly name="login_pracownika" value="<?php echo $row['login_pracownika'] ?>" />
+						<input type="text" name="nowy_login" value="nowy login" class="green"/><br><br>
+						<div>
+							<label>data<label>
+						</div>
+						<input type="text" readonly name="aktu_data"  value="<?php echo date("Y-m-d")?>" />
+						<input class="btn btn-primary" type="submit" name="zatwierdz" value="zatwierdź" >
 					</div><br>
 				</form>
 				<hr>
@@ -127,22 +134,36 @@
 			}
 		}
 		if (isset($_POST['zatwierdz'])) {
-			$query_login = "SELECT login_pracownika FROM pracownicy WHERE login_pracownika = '$_POST[login_pracownika]'";
-			$result = mysqli_query($conn, $query_login) or die(mysqli_error("Nieprawidłowe zapytanie"));
+			$query_login = "SELECT login_pracownika FROM pracownicy WHERE login_pracownika = '$_POST[nowy_login]'";
+			$result = mysqli_query($conn, $query_login);
 
-			if (mysqli_num_rows($result) == 0) {
+			if (mysqli_num_rows($result) === 0) {
 				echo '<h3>Nie ma takiego pracownika!</h3>';
+				
 			} else {
+				
+				$ni = mysqli_real_escape_string($conn, $_REQUEST['ni']);
+				$rodzaj = mysqli_real_escape_string($conn, $_REQUEST['rodzaj']);
+				$status = mysqli_real_escape_string($conn, $_REQUEST['status']);
+				$login_stary = mysqli_real_escape_string($conn, $_REQUEST['login_pracownika']);
+				$login_nowy = mysqli_real_escape_string($conn, $_REQUEST['nowy_login']);
+				$data = mysqli_real_escape_string($conn, $_REQUEST['aktu_data']);
 
-				$query_login_sprzet = "SELECT id_pracownika FROM pracownicy WHERE login_pracownika = '$_POST[login_pracownika]'";
-				$result_login_sprzet = mysqli_query($conn, $query_login_sprzet) or die(mysqli_error("Nieprawidłowe zapytanie"));
+				$query_historia = "INSERT INTO sprzet_historia (NI, rodzaj, status_sprz, login_stary, login_nowy, data_zmiany) 
+				VALUES ('$ni', '$rodzaj', '$status', '$login_stary', '$login_nowy', '$data')";
+				if($query_historia) {
+					mysqli_query($conn, $query_historia);
+				}
+
+				$query_login_sprzet = "SELECT id_pracownika FROM pracownicy WHERE login_pracownika = '$_POST[nowy_login]'";
+				$result_login_sprzet = mysqli_query($conn, $query_login_sprzet);
 				$row_login_sprzet = mysqli_fetch_array($result_login_sprzet);
 				$row_na_int = (int)$row_login_sprzet['id_pracownika'];
 
 				$query_update = "UPDATE sprzet SET id_pracownika = $row_na_int, status_sprz = '$_POST[status]' WHERE id_sprzetu ='" . $_POST['id_sprzetu'] . "'";
 
-				if (count($_POST) > 0) {
-					$result = mysqli_query($conn, $query_update);
+				if ($query_update) {
+					mysqli_query($conn, $query_update);
 					echo '<h3>Zmiany wprowadzone</h3>';
 				}
 			}
