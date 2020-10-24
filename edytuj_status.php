@@ -6,10 +6,9 @@
 	<title>edytuj status sprzętu</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<style>
-		.green{
+		.green {
 			color: green;
 		}
-
 	</style>
 </head>
 
@@ -34,14 +33,15 @@
 					<a class="nav-link active" href="sprzet_tabela.php">sprzęt - tabela</a>
 				</li>
 				<li class="nav-item">
-                    <a class="nav-link active" href="pracownicy_tabela.php">pracownicy - tabela</a>
+					<a class="nav-link active" href="pracownicy_tabela.php">pracownicy - tabela</a>
 				</li>
 				<li class="nav-item">
-                    <a class="nav-link active" href="sprzet_pracownik_tab.php">pracownicy/sprzęt - tabela</a>
-                </li>
+					<a class="nav-link active" href="sprzet_pracownik_tab.php">pracownicy/sprzęt - tabela</a>
+				</li>
 			</ul>
 		</header><br>
-		<h4>Edycja przypisania użytkownika do sprzętu.</h4> <hr>
+		<h4>Edycja przypisania użytkownika do sprzętu.</h4>
+		<hr>
 		<p>Tu możesz wyszukać sprzęt następnie przypisać do niego pracownika oraz zmienić status sprzętu.</p>
 
 		<br>
@@ -80,54 +80,63 @@
 			while ($row = mysqli_fetch_array($result)) {
 		?>
 				<form method="POST" action="edytuj_status.php">
-					<div>
-						<div>
-							<label>ID sprzętu<label>
+					<div class="row">
+						<div class="col-md-6">
+							<div>
+								<div>
+									<label>ID sprzętu<label>
+								</div>
+								<input type="text" name="id_sprzetu" readonly value="<?php echo $row['id_sprzetu'] ?>" />
+							</div><br>
+							<div>
+								<div>
+									<label>N/I<label>
+								</div>
+								<input type="text" name="ni" readonly value="<?php echo $row['NI'] ?>" />
+							</div><br>
+							<div>
+								<div>
+									<label>rodzaj<label>
+								</div>
+								<input type="text" name="rodzaj" readonly value="<?php echo $row['rodzaj'] ?>" />
+							</div><br>
+							<div>
+								<div>
+									<label>pin<label>
+								</div>
+								<input type="text" name="pin" readonly value="<?php echo $row['pin'] ?>" />
+							</div><br>
 						</div>
-						<input type="text" name="id_sprzetu" readonly value="<?php echo $row['id_sprzetu'] ?>" />
-					</div><br>
-					<div>
-						<div>
-							<label>N/I<label>
+						<div class="col-md-6">
+							<div>
+								<div>
+									<label>status<label>
+								</div>
+								<select id="status" name="status" class="green">
+									<option><?php echo $row['status_sprz'] ?></option>
+									<option>magazyn</option>
+									<option>wydany</option>
+									<option>pożyczony</option>
+									<option>prezentacja</option>
+								</select>
+							</div><br>
+							<div>
+								<div>
+									<label>login<label>
+								</div>
+								<input type="text" readonly name="login_pracownika" value="<?php echo $row['login_pracownika'] ?>" /><br><br>
+								<div>
+									<label>nowy login<label>
+								</div>
+								<input type="text" name="nowy_login" value="<?php echo $row['login_pracownika'] ?>" class="green" /><br><br>
+								<div>
+									<label>data<label>
+								</div>
+								<input type="text" readonly name="aktu_data" value="<?php echo date("Y-m-d") ?>" />
+								<input class="btn btn-primary" type="submit" name="zatwierdz" value="zatwierdź">
+							</div><br>
 						</div>
-						<input type="text" name="ni" readonly value="<?php echo $row['NI'] ?>" />
-					</div><br>
-					<div>
-						<div>
-							<label>rodzaj<label>
-						</div>
-						<input type="text" name="rodzaj" readonly value="<?php echo $row['rodzaj'] ?>" />
-					</div><br>
-					<div>
-						<div>
-							<label>pin<label>
-						</div>
-						<input type="text" name="pin" readonly value="<?php echo $row['pin'] ?>" />
-					</div><br>
-					<div>
-						<div>
-							<label>status<label>
-						</div>
-						<select id="status" name="status" class="green">
-							<option><?php echo $row['status_sprz'] ?></option>
-							<option>magazyn</option>
-							<option>wydany</option>
-							<option>pożyczony</option>
-							<option>prezentacja</option>
-						</select>
-					</div><br>
-					<div>
-						<div>
-							<label>login<label>
-						</div>
-						<input type="text" readonly name="login_pracownika" value="<?php echo $row['login_pracownika'] ?>" />
-						<input type="text" name="nowy_login" value="nowy login" class="green"/><br><br>
-						<div>
-							<label>data<label>
-						</div>
-						<input type="text" readonly name="aktu_data"  value="<?php echo date("Y-m-d")?>" />
-						<input class="btn btn-primary" type="submit" name="zatwierdz" value="zatwierdź" >
-					</div><br>
+					</div>
 				</form>
 				<hr>
 		<?php
@@ -139,9 +148,8 @@
 
 			if (mysqli_num_rows($result) === 0) {
 				echo '<h3>Nie ma takiego pracownika!</h3>';
-				
 			} else {
-				
+
 				$ni = mysqli_real_escape_string($conn, $_REQUEST['ni']);
 				$rodzaj = mysqli_real_escape_string($conn, $_REQUEST['rodzaj']);
 				$status = mysqli_real_escape_string($conn, $_REQUEST['status']);
@@ -151,7 +159,7 @@
 
 				$query_historia = "INSERT INTO sprzet_historia (NI, rodzaj, status_sprz, login_stary, login_nowy, data_zmiany) 
 				VALUES ('$ni', '$rodzaj', '$status', '$login_stary', '$login_nowy', '$data')";
-				if($query_historia) {
+				if ($query_historia) {
 					mysqli_query($conn, $query_historia);
 				}
 
