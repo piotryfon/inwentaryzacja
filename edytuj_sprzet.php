@@ -86,37 +86,37 @@
                             <div class="col-lg-6">
                                 <div>
                                     <div>
-                                        <label>ID sprzętu<label>
+                                        <label>ID sprzętu</label>
                                     </div>
                                     <input type="number" name="id" readonly value="<?php echo $row['id_sprzetu'] ?>" />
                                 </div><br>
                                 <div>
                                     <div>
-                                        <label>rodzaj<label>
+                                        <label>rodzaj</label>
                                     </div>
                                     <input type="text" name="rodzaj" value="<?php echo $row['rodzaj'] ?>" />
                                 </div><br>
                                 <div>
                                     <div>
-                                        <label>pin<label>
+                                        <label>pin</label>
                                     </div>
                                     <input type="text" name="pin" value="<?php echo $row['pin'] ?>" />
                                 </div><br>
                                 <div>
                                     <div>
-                                        <label>model<label>
+                                        <label>model</label>
                                     </div>
                                     <input type="text" name="model" value="<?php echo $row['model'] ?>" />
                                 </div><br>
                                 <div>
                                     <div>
-                                        <label>N/I<label>
+                                        <label>N/I</label>
                                     </div>
                                     <input type="text" name="ni" value="<?php echo $row['NI'] ?>" />
                                 </div><br>
                                 <div>
                                     <div>
-                                        <label>S/N<label>
+                                        <label>S/N</label>
                                     </div>
                                     <input type="text" name="sn" value="<?php echo $row['SN'] ?>" />
                                 </div><br>
@@ -124,31 +124,31 @@
                             <div class="col-lg-6">
                                 <div>
                                     <div>
-                                        <label>procesor<label>
+                                        <label>procesor</label>
                                     </div>
                                     <input type="text" name="procesor" value="<?php echo $row['procesor'] ?>" />
                                 </div><br>
                                 <div>
                                     <div>
-                                        <label>RAM<label>
+                                        <label>RAM</label>
                                     </div>
                                     <input type="text" name="ram" value="<?php echo $row['ram'] ?>" />
                                 </div><br>
                                 <div>
                                     <div>
-                                        <label>dysk<label>
+                                        <label>dysk</label>
                                     </div>
                                     <input type="text" name="dysk" value="<?php echo $row['dysk'] ?>" />
                                 </div><br>
                                 <div>
                                     <div>
-                                        <label>status<label>
+                                        <label>status</label>
                                     </div>
                                     <input type="text" name="status" value="<?php echo $row['status_sprz'] ?>" />
                                 </div><br>
                                 <div>
                                     <div>
-                                        <label>opis<label>
+                                        <label>opis</label>
                                     </div>
                                     <textarea type="text" name="opis"><?php echo $row['opis'] ?></textarea>
                                 </div><br>

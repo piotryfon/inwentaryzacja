@@ -84,25 +84,25 @@
 						<div class="col-md-6">
 							<div>
 								<div>
-									<label>ID sprzętu<label>
+									<label>ID sprzętu</label>
 								</div>
 								<input type="text" name="id_sprzetu" readonly value="<?php echo $row['id_sprzetu'] ?>" />
 							</div><br>
 							<div>
 								<div>
-									<label>N/I<label>
+									<label>N/I</label>
 								</div>
 								<input type="text" name="ni" readonly value="<?php echo $row['NI'] ?>" />
 							</div><br>
 							<div>
 								<div>
-									<label>rodzaj<label>
+									<label>rodzaj</label>
 								</div>
 								<input type="text" name="rodzaj" readonly value="<?php echo $row['rodzaj'] ?>" />
 							</div><br>
 							<div>
 								<div>
-									<label>pin<label>
+									<label>pin</label>
 								</div>
 								<input type="text" name="pin" readonly value="<?php echo $row['pin'] ?>" />
 							</div><br>
@@ -110,7 +110,7 @@
 						<div class="col-md-6">
 							<div>
 								<div>
-									<label>status<label>
+									<label>status</label>
 								</div>
 								<select id="status" name="status" class="green">
 									<option><?php echo $row['status_sprz'] ?></option>
@@ -122,15 +122,15 @@
 							</div><br>
 							<div>
 								<div>
-									<label>login<label>
+									<label>login</label>
 								</div>
 								<input type="text" readonly name="login_pracownika" value="<?php echo $row['login_pracownika'] ?>" /><br><br>
 								<div>
-									<label>nowy login<label>
+									<label>nowy login</label>
 								</div>
 								<input type="text" name="nowy_login" value="<?php echo $row['login_pracownika'] ?>" class="green" /><br><br>
 								<div>
-									<label>data<label>
+									<label>data</label>
 								</div>
 								<input type="text" readonly name="aktu_data" value="<?php echo date("Y-m-d") ?>" />
 								<input class="btn btn-primary" type="submit" name="zatwierdz" value="zatwierdź">
