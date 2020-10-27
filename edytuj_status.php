@@ -6,9 +6,7 @@
 	<title>edytuj status sprzętu</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<style>
-		.green {
-			color: green;
-		}
+	
 	</style>
 </head>
 
@@ -96,6 +94,12 @@
 							</div><br>
 							<div>
 								<div>
+									<label>S/N</label>
+								</div>
+								<input type="text" name="sn" readonly value="<?php echo $row['SN'] ?>" />
+							</div><br>
+							<div>
+								<div>
 									<label>rodzaj</label>
 								</div>
 								<input type="text" name="rodzaj" readonly value="<?php echo $row['rodzaj'] ?>" />
@@ -112,7 +116,7 @@
 								<div>
 									<label>status</label>
 								</div>
-								<select id="status" name="status" class="green">
+								<select id="status" name="status" class="bg-success text-white">
 									<option><?php echo $row['status_sprz'] ?></option>
 									<option>magazyn</option>
 									<option>wydany</option>
@@ -128,7 +132,7 @@
 								<div>
 									<label>nowy login</label>
 								</div>
-								<input type="text" name="nowy_login" value="<?php echo $row['login_pracownika'] ?>" class="green" /><br><br>
+								<input type="text" name="nowy_login" value="<?php echo $row['login_pracownika'] ?>" class="bg-success text-white" /><br><br>
 								<div>
 									<label>data</label>
 								</div>

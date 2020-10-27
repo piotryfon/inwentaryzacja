@@ -33,12 +33,12 @@
           <a class="nav-link active" href="sprzet_pracownik_tab.php">pracownicy/sprzęt - tabela</a>
         </li>
       </ul>
-    </header>
+    </header><br>
 
     <?php
     require("connection.php");
     ?>
-
+    <h3>Edycja tabeli sprzęt - pracownik.</h3><br>
     <form method="post">
       <div class="row">
         <div class="col-md-6">
@@ -67,7 +67,13 @@
             <div>
               <label>status</label>
             </div>
-            <input type="text" name='status_sprz' value="<?php echo $_POST['status_sprz'] ?>"><br>
+            <select id="status" name="status" class="bg-success text-white">
+									<option><?php echo $_POST['status_sprz'] ?></option>
+									<option>magazyn</option>
+									<option>wydany</option>
+									<option>pożyczony</option>
+									<option>prezentacja</option>
+								</select>
             <div>
               <label>login</label>
             </div>
@@ -75,7 +81,7 @@
             <div>
               <label>nowy login</label>
             </div>
-            <input type="text" name='nowy_login' value="<?php echo $_POST['login_pracownika'] ?>"><br>
+            <input type="text" class="bg-success text-white" name='nowy_login' value="<?php echo $_POST['login_pracownika'] ?>"><br>
             <div>
               <label>data</label>
             </div>
