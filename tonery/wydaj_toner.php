@@ -1,3 +1,12 @@
+<?php 
+    $conn = mysqli_connect("localhost","root","","tonery_db"); 
+        if($conn == false){
+            die("Brak połączenia z bazą: ".mysqli_connect_error());
+        }
+    $query_drukarki = "SELECT NI FROM drukarki";
+    $result_drukarki = mysqli_query($conn, $query_drukarki);
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -30,16 +39,31 @@
             </ul>
         </header>
         <h4>Wydaj toner</h4><br>
+        
         <form method="POST" action="wydaj_toner.php">
-            <label>kod</label>
-            <input type="text" name="kod">
+            <div>
+                <label for="kod">kod</label>
+            </div>
+            <input type="text" id="kod" name="kod"><br><br>
+            <div>
+                <label for="ni">N/I drukarki</label>
+            </div>
+            <select id="ni" name="NI_drukarki">
+            <?php
+                while ($row = mysqli_fetch_array($result_drukarki)) {
+                    echo "<option>$row[NI]</option>";
+                }
+            ?>
+            </select><br><br>
+            <div>
+                <label for="data">data</label>
+            </div>
+            <input readonly type="text" id="data" name="data" value="<?php echo date("Y-m-d") ?>"><br><br>
+            
             <input type="submit" value="wydaj toner" name="wydaj_toner" />
         </form>
         <?php
-        $conn = mysqli_connect("localhost","root","","tonery_db"); 
-        if($conn == false){
-            die("Brak połączenia z bazą: ".mysqli_connect_error());
-        }
+       
       
         if(isset($_POST['wydaj_toner'])){
 
@@ -59,7 +83,10 @@
                     echo "Brak tonera!";
                 } else {
                     $query_odejmij = "UPDATE tonery_tab SET ilosc = ilosc-1 WHERE kod = '$_POST[kod]'";
-                    $result_odejmij = mysqli_query($conn, $query_odejmij);   
+                    $result_odejmij = mysqli_query($conn, $query_odejmij);  
+                    $query_dodaj_do_wydanych = "INSERT INTO wydane_tonery (kod, NI_drukarki, data_wydania) 
+                    VALUES ('$_POST[kod]', '$_POST[NI_drukarki]', '$_POST[data]')"; 
+                    $result_wydane = mysqli_query($conn, $query_dodaj_do_wydanych);
                
                     header("location: wydano_toner.php");
                 }  
