@@ -26,7 +26,9 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="wydaj_toner.php">wydaj toner</a>
                 </li>
-
+                <li class="nav-item">
+                    <a class="nav-link active" href="dodaj_rekord.php">dodaj rekord</a>
+                </li>
             </ul>
         </header>
         <h4>Dodaj toner</h4><br>

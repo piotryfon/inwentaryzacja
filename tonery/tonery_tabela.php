@@ -61,6 +61,9 @@ $result = mysqli_query($conn, $query);
                 <li class="nav-item">
                     <a class="nav-link active" href="wydaj_toner.php">wydaj toner</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="dodaj_rekord.php">dodaj rekord</a>
+                </li>
 
             </ul>
         </header>
@@ -71,6 +74,7 @@ $result = mysqli_query($conn, $query);
                         <th>oznaczenie</th>
                         <th>firma</th>
                         <th>ilość</th>
+                        <th>opis</th>
                     </tr>
                     <?php
                     while ($row = mysqli_fetch_array($result)) {
@@ -79,6 +83,7 @@ $result = mysqli_query($conn, $query);
                         echo "<td>$row[oznaczenie]</td>";
                         echo "<td>$row[firma]</td>";
                         echo "<td>$row[ilosc]</td>";
+                        echo "<td>$row[opis]</td>";
                         echo "</tr>";
                     }
 

@@ -1,4 +1,4 @@
 <?php 
-    echo 'dodano toner <br> <a href="dodaj_toner.php">wróć</a>';
+    echo '<h3>Toner dodano<br> <a href="dodaj_toner.php">wróć</a></h3>';
    
 ?>

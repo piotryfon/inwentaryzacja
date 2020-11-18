@@ -83,7 +83,8 @@
 			} else {
 				$sql = "INSERT INTO pracownicy (login_pracownika, imie, nazwisko, departament, pokoj) VALUES ('$login_pracownika', '$imie', '$nazwisko','$departament','$pokoj')";
 				if (mysqli_query($conn, $sql)) {
-					echo '<h3>Rekrd został dodany</h3>';
+					header("location: pracownikdodany.php");
+				
 				} else {
 					echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
 				}
