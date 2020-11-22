@@ -14,6 +14,7 @@
     <style>
 
     </style>
+    
 </head>
 
 <body>
@@ -50,19 +51,20 @@
             <div>
                 <label for="ni">N/I drukarki</label>
             </div>
-            <select id="ni" name="NI_drukarki">
+            <input name="NI_drukarki" id="NI_drukarki"></input>
+            <select id="ni" name="NI_drukarki_wybierz">
             <?php
                 while ($row = mysqli_fetch_array($result_drukarki)) {
                     echo "<option>$row[NI]</option>";
                 }
             ?>
-            </select><br><br>
+            </select><label><-wybierz z listy</label><br><br>
             <div>
                 <label for="data">data</label>
             </div>
             <input readonly type="text" id="data" name="data" value="<?php echo date("Y-m-d") ?>"><br><br>
             
-            <input type="submit" value="wydaj toner" name="wydaj_toner" />
+            <input type="submit" class="btn btn-success" value="wydaj toner" name="wydaj_toner" />
         </form>
         <?php
        
@@ -81,23 +83,39 @@
                 $result_ilosc = mysqli_query($conn, $query_ilosc);
                 $row = mysqli_fetch_array($result_ilosc);
                 
-                if($row['ilosc'] < 1) {
-                    echo "Brak tonera!";
+                $NI_drukarki = mysqli_real_escape_string($conn, $_REQUEST['NI_drukarki']);
+                if($NI_drukarki===""){
+                    echo "Nie wybrałeś drukarki";
                 } else {
-                    $query_odejmij = "UPDATE tonery_tab SET ilosc = ilosc-1 WHERE kod = '$_POST[kod]'";
-                    $result_odejmij = mysqli_query($conn, $query_odejmij);  
-                    $query_dodaj_do_wydanych = "INSERT INTO wydane_tonery (kod, NI_drukarki, data_wydania) 
-                    VALUES ('$_POST[kod]', '$_POST[NI_drukarki]', '$_POST[data]')"; 
-                    $result_wydane = mysqli_query($conn, $query_dodaj_do_wydanych);
-               
-                    header("location: wydano_toner.html");
-                }  
+                    if($row['ilosc'] < 1) {
+                        echo "Brak tonera!";
+                    } else {
+                        $query_odejmij = "UPDATE tonery_tab SET ilosc = ilosc-1 WHERE kod = '$_POST[kod]'";
+                        $result_odejmij = mysqli_query($conn, $query_odejmij);  
+                        $query_dodaj_do_wydanych = "INSERT INTO wydane_tonery (kod, NI_drukarki, data_wydania) 
+                        VALUES ('$_POST[kod]', '$_POST[NI_drukarki]', '$_POST[data]')"; 
+                        $result_wydane = mysqli_query($conn, $query_dodaj_do_wydanych);
+                   
+                        header("location: wydano_toner.html");
+                    }  
+                }
             }
         }   
         mysqli_close($conn);
        
         ?>
     </div>
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("select").change(function(){
+                $("#NI_drukarki:text").val($("select").val());
+            });
+        });
+    </script>
+    
 </body>
 
 </html>

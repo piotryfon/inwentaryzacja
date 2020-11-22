@@ -57,7 +57,7 @@
             </div>
             <textarea name="opis"></textarea><br><br>
 
-            <input type="submit" value="dodaj" name="dodaj" />
+            <input type="submit" class="btn btn-success" value="dodaj" name="dodaj" />
         </form>
         <?php
         require("connection_tonery.php");

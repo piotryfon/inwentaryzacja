@@ -39,8 +39,8 @@
             <label>kod</label>
             <input type="text" name="kod">
             <label>ilość:</label>
-            <input type="number" name="ilosc" value="1" min="1" max="50">
-            <input type="submit" value="dodaj" name="dodaj"/>
+            <input type="number" name="ilosc" value="1" min="1" max="50" style="width: 60px"/>
+            <input type="submit" class="btn btn-success" value="dodaj" name="dodaj"/>
         </form>
         <?php
         require("connection_tonery.php");
