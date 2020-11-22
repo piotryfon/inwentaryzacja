@@ -29,6 +29,9 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="dodaj_rekord.php">dodaj rekord</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="wydane_tonery.php">wydane tonery</a>
+                </li>
             </ul>
         </header>
         <h4>Dodaj rekord - toner</h4><br>
@@ -57,10 +60,7 @@
             <input type="submit" value="dodaj" name="dodaj" />
         </form>
         <?php
-        $conn = mysqli_connect("localhost","root","","tonery_db"); 
-        if($conn == false){
-            die("Brak połączenia z bazą: ".mysqli_connect_error());
-        }
+        require("connection_tonery.php");
       
         if(isset($_POST['dodaj'])){
             $kod = mysqli_real_escape_string($conn, $_REQUEST['kod']);
@@ -75,7 +75,7 @@
                 echo '<h3>Zostawiłeś puste pole</h3>';
             } else {
                 if (mysqli_query($conn, $sql)) {
-                    header("location: rekord_dodany.php");
+                    header("location: rekord_dodany.html");
                 } else {
                     echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
                 }

@@ -21,9 +21,6 @@
           <a class="nav-link active" href="dodajsprzet.php">dodaj sprzęt</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="edytuj_status.php">zmień status sprzętu</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link active" href="sprzet_tabela.php">sprzęt - tabela</a>
         </li>
         <li class="nav-item">
@@ -67,7 +64,7 @@
             <div>
               <label>status</label>
             </div>
-            <select id="status" name="status" class="bg-success text-white">
+            <select id="status" name="status_sprz" class="bg-success text-white">
 									<option><?php echo $_POST['status_sprz'] ?></option>
 									<option>magazyn</option>
 									<option>wydany</option>
@@ -121,7 +118,7 @@
 
         if ($query_update) {
           mysqli_query($conn, $query_update);
-          echo '<h3>Zmiany wprowadzone</h3>';
+          header("location: zmiany_wprowadzone.html");
         }
       }
     }

@@ -22,9 +22,6 @@
 					<a class="nav-link active" href="dodajsprzet.php">dodaj sprzęt</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" href="edytuj_status.php">zmień status sprzętu</a>
-				</li>
-				<li class="nav-item">
 					<a class="nav-link active" href="sprzet_tabela.php">sprzęt - tabela</a>
 				</li>
 				<li class="nav-item">
@@ -83,7 +80,7 @@
 			} else {
 				$sql = "INSERT INTO pracownicy (login_pracownika, imie, nazwisko, departament, pokoj) VALUES ('$login_pracownika', '$imie', '$nazwisko','$departament','$pokoj')";
 				if (mysqli_query($conn, $sql)) {
-					header("location: pracownikdodany.php");
+					header("location: pracownikdodany.html");
 				
 				} else {
 					echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);

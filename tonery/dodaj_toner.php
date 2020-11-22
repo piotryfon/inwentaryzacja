@@ -29,21 +29,25 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="dodaj_rekord.php">dodaj rekord</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="wydane_tonery.php">wydane tonery</a>
+                </li>
             </ul>
         </header>
         <h4>Dodaj toner</h4><br>
         <form method="POST" action="dodaj_toner.php">
             <label>kod</label>
             <input type="text" name="kod">
-            <input type="submit" value="dodaj" name="dodaj" />
+            <label>ilość:</label>
+            <input type="number" name="ilosc" value="1" min="1" max="50">
+            <input type="submit" value="dodaj" name="dodaj"/>
         </form>
         <?php
-        $conn = mysqli_connect("localhost","root","","tonery_db"); 
-        if($conn == false){
-            die("Brak połączenia z bazą: ".mysqli_connect_error());
-        }
+        require("connection_tonery.php");
       
         if(isset($_POST['dodaj'])){
+
+            $ilosc = mysqli_real_escape_string($conn, $_REQUEST['ilosc']);
 
             $query_is_value = "SELECT id FROM tonery_tab WHERE kod = '$_POST[kod]'";
             $result_is_value = mysqli_query($conn, $query_is_value);
@@ -52,10 +56,10 @@
                 echo "Kod nieprawidłowy";
             } 
             else {
-                $query_update = "UPDATE tonery_tab SET ilosc = ilosc+1 WHERE kod = '$_POST[kod]'";
+                $query_update = "UPDATE tonery_tab SET ilosc = ilosc + $ilosc WHERE kod = '$_POST[kod]'";
                 $result_updete = mysqli_query($conn, $query_update);   
                
-                header("location: dodano_toner.php");
+                header("location: dodano_toner.html");
             }
         }   
         mysqli_close($conn);

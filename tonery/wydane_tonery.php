@@ -1,20 +1,12 @@
-<?php
-
-require("connection.php");
-
-$query = "SELECT * FROM pracownicy";
-$result = mysqli_query($conn, $query);
-
-
-?>
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
-    <title>Pracownicy - tabela</title>
+    <title>Tonery</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <style>
+
         table {
             border-collapse: collapse;
         }
@@ -39,56 +31,61 @@ $result = mysqli_query($conn, $query);
             background-color: #33A5FF;
             color: white;
         }
+ 
     </style>
-
 </head>
 
 <body>
-
     <div class="container">
-        <header>
+    <header>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link active" href="index.php">str. gł</a>
+                    <a class="nav-link active" href="/inwentaryzacja/index.php">str. gł</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="dodajpracownika.php">dodaj pracownika</a>
+                    <a class="nav-link active" href="tonery_tabela.php">tonety tabela</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="dodajsprzet.php">dodaj sprzęt</a>
+                    <a class="nav-link active" href="dodaj_toner.php">dodaj toner</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="sprzet_tabela.php">sprzęt - tabela</a>
+                    <a class="nav-link active" href="wydaj_toner.php">wydaj toner</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="pracownicy_tabela.php">pracownicy - tabela</a>
+                    <a class="nav-link active" href="dodaj_rekord.php">dodaj rekord</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="sprzet_pracownik_tab.php">pracownicy/sprzęt - tabela</a>
+                    <a class="nav-link active" href="wydane_tonery.php">wydane tonery</a>
                 </li>
             </ul>
         </header>
-        <h3>Pracownicy - tabela</h3>
+        <h4>Tabela z wydanymi tonerami</h4><br>
+
+        <?php
+            require("connection_tonery.php");
+
+            $query = "SELECT * FROM wydane_tonery";
+
+            $result = mysqli_query($conn, $query);
+        ?>
         <table>
             <tr>
-                <th>id pracownika</th>
-                <th>login</th>
-                <th>departament</th>
-                <th>pokój</th>
+                <th>kod</th>
+                <th>N/I drukarki</th>
+                <th>data wydania tonera</th>
             </tr>
-            <?php
-            while ($row = mysqli_fetch_array($result)) {
+        <?php
+            while($row = mysqli_fetch_array($result)) {
                 echo "<tr>";
-                echo "<td>$row[id_pracownika]</td>";
-                echo "<td>$row[login_pracownika]</td>";
-                echo "<td>$row[departament]</td>";
-                echo "<td>$row[pokoj]</td>";
+                    echo "<td>$row[kod]</td>";
+                    echo "<td>$row[NI_drukarki]</td>";
+                    echo "<td>$row[data_wydania]</td>";
                 echo "</tr>";
             }
-            ?>
+        ?>
         </table>
         <?php
             mysqli_close($conn);
         ?>
-
-    </div>
+    </body>
+</html>

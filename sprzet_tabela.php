@@ -56,9 +56,6 @@ $result = mysqli_query($conn, $query);
                     <a class="nav-link active" href="dodajsprzet.php">dodaj sprzęt</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="edytuj_status.php">zmień status sprzętu</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link active" href="sprzet_tabela.php">sprzęt - tabela</a>
                 </li>
                 <li class="nav-item">

@@ -1,8 +1,5 @@
 <?php 
-    $conn = mysqli_connect("localhost","root","","tonery_db"); 
-        if($conn == false){
-            die("Brak połączenia z bazą: ".mysqli_connect_error());
-        }
+    require("connection_tonery.php");
     $query_drukarki = "SELECT NI FROM drukarki";
     $result_drukarki = mysqli_query($conn, $query_drukarki);
 ?>
@@ -37,6 +34,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="dodaj_rekord.php">dodaj rekord</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="wydane_tonery.php">wydane tonery</a>
                 </li>
             </ul>
         </header>
@@ -90,7 +90,7 @@
                     VALUES ('$_POST[kod]', '$_POST[NI_drukarki]', '$_POST[data]')"; 
                     $result_wydane = mysqli_query($conn, $query_dodaj_do_wydanych);
                
-                    header("location: wydano_toner.php");
+                    header("location: wydano_toner.html");
                 }  
             }
         }   

@@ -21,9 +21,6 @@
 					<a class="nav-link active" href="dodajsprzet.php">dodaj sprzęt</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" href="edytuj_status.php">zmień status sprzętu</a>
-				</li>
-				<li class="nav-item">
 					<a class="nav-link active" href="sprzet_tabela.php">sprzęt - tabela</a>
 				</li>
 				<li class="nav-item">
@@ -135,7 +132,7 @@
 				$sql = "INSERT INTO sprzet (rodzaj, pin, model, SN, NI, procesor, ram, dysk, status_sprz, opis) 
 				VALUES ('$rodzaj', '$pin', '$model','$sn', '$ni', '$procesor', '$ram', '$dysk', '$status','$opis')";
 				if (mysqli_query($conn, $sql)) {
-					header("location: sprzetdodany.php");
+					header("location: sprzetdodany.html");
 				
 				} else {
 					echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);

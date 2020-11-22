@@ -1,9 +1,6 @@
 <?php
+ require("connection_tonery.php");
 
-$conn = mysqli_connect("localhost","root","","tonery_db"); 
-if($conn == false){
-    die("Brak połączenia z bazą: ".mysqli_connect_error());
-}
 $query = "SELECT * FROM tonery_tab";    
 $result = mysqli_query($conn, $query);
     
@@ -64,7 +61,9 @@ $result = mysqli_query($conn, $query);
                 <li class="nav-item">
                     <a class="nav-link active" href="dodaj_rekord.php">dodaj rekord</a>
                 </li>
-
+                <li class="nav-item">
+                    <a class="nav-link active" href="wydane_tonery.php">wydane tonery</a>
+                </li>
             </ul>
         </header>
         <h3>Tabela z tonerami</h3>

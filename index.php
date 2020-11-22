@@ -26,9 +26,6 @@
                     <a class="nav-link active" href="dodajsprzet.php">dodaj sprzęt</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="edytuj_status.php">zmień status sprzętu</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link active" href="sprzet_tabela.php">sprzęt - tabela</a>
                 </li>
                 <li class="nav-item">
@@ -36,9 +33,6 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="sprzet_pracownik_tab.php">pracownicy/sprzęt - tabela</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="tonery/tonery_tabela.php">tonery</a>
                 </li>
             </ul>
         </header>
@@ -54,7 +48,13 @@
                 <li>edytuj sprzęt</li>
             </a>
             <a href="edytuj_status.php">
-                <li>edytuj status sprzętu i przypisanie sprzętu do pracownika</li>
+                <li>edytuj status sprzętu i przypisz sprzętu do pracownika</li>
+            </a>
+        </ul>
+        <h5>lub skorzystaj z aplikacji inwentaryzującej tonery</h5>
+        <ul>
+            <a href="tonery/tonery_tabela.php">
+                <li>tonery</li>
             </a>
         </ul>
 
