@@ -1,6 +1,6 @@
 <?php 
     require("connection_tonery.php");
-    $query_drukarki = "SELECT NI FROM drukarki";
+    $query_drukarki = "SELECT NI FROM drukarki ORDER BY NI ASC";
     $result_drukarki = mysqli_query($conn, $query_drukarki);
 ?>
 

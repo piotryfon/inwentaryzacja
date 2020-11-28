@@ -78,7 +78,7 @@
             <div>
               <label>nowy login</label>
             </div>
-            <input type="text" class="bg-success text-white" name='nowy_login' value="<?php echo $_POST['login_pracownika'] ?>"><br>
+            <input type="text" class="bg-success text-white" id="nowy_login" name='nowy_login' value="<?php echo $_POST['login_pracownika'] ?>"><br>
             <div>
               <label>data</label>
             </div>
@@ -125,6 +125,23 @@
     mysqli_close($conn);
     ?>
   </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+          $("#status").change(function(){
+				if($("#status").val() === "magazyn"){
+					$("#nowy_login:text").val("magazyn");
+				} else if($("#status").val() === "prezentacja"){
+					$("#nowy_login:text").val("prezentacja");
+				} else {
+					$("#nowy_login:text").val("wpisz nowy login");
+					alert("Uzupełnij nowy login.")
+				}
+			}
+		)});
+     
+    </script>
 </body>
 
 </html>
