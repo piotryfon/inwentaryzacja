@@ -12,28 +12,29 @@
 
 <body>
     <div class="container">
-    <header>
+        <header>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
                     <a class="nav-link active" href="/inwentaryzacja/index.php">str. gł</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="tonery_tabela.php">tonety tabela</a>
+                    <a class="nav-link active" href="tonery_tabela.php">tonery tabela</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="dodaj_toner.php">dodaj toner</a>
+                    <a class="nav-link active" href="dodaj_toner.php">dodaj toner do magazynu</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="wydaj_toner.php">wydaj toner</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="dodaj_rekord.php">dodaj rekord</a>
+                    <a class="nav-link active" href="dodaj_rekord.php">dodaj rekord do bazy SQL</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="wydane_tonery.php">wydane tonery</a>
                 </li>
             </ul>
         </header>
+        <hr>
         <h4>Dodaj toner</h4><br>
         <form method="POST" action="dodaj_toner.php">
             <label>kod</label>
