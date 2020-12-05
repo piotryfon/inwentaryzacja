@@ -47,7 +47,7 @@ $result = mysqli_query($conn, $query);
         <header>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/inwentaryzacja/index.php">str. gł</a>
+                    <a class="nav-link disabled" href="/inwentaryzacja/index.php">str. gł</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="tonery_tabela.php">tonery tabela</a>
@@ -69,26 +69,26 @@ $result = mysqli_query($conn, $query);
         <hr>
         <h3>Tabela z tonerami</h3>
         <table>
-                    <tr>
-                        <th>kod</th>
-                        <th>oznaczenie</th>
-                        <th>firma</th>
-                        <th>opis</th>
-                        <th>ilość</th>
-                    </tr>
-                    <?php
-                    while ($row = mysqli_fetch_array($result)) {
-                        echo "<tr>";
-                        echo "<td>$row[kod]</td>";
-                        echo "<td>$row[oznaczenie]</td>";
-                        echo "<td>$row[firma]</td>";
-                        echo "<td>$row[opis]</td>";
-                        echo "<td>$row[ilosc]</td>";
-                        echo "</tr>";
-                    }
+            <tr>
+                <th>kod</th>
+                <th>oznaczenie</th>
+                <th>firma</th>
+                <th>opis</th>
+                <th>ilość</th>
+            </tr>
+            <?php
+            while ($row = mysqli_fetch_array($result)) {
+                echo "<tr>";
+                echo "<td>$row[kod]</td>";
+                echo "<td>$row[oznaczenie]</td>";
+                echo "<td>$row[firma]</td>";
+                echo "<td>$row[opis]</td>";
+                echo "<td>$row[ilosc]</td>";
+                echo "</tr>";
+            }
 
-                    ?>
-                </table>
+            ?>
+        </table>
 
     </div>
     <?php

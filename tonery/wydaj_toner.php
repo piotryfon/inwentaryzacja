@@ -75,7 +75,7 @@
             $result_is_value = mysqli_query($conn, $query_is_value);
 
             if(mysqli_num_rows($result_is_value)===0){
-                echo "Kod nieprawidłowy";
+                echo "<br><h4>Kod nieprawidłowy</h4>";
             } 
             else {
 
@@ -85,10 +85,10 @@
                 
                 $NI_drukarki = mysqli_real_escape_string($conn, $_REQUEST['NI_drukarki']);
                 if($NI_drukarki===""){
-                    echo "Nie wybrałeś drukarki";
+                    echo "<br><h4>Nie wybrałeś drukarki</h4>";
                 } else {
                     if($row['ilosc'] < 1) {
-                        echo "Brak tonera!";
+                        echo "<br><h5>Toner nie może być wydany, brak w magazynie!</h5>";
                     } else {
                         $query_odejmij = "UPDATE tonery_tab SET ilosc = ilosc-1 WHERE kod = '$_POST[kod]'";
                         $result_odejmij = mysqli_query($conn, $query_odejmij);  
@@ -96,7 +96,7 @@
                         VALUES ('$_POST[kod]', '$_POST[NI_drukarki]', '$_POST[data]')"; 
                         $result_wydane = mysqli_query($conn, $query_dodaj_do_wydanych);
                    
-                        header("location: wydano_toner.html");
+                        echo "<br><h4>Wydano toner.</h4>";
                     }  
                 }
             }
@@ -109,6 +109,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script type="text/javascript">
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
         $(document).ready(function(){
             $("select").change(function(){
                 $("#NI_drukarki:text").val($("select").val());

@@ -76,17 +76,22 @@
                 echo '<h3>Zostawiłeś puste pole</h3>';
             } else {
                 if (mysqli_query($conn, $sql)) {
-                    header("location: rekord_dodany.html");
+                    echo '<script type="text/javascript">
+                            alert("Rekord dodany.")
+                        </script>';
                 } else {
                     echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
                 }
-               
             }
         }
-
         mysqli_close($conn);
         ?>
     </div>
+    <script type="text/javascript">
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
 </body>
 
 </html>

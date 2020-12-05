@@ -80,7 +80,7 @@
 			} else {
 				$sql = "INSERT INTO pracownicy (login_pracownika, imie, nazwisko, departament, pokoj) VALUES ('$login_pracownika', '$imie', '$nazwisko','$departament','$pokoj')";
 				if (mysqli_query($conn, $sql)) {
-					header("location: pracownikdodany.html");
+					echo "<h4>Pracownik dodany.</h4>";
 				
 				} else {
 					echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
@@ -90,6 +90,11 @@
 		mysqli_close($conn);
 		?>
 	</div>
+	<script type="text/javascript">
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
 </body>
 
 </html>

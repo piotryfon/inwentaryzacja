@@ -132,7 +132,7 @@
 				$sql = "INSERT INTO sprzet (rodzaj, pin, model, SN, NI, procesor, ram, dysk, status_sprz, opis) 
 				VALUES ('$rodzaj', '$pin', '$model','$sn', '$ni', '$procesor', '$ram', '$dysk', '$status','$opis')";
 				if (mysqli_query($conn, $sql)) {
-					header("location: sprzetdodany.html");
+					echo "<h4>Sprzęt dodany</h4>";
 				
 				} else {
 					echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
@@ -143,6 +143,11 @@
 		?>
 
 	</div>
+	<script type="text/javascript">
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
 </body>
 
 </html>

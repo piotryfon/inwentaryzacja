@@ -60,13 +60,18 @@
                 $query_update = "UPDATE tonery_tab SET ilosc = ilosc + $ilosc WHERE kod = '$_POST[kod]'";
                 $result_updete = mysqli_query($conn, $query_update);   
                
-                header("location: dodano_toner.html");
+                echo "<h4>Dodano toner do magazynu.</h4>";
             }
         }   
         mysqli_close($conn);
        
         ?>
     </div>
+    <script type="text/javascript">
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
 </body>
 
 </html>
