@@ -9,12 +9,11 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Tonery</title>
+    <title>Wydaj toner</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <style>
 
     </style>
-    
 </head>
 
 <body>
@@ -58,7 +57,7 @@
                     echo "<option>$row[NI]</option>";
                 }
             ?>
-            </select><label><-wybierz z listy</label><br><br>
+            </select><label><-wybierz z listy lub wpisz nazwę drukarki</label><br><br>
             <div>
                 <label for="data">data</label>
             </div>
@@ -67,15 +66,16 @@
             <input type="submit" class="btn btn-success" value="wydaj toner" name="wydaj_toner" />
         </form>
         <?php
-       
-      
+    
         if(isset($_POST['wydaj_toner'])){
 
             $query_is_value = "SELECT id FROM tonery_tab WHERE kod = '$_POST[kod]'";
             $result_is_value = mysqli_query($conn, $query_is_value);
 
             if(mysqli_num_rows($result_is_value)===0){
-                echo "<br><h4>Kod nieprawidłowy</h4>";
+                echo '<script type="text/javascript">
+                    alert("Kod nieprawidłowy.")
+                    </script>';
             } 
             else {
 
@@ -85,18 +85,23 @@
                 
                 $NI_drukarki = mysqli_real_escape_string($conn, $_REQUEST['NI_drukarki']);
                 if($NI_drukarki===""){
-                    echo "<br><h4>Nie wybrałeś drukarki</h4>";
+                    echo '<script type="text/javascript">
+                        alert("Nie wybrałeś drukarki.")
+                        </script>';
                 } else {
                     if($row['ilosc'] < 1) {
-                        echo "<br><h5>Toner nie może być wydany, brak w magazynie!</h5>";
+                        echo '<script type="text/javascript">
+                            alert("Toner nie może być wydany - brak w magazynie.")
+                            </script>';
                     } else {
                         $query_odejmij = "UPDATE tonery_tab SET ilosc = ilosc-1 WHERE kod = '$_POST[kod]'";
                         $result_odejmij = mysqli_query($conn, $query_odejmij);  
                         $query_dodaj_do_wydanych = "INSERT INTO wydane_tonery (kod, NI_drukarki, data_wydania) 
                         VALUES ('$_POST[kod]', '$_POST[NI_drukarki]', '$_POST[data]')"; 
                         $result_wydane = mysqli_query($conn, $query_dodaj_do_wydanych);
-                   
-                        echo "<br><h4>Wydano toner.</h4>";
+                            echo '<script type="text/javascript">
+                                alert("Toner wydano.")
+                                </script>';
                     }  
                 }
             }

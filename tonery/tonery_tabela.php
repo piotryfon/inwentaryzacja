@@ -10,7 +10,7 @@ $result = mysqli_query($conn, $query);
 
 <head>
 	<meta charset="utf-8">
-	<title>edytuj status sprzętu</title>
+	<title>Tonery tabela</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<style>
      
@@ -47,7 +47,7 @@ $result = mysqli_query($conn, $query);
         <header>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="/inwentaryzacja/index.php">str. gł</a>
+                    <a class="nav-link active" href="/inwentaryzacja/index.php">str. gł</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="tonery_tabela.php">tonery tabela</a>

@@ -37,7 +37,7 @@
             </ul>
         </header>
 
-        <h3>Witamy na w aplikacji inwentaryzacyjnej Helpdesk</h3>
+        <h3>Aplikacja inwentaryzacyjna.</h3>
         <hr>
         <h5>Tu możesz edytować dane:</h5>
         <ul>
@@ -48,7 +48,7 @@
                 <li>edytuj sprzęt</li>
             </a>
             <a href="edytuj_status.php">
-                <li>edytuj status sprzętu i przypisz sprzętu do pracownika</li>
+                <li>edytuj status sprzętu i przypisz do pracownika</li>
             </a>
         </ul>
         <h5>lub skorzystaj z aplikacji inwentaryzującej tonery</h5>

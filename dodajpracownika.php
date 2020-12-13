@@ -74,7 +74,7 @@
 			$departament = mysqli_real_escape_string($conn, $_REQUEST['departament']);
 			$pokoj = mysqli_real_escape_string($conn, $_REQUEST['pokoj']);
 
-			if ($login_pracownika == "" or $imie == "") {
+			if ($login_pracownika == "") {
 
 				echo '<p>Zostawiłeś puste pole</p>';
 			} else {
