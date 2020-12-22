@@ -66,7 +66,7 @@
         <?php
             require("connection_tonery.php");
 
-            $query = "SELECT * FROM wydane_tonery";
+            $query = "SELECT * FROM wydane_tonery ORDER BY data_wydania DESC LIMIT 50";
             $result = mysqli_query($conn, $query);
             $count_query = "SELECT NI_drukarki, COUNT(*) FROM wydane_tonery
                 GROUP BY NI_drukarki ORDER BY COUNT(*) DESC";

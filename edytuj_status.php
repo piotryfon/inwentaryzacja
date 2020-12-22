@@ -116,6 +116,8 @@
 								<select id="status" name="status" class="bg-success text-white">
 									<option><?php echo $row['status_sprz'] ?></option>
 									<option>magazyn</option>
+									<option>w przygotowaniu</option>
+									<option>do wydania</option>
 									<option>wydany</option>
 									<option>pożyczony</option>
 									<option>prezentacja</option>
@@ -130,6 +132,10 @@
 									<label>nowy login</label>
 								</div>
 								<input type="text" id="nowy_login" name="nowy_login" value="<?php echo $row['login_pracownika'] ?>" class="bg-success text-white" /><br><br>
+								<div>
+									<label>opis</label>
+								</div>
+								<textarea rows="4" cols="30" name="opis"><?php echo $row['opis'] ?></textarea>
 								<div>
 									<label>data</label>
 								</div>
@@ -156,10 +162,11 @@
 				$status = mysqli_real_escape_string($conn, $_REQUEST['status']);
 				$login_stary = mysqli_real_escape_string($conn, $_REQUEST['login_pracownika']);
 				$login_nowy = mysqli_real_escape_string($conn, $_REQUEST['nowy_login']);
+				$opis = mysqli_real_escape_string($conn, $_REQUEST['opis']);
 				$data = mysqli_real_escape_string($conn, $_REQUEST['aktu_data']);
-
-				$query_historia = "INSERT INTO sprzet_historia (NI, rodzaj, status_sprz, login_stary, login_nowy, data_zmiany) 
-				VALUES ('$ni', '$rodzaj', '$status', '$login_stary', '$login_nowy', '$data')";
+				
+				$query_historia = "INSERT INTO sprzet_historia (NI, rodzaj, status_sprz, login_stary, login_nowy, opis, data_zmiany) 
+				VALUES ('$ni', '$rodzaj', '$status', '$login_stary', '$login_nowy', '$opis', '$data')";
 				if ($query_historia) {
 					mysqli_query($conn, $query_historia);
 				}
@@ -169,7 +176,7 @@
 				$row_login_sprzet = mysqli_fetch_array($result_login_sprzet);
 				$row_na_int = (int)$row_login_sprzet['id_pracownika'];
 
-				$query_update = "UPDATE sprzet SET id_pracownika = $row_na_int, status_sprz = '$_POST[status]' WHERE id_sprzetu ='" . $_POST['id_sprzetu'] . "'";
+				$query_update = "UPDATE sprzet SET id_pracownika = $row_na_int, status_sprz = '$_POST[status]', opis = '$_POST[opis]' WHERE id_sprzetu ='" . $_POST['id_sprzetu'] . "'";
 
 				if ($query_update) {
 					mysqli_query($conn, $query_update);
@@ -192,6 +199,10 @@
 					$("#nowy_login:text").val("magazyn");
 				} else if($("#status").val() === "prezentacja"){
 					$("#nowy_login:text").val("prezentacja");
+				} else if($("#status").val() === "w przygotowaniu"){
+					$("#nowy_login:text").val("magazyn");
+				} else if($("#status").val() === "do wydania"){
+					$("#nowy_login:text").val("magazyn");
 				} else {
 					$("#nowy_login:text").val("wpisz nowy login");
 					alert("Uzupełnij nowy login.")

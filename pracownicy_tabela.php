@@ -73,6 +73,8 @@ $result = mysqli_query($conn, $query);
             <tr>
                 <th>id pracownika</th>
                 <th>login</th>
+                <th>imię</th>
+                <th>nazwisko</th>
                 <th>departament</th>
                 <th>pokój</th>
             </tr>
@@ -81,6 +83,8 @@ $result = mysqli_query($conn, $query);
                 echo "<tr>";
                 echo "<td>$row[id_pracownika]</td>";
                 echo "<td>$row[login_pracownika]</td>";
+                echo "<td>$row[imie]</td>";
+                echo "<td>$row[nazwisko]</td>";
                 echo "<td>$row[departament]</td>";
                 echo "<td>$row[pokoj]</td>";
                 echo "</tr>";

@@ -72,23 +72,31 @@ $result = mysqli_query($conn, $query);
                 <h4>Sprzęt</h4>
                 <table>
                     <tr>
+                        <th>id sprzętu</th>
                         <th>rodzaj</th>
                         <th>pin</th>
                         <th>model</th>
                         <th>status</th>
                         <th>NI</th>
                         <th>SN</th>
+                        <th>procesor</th>
+                        <th>RAM</th>
+                        <th>dysk</th>
                         <th>opis</th>
                     </tr>
                     <?php
                     while ($row = mysqli_fetch_array($result)) {
                         echo "<tr>";
+                        echo "<td>$row[id_sprzetu]</td>";
                         echo "<td>$row[rodzaj]</td>";
                         echo "<td>$row[pin]</td>";
                         echo "<td>$row[model]</td>";
                         echo "<td>$row[status_sprz]</td>";
                         echo "<td>$row[NI]</td>";
                         echo "<td>$row[SN]</td>";
+                        echo "<td>$row[procesor]</td>";
+                        echo "<td>$row[ram]</td>";
+                        echo "<td>$row[dysk]</td>";
                         echo "<td>$row[opis]</td>";
                         echo "</tr>";
                     }

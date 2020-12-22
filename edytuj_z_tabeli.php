@@ -67,6 +67,8 @@
             <select id="status" name="status_sprz" class="bg-success text-white">
 									<option><?php echo $_POST['status_sprz'] ?></option>
 									<option>magazyn</option>
+                  <option>w przygotowaniu</option>
+									<option>do wydania</option>
 									<option>wydany</option>
 									<option>pożyczony</option>
 									<option>prezentacja</option>
@@ -134,6 +136,10 @@
 					$("#nowy_login:text").val("magazyn");
 				} else if($("#status").val() === "prezentacja"){
 					$("#nowy_login:text").val("prezentacja");
+				} else if($("#status").val() === "w przygotowaniu"){
+					$("#nowy_login:text").val("magazyn");
+				} else if($("#status").val() === "do wydania"){
+					$("#nowy_login:text").val("magazyn");
 				} else {
 					$("#nowy_login:text").val("wpisz nowy login");
 					alert("Uzupełnij nowy login.")
