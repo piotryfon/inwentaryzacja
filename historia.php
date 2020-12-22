@@ -1,6 +1,6 @@
 <?php
 require("connection.php");
-$query = "SELECT * FROM sprzet";
+$query = "SELECT * FROM sprzet_historia ORDER BY data_zmiany DESC";
 $result = mysqli_query($conn, $query);
 ?>
 
@@ -9,7 +9,7 @@ $result = mysqli_query($conn, $query);
 
 <head>
     <meta charset="utf-8">
-    <title>sprzęt - tabela</title>
+    <title>sprzęt - historia</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <style>
         table {
@@ -37,11 +37,15 @@ $result = mysqli_query($conn, $query);
             color: white;
         }
     </style>
+
 </head>
+
 <body>
-    <div class="container-fluid">
+
+    <div class="container">
         <header>
             <ul class="nav justify-content-center">
+
                 <li class="nav-item">
                     <a class="nav-link active" href="index.php">str. gł</a>
                 </li>
@@ -65,48 +69,32 @@ $result = mysqli_query($conn, $query);
                 </li>
             </ul>
         </header>
-        <div class="row">
-            <div class="col-lg-12">
-                <h4>Sprzęt</h4>
-                <table>
-                    <tr>
-                        <th>id sprzętu</th>
-                        <th>rodzaj</th>
-                        <th>pin</th>
-                        <th>model</th>
-                        <th>status</th>
-                        <th>NI</th>
-                        <th>SN</th>
-                        <th>procesor</th>
-                        <th>RAM</th>
-                        <th>dysk</th>
-                        <th>opis</th>
-                    </tr>
-                    <?php
-                    while ($row = mysqli_fetch_array($result)) {
-                        echo "<tr>";
-                        echo "<td>$row[id_sprzetu]</td>";
-                        echo "<td>$row[rodzaj]</td>";
-                        echo "<td>$row[pin]</td>";
-                        echo "<td>$row[model]</td>";
-                        echo "<td>$row[status_sprz]</td>";
-                        echo "<td>$row[NI]</td>";
-                        echo "<td>$row[SN]</td>";
-                        echo "<td>$row[procesor]</td>";
-                        echo "<td>$row[ram]</td>";
-                        echo "<td>$row[dysk]</td>";
-                        echo "<td>$row[opis]</td>";
-                        echo "</tr>";
-                    }
-
-                    ?>
-                </table>
-            </div>
-        </div>
+        <h4>Sprzęt - historia zmian</h4>
+            <table>
+                <tr>
+                    <th>NI</th>
+                    <th>rodzaj</th>
+                    <th>status</th>
+                    <th>stary login</th>
+                    <th>nowy login</th>
+                    <th>data zmiany</th>
+                </tr>
+                <?php
+                while ($row = mysqli_fetch_array($result)) {
+                    echo "<tr>";
+                    echo "<td>$row[NI]</td>";
+                    echo "<td>$row[rodzaj]</td>";
+                    echo "<td>$row[status_sprz]</td>";  
+                    echo "<td>$row[login_stary]</td>";
+                    echo "<td>$row[login_nowy]</td>";
+                    echo "<td>$row[data_zmiany]</td>";
+                    echo "</tr>";
+                }
+                ?>
+            </table>
     </div>
+    <?php
+        mysqli_close($conn);
+    ?>
 </body>
-
 </html>
-<?php
-mysqli_close($conn);
-?>

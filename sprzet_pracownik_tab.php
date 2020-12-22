@@ -70,7 +70,9 @@ $result3 = mysqli_query($conn, $query3);
                 <li class="nav-item">
                     <a class="nav-link active" href="sprzet_pracownik_tab.php">pracownicy/sprzęt - tabela</a>
                 </li>
-
+                <li class="nav-item">
+                    <a class="nav-link active" href="historia.php">historia zmian</a>
+                </li>
             </ul>
         </header>
         <div class="row">
