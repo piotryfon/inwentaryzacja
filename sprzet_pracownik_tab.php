@@ -1,16 +1,8 @@
 <?php
-
 require("connection.php");
-
-$query3 = "SELECT * FROM sprzet LEFT JOIN pracownicy 
-            ON sprzet.id_pracownika = pracownicy.id_pracownika";
-
-$result3 = mysqli_query($conn, $query3);
-
 ?>
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <title>sprzęt-pracownik</title>
@@ -39,17 +31,15 @@ $result3 = mysqli_query($conn, $query3);
         th {
             background-color: #33A5FF;
             color: white;
+            text-align: center;
         }
         input {
             max-width: 165px;
         }
     </style>
-
 </head>
-
 <body>
-
-    <div class="container-fluid">
+    <div class="container">
         <header>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
@@ -75,46 +65,67 @@ $result3 = mysqli_query($conn, $query3);
                 </li>
             </ul>
         </header>
-        <div class="row">
-            <div class="col-lg-10">
-                <h4>Sprzęt - pracownik</h4>
-                <table>
-                    <tr>
-                        <th>id sprzętu</th>
-                        <th>rodzaj</th>
-                        <th>model</th>
-                        <th>N/I</th>
-                        <th>S/N</th>
-                        <th>login</th>
-                        <th>status</th>
-                        <th>zmiana</th>
-                    </tr>
-                    <?php
-                    while ($row = mysqli_fetch_array($result3)) {
-                        echo "<tr>";
-                        echo '<form method="post" action="edytuj_z_tabeli.php">';
-                        echo "<td><input style='width: 50px' readonly name='id_sprzetu' value='$row[id_sprzetu]'></td>";
-                        echo "<td><input readonly name='rodzaj' value='$row[rodzaj]'></td>";
-                        echo "<td><input readonly name='model' value='$row[model]'></td>";
-                        echo "<td><input readonly name='ni' value='$row[NI]'></td>";
-                        echo "<td><input readonly name='sn' value='$row[SN]'></td>";
-                        echo "<td><input readonly name='login_pracownika' value='$row[login_pracownika]'></td>";
-                        echo "<td><input readonly name='status_sprz' value='$row[status_sprz]'></td>";
-                        echo "<td><input type='submit' name='go' value='zmień'></td>";
-                        echo '</form>';
-                        echo "</tr>";
-                    }
-                    ?>
-                </table>
-            </div>
-        </div>
+        <br>
+        <h4>Wyszukaj pracownika lub sprzęt</h4>
+		<form method="POST">
+			<div>
+				<label for="opcja">Wybierz parametr:</label><br>
+				<select name="opcja" id="opcja">
+					<option value="login_pracownika">login pracownika</option>
+                    <option value="NI">N/I sprzętu</option>
+				</select>
+			</div><br>
+			<div>
+				<input type="text" name="wartosc" placeholder="Wpisz wartość">
+			</div><br>
+			<input class="btn btn-primary" type="submit" name="search" value="przeszukaj dane">
+		</form>
+		<hr>
+		<br>
+        
+		<?php
+		if (isset($_POST['search'])) {
+			$opcjonalna_wartosc = $_POST['opcja'];
+			$wartosc_input = $_POST['wartosc'];
+			$query = "SELECT * FROM sprzet LEFT
+							JOIN pracownicy 
+            				ON sprzet.id_pracownika = pracownicy.id_pracownika
+							WHERE $opcjonalna_wartosc LIKE '%$wartosc_input%'";
+
+			$result = mysqli_query($conn, $query);
+			if (!$result) {
+				echo "Nieprwidłowe zapytanie";
+			}
+        ?>
+        <table>
+            <tr>
+                <th>id sprzętu</th>
+                <th>rodzaj</th>
+                <th>model</th>
+                <th>N/I</th>
+                <th>S/N</th>
+                <th>login</th>
+                <th>status</th>
+            </tr>
+        <?php
+			while ($row = mysqli_fetch_array($result)) {
+                echo "<tr>";
+                echo "<td>$row[id_sprzetu]</td>";
+                echo "<td>$row[rodzaj]</td>";
+                echo "<td>$row[model]</td>";
+                echo "<td>$row[NI]</td>";
+                echo "<td>$row[SN]</td>";
+                echo "<td>$row[login_pracownika]</td>";
+                echo "<td>$row[status_sprz]</td>";
+                echo "</tr>";
+            }
+        }
+		?>
+        </table>
     </div>
-
 </body>
-
-</html>
-
-
 <?php
 mysqli_close($conn);
 ?>
+</html>
+

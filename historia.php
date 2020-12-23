@@ -1,12 +1,8 @@
 <?php
-require("connection.php");
-$query = "SELECT * FROM sprzet_historia ORDER BY data_zmiany DESC";
-$result = mysqli_query($conn, $query);
+ require("connection.php");
 ?>
-
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <title>sprzęt - historia</title>
@@ -37,11 +33,8 @@ $result = mysqli_query($conn, $query);
             color: white;
         }
     </style>
-
 </head>
-
 <body>
-
     <div class="container">
         <header>
             <ul class="nav justify-content-center">
@@ -68,8 +61,29 @@ $result = mysqli_query($conn, $query);
                     <a class="nav-link active" href="historia.php">historia zmian</a>
                 </li>
             </ul>
-        </header>
+        </header><br>
         <h4>Sprzęt - historia zmian</h4>
+        <form method="POST">
+            <label for="zakres">zakres</label>
+            <select name="zakres">
+                <option>100</option>
+                <option>200</option>
+                <option>500</option>
+                <option>1000</option>
+                <option>5000</option>
+            </select>
+            <label for="sposob">sposób</label>
+            <select name="sposob">
+                <option>DESC</option>
+                <option>ASC</option>
+            </select>
+            <input type="submit" name="show" value="pokaż">
+        </form>
+        <?php
+        if (isset($_POST['show'])) {
+            $query = "SELECT * FROM sprzet_historia ORDER BY data_zmiany $_POST[sposob] LIMIT $_POST[zakres]";
+            $result = mysqli_query($conn, $query);
+        ?>
             <table>
                 <tr>
                     <th>NI</th>
@@ -89,9 +103,12 @@ $result = mysqli_query($conn, $query);
                     echo "<td>$row[login_nowy]</td>";
                     echo "<td>$row[data_zmiany]</td>";
                     echo "</tr>";
-                }
+                }    
                 ?>
             </table>
+        <?php
+        }
+        ?>
     </div>
     <?php
         mysqli_close($conn);
