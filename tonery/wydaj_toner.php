@@ -42,7 +42,7 @@
         </header>
         <hr>
         <h4>Wydaj toner</h4><br>
-        <form method="POST" action="wydaj_toner.php">
+        <form method="POST">
             <div>
                 <label for="kod">kod</label>
             </div>
@@ -73,9 +73,9 @@
             $result_is_value = mysqli_query($conn, $query_is_value);
 
             if(mysqli_num_rows($result_is_value)===0){
-                echo '<script type="text/javascript">
-                    alert("Kod nieprawidłowy.")
-                    </script>';
+                echo '
+                <h5 style="color: red">Nieprawidłowy kod!</h5>
+                ';
             } 
             else {
 
@@ -85,23 +85,23 @@
                 
                 $NI_drukarki = mysqli_real_escape_string($conn, $_REQUEST['NI_drukarki']);
                 if($NI_drukarki===""){
-                    echo '<script type="text/javascript">
-                        alert("Nie wybrałeś drukarki.")
-                        </script>';
+                    echo '
+                    <h5 style="color: red">Nie wybrałeś drukarki!</h5>
+                    ';
                 } else {
                     if($row['ilosc'] < 1) {
-                        echo '<script type="text/javascript">
-                            alert("Toner nie może być wydany - brak w magazynie.")
-                            </script>';
+                        echo '
+                            <h5 style="color: red">Toner nie może być wydany - brak w magazynie!</h5>
+                            ';
                     } else {
                         $query_odejmij = "UPDATE tonery_tab SET ilosc = ilosc-1 WHERE kod = '$_POST[kod]'";
                         $result_odejmij = mysqli_query($conn, $query_odejmij);  
                         $query_dodaj_do_wydanych = "INSERT INTO wydane_tonery (kod, NI_drukarki, data_wydania) 
                         VALUES ('$_POST[kod]', '$_POST[NI_drukarki]', '$_POST[data]')"; 
                         $result_wydane = mysqli_query($conn, $query_dodaj_do_wydanych);
-                            echo '<script type="text/javascript">
-                                alert("Toner wydano.")
-                                </script>';
+                        echo '<script type="text/javascript">
+                        alert("Wydano toner.");
+                        </script>';
                     }  
                 }
             }

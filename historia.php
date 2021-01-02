@@ -83,30 +83,34 @@
         if (isset($_POST['show'])) {
             $query = "SELECT * FROM sprzet_historia ORDER BY data_zmiany $_POST[sposob] LIMIT $_POST[zakres]";
             $result = mysqli_query($conn, $query);
-        ?>
-            <table>
-                <tr>
-                    <th>NI</th>
-                    <th>rodzaj</th>
-                    <th>status</th>
-                    <th>stary login</th>
-                    <th>nowy login</th>
-                    <th>data zmiany</th>
-                </tr>
-                <?php
-                while ($row = mysqli_fetch_array($result)) {
-                    echo "<tr>";
-                    echo "<td>$row[NI]</td>";
-                    echo "<td>$row[rodzaj]</td>";
-                    echo "<td>$row[status_sprz]</td>";  
-                    echo "<td>$row[login_stary]</td>";
-                    echo "<td>$row[login_nowy]</td>";
-                    echo "<td>$row[data_zmiany]</td>";
-                    echo "</tr>";
-                }    
-                ?>
-            </table>
-        <?php
+            if(mysqli_num_rows($result)===0){
+                echo'<h4>Tabela jest pusta.</h4>';
+            } else {    
+            ?>
+                <table>
+                    <tr>
+                        <th>NI</th>
+                        <th>rodzaj</th>
+                        <th>status</th>
+                        <th>stary login</th>
+                        <th>nowy login</th>
+                        <th>data zmiany</th>
+                    </tr>
+                    <?php
+                        while ($row = mysqli_fetch_array($result)) {
+                            echo "<tr>";
+                            echo "<td>$row[NI]</td>";
+                            echo "<td>$row[rodzaj]</td>";
+                            echo "<td>$row[status_sprz]</td>";  
+                            echo "<td>$row[login_stary]</td>";
+                            echo "<td>$row[login_nowy]</td>";
+                            echo "<td>$row[data_zmiany]</td>";
+                            echo "</tr>";
+                        }    
+                    ?>
+                </table>
+            <?php
+            }
         }
         ?>
     </div>

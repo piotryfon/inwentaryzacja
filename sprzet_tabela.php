@@ -1,6 +1,8 @@
 <?php
 require("connection.php");
-$query = "SELECT * FROM sprzet";
+$query = "SELECT * FROM sprzet LEFT
+JOIN pracownicy 
+ON sprzet.id_pracownika = pracownicy.id_pracownika";
 $result = mysqli_query($conn, $query);
 ?>
 
@@ -75,6 +77,7 @@ $result = mysqli_query($conn, $query);
                         <th>pin</th>
                         <th>model</th>
                         <th>status</th>
+                        <th>login</th>
                         <th>NI</th>
                         <th>SN</th>
                         <th>procesor</th>
@@ -90,6 +93,7 @@ $result = mysqli_query($conn, $query);
                         echo "<td>$row[pin]</td>";
                         echo "<td>$row[model]</td>";
                         echo "<td>$row[status_sprz]</td>";
+                        echo "<td>$row[login_pracownika]</td>";
                         echo "<td>$row[NI]</td>";
                         echo "<td>$row[SN]</td>";
                         echo "<td>$row[procesor]</td>";

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Dodaj toner</title>
+    <title>Usuń toner</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <style>
 
@@ -35,20 +35,16 @@
             </ul>
         </header>
         <hr>
-        <h4>Dodaj toner</h4><br>
-        <form method="POST" action="dodaj_toner.php">
+        <h4>Usuń toner</h4><br>
+        <form method="POST">
             <label>kod</label>
             <input type="text" name="kod">
-            <label>ilość:</label>
-            <input type="number" name="ilosc" value="1" min="1" max="50" style="width: 60px"/>
-            <input type="submit" class="btn btn-success" value="dodaj" name="dodaj"/>
+            <input type="submit" class="btn btn-danger" value="usuń toner" name="usun"/>
         </form>
         <?php
         require("connection_tonery.php");
       
-        if(isset($_POST['dodaj'])){
-
-            $ilosc = mysqli_real_escape_string($conn, $_REQUEST['ilosc']);
+        if(isset($_POST['usun'])){
 
             $query_is_value = "SELECT id FROM tonery_tab WHERE kod = '$_POST[kod]'";
             $result_is_value = mysqli_query($conn, $query_is_value);
@@ -57,10 +53,20 @@
                 echo '<h5 style="color: red">Nieprawidłowy kod!</h5>';
             } 
             else {
-                $query_update = "UPDATE tonery_tab SET ilosc = ilosc + $ilosc WHERE kod = '$_POST[kod]'";
-                $result_updete = mysqli_query($conn, $query_update);   
-               
-               header("location: dodano_toner.html");
+                $query_ilosc = "SELECT ilosc from tonery_tab WHERE kod = '$_POST[kod]'";
+                $result_ilosc = mysqli_query($conn, $query_ilosc);
+                $row = mysqli_fetch_array($result_ilosc);
+                if($row['ilosc'] < 1) {
+                    echo '
+                        <h5 style="color: red">Toner nie może być usunięty - brak w magazynie!</h5>
+                        ';
+                } else {
+                    $query_update = "UPDATE tonery_tab SET ilosc = ilosc - 1 WHERE kod = '$_POST[kod]'";
+                    $result_updete = mysqli_query($conn, $query_update);   
+                    echo '<script type="text/javascript">
+                    alert("Usunięto toner.");
+                    </script>';
+                }
             }
         }   
         mysqli_close($conn);

@@ -35,7 +35,8 @@
 			</ul>
 		</header>
 		<h3>Dodaj sprzęt</h3>
-
+		<p>Sprzęt aytomatycznie doda się jako użytkownik "magazyn".<br>
+		 Jeżeli jest z nowej dostawy, dla ułatwienia wyszukiwania zaznacz status "nowy".</p>
 		<form method="post">
 			<div class="row">
 				<div class="col-md-4">
@@ -46,8 +47,11 @@
 							<option>laptop</option>
 							<option>komputer stacjonarny</option>
 							<option>monitor</option>
-							<option>drukarka</option>
 							<option>kamera</option>
+							<option>słuchawki z mikrofonem</option>
+							<option>projektor</option>
+							<option>drukarka</option>
+							<option>inne</option>
 						</select>
 					</p>
 					<p>
@@ -59,7 +63,7 @@
 						<input type="text" name="ni" id="ni">
 					</p>
 					<p>
-						<label for="sn">S/N</label><br>
+						<label for="sn">* S/N (wymagane)</label><br>
 						<input type="text" name="sn" id="sn">
 					</p>
 				</div>
@@ -97,7 +101,10 @@
 					<p>
 						<label for="status">status</label><br>
 						<select id="status" name="status">
+							<option>nowy</option>
 							<option>magazyn</option>
+							<option>w przygotowaniu</option>
+							<option>do wydania</option>
 							<option>wydany</option>
 							<option>pożyczony</option>
 							<option>prezentacja</option>
@@ -129,8 +136,7 @@
 
 
 			if ($sn == "") {
-
-				echo '<p>Zostawiłeś pusta pole</p>';
+				echo '<p>Zostawiłeś puste pole.</p>';
 			} else {
 				$sql = "INSERT INTO sprzet (rodzaj, pin, model, SN, NI, procesor, ram, dysk, status_sprz, opis) 
 				VALUES ('$rodzaj', '$pin', '$model','$sn', '$ni', '$procesor', '$ram', '$dysk', '$status','$opis')";

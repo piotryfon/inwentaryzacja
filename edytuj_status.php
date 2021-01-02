@@ -41,7 +41,6 @@
 		<h4>Edycja przypisania użytkownika do sprzętu.</h4>
 		<hr>
 		<p>Tu możesz wyszukać sprzęt następnie przypisać do niego pracownika oraz zmienić status sprzętu.</p>
-
 		<br>
 		<form method="POST">
 			<div>
@@ -56,100 +55,107 @@
 			</div><br>
 			<input class="btn btn-primary" type="submit" name="search" value="przeszukaj dane">
 		</form>
-		<hr>
-		<br>
-
+		<hr><br>
 		<?php
 		require("connection.php");
 
 		if (isset($_POST['search'])) {
-			$opcjonalna_wartosc = $_POST['opcja'];
-			$wartosc_input = $_POST['wartosc'];
-			$query = "SELECT * FROM sprzet LEFT
-							JOIN pracownicy 
-            				ON sprzet.id_pracownika = pracownicy.id_pracownika
-							WHERE $opcjonalna_wartosc LIKE '%$wartosc_input%'";
+			if($_POST['wartosc']===''){
+				echo'Nie wpisałeś żadnej wartości.';
+			} else {
+				$opcjonalna_wartosc = $_POST['opcja'];
+				$wartosc_input = $_POST['wartosc'];
+				$query = "SELECT * FROM sprzet LEFT
+								JOIN pracownicy 
+								ON sprzet.id_pracownika = pracownicy.id_pracownika
+								WHERE $opcjonalna_wartosc LIKE '%$wartosc_input%'";
 
-			$result = mysqli_query($conn, $query);
-			if (!$result) {
-				echo "Nieprwidłowe zapytanie";
-			}
+				$result = mysqli_query($conn, $query);
 
-			while ($row = mysqli_fetch_array($result)) {
-		?>
-				<form method="POST" action="edytuj_status.php">
-					<div class="row">
-						<div class="col-md-6">
-							<div>
-								<div>
-									<label>ID sprzętu</label>
+				if(mysqli_num_rows($result)===0){
+					echo '<h5 style="color: red">Nie znalezoino rekordów o takiej wartości.</h5>';
+				} else {
+
+					while ($row = mysqli_fetch_array($result)) {
+					?>
+						<form method="POST" action="edytuj_status.php">
+							<div class="row">
+								<div class="col-md-6">
+									<div>
+										<div>
+											<label>ID sprzętu</label>
+										</div>
+										<input type="text" name="id_sprzetu" readonly value="<?php echo $row['id_sprzetu'] ?>" />
+									</div><br>
+									<div>
+										<div>
+											<label>N/I</label>
+										</div>
+										<input type="text" name="ni" readonly value="<?php echo $row['NI'] ?>" />
+									</div><br>
+									<div>
+										<div>
+											<label>S/N</label>
+										</div>
+										<input type="text" name="sn" readonly value="<?php echo $row['SN'] ?>" />
+									</div><br>
+									<div>
+										<div>
+											<label>rodzaj</label>
+										</div>
+										<input type="text" name="rodzaj" readonly value="<?php echo $row['rodzaj'] ?>" />
+									</div><br>
+									<div>
+										<div>
+											<label>pin</label>
+										</div>
+										<input type="text" name="pin" readonly value="<?php echo $row['pin'] ?>" />
+									</div><br>
 								</div>
-								<input type="text" name="id_sprzetu" readonly value="<?php echo $row['id_sprzetu'] ?>" />
-							</div><br>
-							<div>
-								<div>
-									<label>N/I</label>
+								<div class="col-md-6">
+									<div>
+										<div>
+											<label>status</label>
+										</div>
+										<select name="status" class="bg-success text-white status">
+											<option><?php echo $row['status_sprz'] ?></option>
+											<option>magazyn</option>
+											<option>nowy</option>
+											<option>w przygotowaniu</option>
+											<option>do wydania</option>
+											<option>wydany</option>
+											<option>pożyczony</option>
+											<option>prezentacja</option>
+										</select>
+									</div><br>
+									<div>
+										<form method="post">
+											<div>
+												<label>login</label>
+											</div>
+											<input type="text" readonly name="login_pracownika" value="<?php echo $row['login_pracownika'] ?>" /><br><br>
+											<div>
+												<label>wpisz nowy login lub "magazyn" albo "nfz"</label>
+											</div>
+											<input type="text" name="nowy_login" value="" class="bg-success text-white" /><br><br>
+											<div>
+												<label>opis</label>
+											</div>
+											<textarea rows="4" cols="30" name="opis" class="bg-success text-white"><?php echo $row['opis'] ?></textarea>
+											<div>
+												<label>data</label>
+											</div>
+											<input type="text" readonly name="aktu_data" value="<?php echo date("Y-m-d") ?>" />
+											<input class="btn btn-primary" type="submit" name="zatwierdz" value="zatwierdź">
+										</form>
+									</div><br>
 								</div>
-								<input type="text" name="ni" readonly value="<?php echo $row['NI'] ?>" />
-							</div><br>
-							<div>
-								<div>
-									<label>S/N</label>
-								</div>
-								<input type="text" name="sn" readonly value="<?php echo $row['SN'] ?>" />
-							</div><br>
-							<div>
-								<div>
-									<label>rodzaj</label>
-								</div>
-								<input type="text" name="rodzaj" readonly value="<?php echo $row['rodzaj'] ?>" />
-							</div><br>
-							<div>
-								<div>
-									<label>pin</label>
-								</div>
-								<input type="text" name="pin" readonly value="<?php echo $row['pin'] ?>" />
-							</div><br>
-						</div>
-						<div class="col-md-6">
-							<div>
-								<div>
-									<label>status</label>
-								</div>
-								<select id="status" name="status" class="bg-success text-white">
-									<option><?php echo $row['status_sprz'] ?></option>
-									<option>magazyn</option>
-									<option>w przygotowaniu</option>
-									<option>do wydania</option>
-									<option>wydany</option>
-									<option>pożyczony</option>
-									<option>prezentacja</option>
-								</select>
-							</div><br>
-							<div>
-								<div>
-									<label>login</label>
-								</div>
-								<input type="text" readonly name="login_pracownika" value="<?php echo $row['login_pracownika'] ?>" /><br><br>
-								<div>
-									<label>nowy login</label>
-								</div>
-								<input type="text" id="nowy_login" name="nowy_login" value="<?php echo $row['login_pracownika'] ?>" class="bg-success text-white" /><br><br>
-								<div>
-									<label>opis</label>
-								</div>
-								<textarea rows="4" cols="30" name="opis"><?php echo $row['opis'] ?></textarea>
-								<div>
-									<label>data</label>
-								</div>
-								<input type="text" readonly name="aktu_data" value="<?php echo date("Y-m-d") ?>" />
-								<input class="btn btn-primary" type="submit" name="zatwierdz" value="zatwierdź">
-							</div><br>
-						</div>
-					</div>
-				</form>
-				<hr>
-		<?php
+							</div>
+						</form>
+						<hr>
+					<?php
+					}
+				}
 			}
 		}
 		if (isset($_POST['zatwierdz'])) {
@@ -157,7 +163,7 @@
 			$result = mysqli_query($conn, $query_login);
 
 			if (mysqli_num_rows($result) === 0) {
-				echo '<h3>Nie ma takiego pracownika!</h3>';
+				 echo '<h5 style="color: red">Nie ma takiego pracownika lub nieprawidłowa wartość!</h5>';
 			} else {
 
 				$ni = mysqli_real_escape_string($conn, $_REQUEST['ni']);
@@ -168,8 +174,8 @@
 				$opis = mysqli_real_escape_string($conn, $_REQUEST['opis']);
 				$data = mysqli_real_escape_string($conn, $_REQUEST['aktu_data']);
 				
-				$query_historia = "INSERT INTO sprzet_historia (NI, rodzaj, status_sprz, login_stary, login_nowy, opis, data_zmiany) 
-				VALUES ('$ni', '$rodzaj', '$status', '$login_stary', '$login_nowy', '$opis', '$data')";
+				$query_historia = "INSERT INTO sprzet_historia (NI, rodzaj, status_sprz, login_stary, login_nowy, data_zmiany) 
+				VALUES ('$ni', '$rodzaj', '$status', '$login_stary', '$login_nowy', '$data')";
 				if ($query_historia) {
 					mysqli_query($conn, $query_historia);
 				}
@@ -183,7 +189,7 @@
 
 				if ($query_update) {
 					mysqli_query($conn, $query_update);
-					echo '<h3>Zmiany wprowadzone</h3>';
+					header("location: status_zmieniony.html");
 				}
 			}
 		}
@@ -191,29 +197,7 @@
 	</div>
 	<?php
 	mysqli_close($conn);
-	?>
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("#status").change(function(){
-				if($("#status").val() === "magazyn"){
-					$("#nowy_login:text").val("magazyn");
-				} else if($("#status").val() === "prezentacja"){
-					$("#nowy_login:text").val("prezentacja");
-				} else if($("#status").val() === "w przygotowaniu"){
-					$("#nowy_login:text").val("magazyn");
-				} else if($("#status").val() === "do wydania"){
-					$("#nowy_login:text").val("magazyn");
-				} else {
-					$("#nowy_login:text").val("wpisz nowy login");
-					alert("Uzupełnij nowy login.")
-				}
-			}
-		)});
-     
-    </script>
+	?>     
 </body>
 
 </html>
