@@ -36,12 +36,13 @@
 			</ul>
 		</header>
 		<h3>Dodaj pracownika</h3>
-
+		<p style="color: green">Zanim dodasz pracownika, sprawdź czy taki login istnieje w 
+		<a href="pracownicy_tabela.php">pracownicy-tabela</a>.</p>
 		<form method="post">
 			<div class="row">
 				<div class="col-md-4 offset-4">
 					<p>
-						<label for="login_pracownika">login:</label><br>
+						<label for="login_pracownika">*login:</label><br>
 						<input type="text" name="login_pracownika" id="login_pracownika">
 					</p>
 					<p>
@@ -63,6 +64,7 @@
 						<input type="text" name="pokoj" id="pokoj">
 					</p>
 					<input class="btn btn-primary" type="submit" name="submit" value="submit" />
+					<p style="color: green">* pole wymagane</p>
 				</div>
 			</div>
 		</form>
@@ -78,13 +80,11 @@
 			$pokoj = mysqli_real_escape_string($conn, $_REQUEST['pokoj']);
 
 			if ($login_pracownika == "") {
-
-				echo '<p>Zostawiłeś puste pole</p>';
+				echo '<h5 style="color: red">Zostawiłeś puste pole - login.</h5>';
 			} else {
 				$sql = "INSERT INTO pracownicy (login_pracownika, imie, nazwisko, departament, pokoj) VALUES ('$login_pracownika', '$imie', '$nazwisko','$departament','$pokoj')";
 				if (mysqli_query($conn, $sql)) {
-					echo "<h4>Pracownik dodany.</h4>";
-				
+					header("location: pracownik_dodany.html");
 				} else {
 					echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
 				}

@@ -72,6 +72,7 @@ $result = mysqli_query($conn, $query);
             </ul>
         </header>
         <h3>Pracownicy - tabela</h3>
+        <p style="color: green">Aby wyszukać użyj Ctrl + f</p>
         <table>
             <tr>
                 <th>id pracownika</th>

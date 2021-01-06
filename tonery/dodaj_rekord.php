@@ -37,28 +37,34 @@
         <hr>
         <h4>Dodaj rekord - toner</h4><br>
         <form method="POST" action="dodaj_rekord.php">
-            <div>
-                <label>kod</label>
+            <div class="row">
+                <div class="col-lg-5">
+                    <div>
+                        <label>*kod</label>
+                    </div>
+                    <input type="text" name="kod"><br><br>
+                    <div>
+                        <label>oznaczenie</label>
+                    </div>
+                    <input type="text" name="oznaczenie"><br><br>
+                    <div>
+                        <label>kolor</label>
+                    </div>
+                    <input type="text" name="kolor"><br><br>
+                </div>
+                <div class="col-lg-5">
+                    <div>
+                        <label>firma</label>
+                    </div>
+                    <input type="text" name="firma"><br><br>
+                    <div>
+                        <label>opis</label>
+                    </div>
+                    <textarea rows="3" cols="30" name="opis"></textarea><br><br>
+                    <input type="submit" class="btn btn-success" value="dodaj" name="dodaj" />
+                    <p style="color: green">* pole wymagane</p>
+                </div>
             </div>
-            <input type="text" name="kod"><br><br>
-            <div>
-                <label>oznaczenie</label>
-            </div>
-            <input type="text" name="oznaczenie"><br><br>
-            <div>
-                <label>kolor</label>
-            </div>
-            <input type="text" name="kolor"><br><br>
-            <div>
-                <label>firma</label>
-            </div>
-            <input type="text" name="firma"><br><br>
-            <div>
-                <label>opis</label>
-            </div>
-            <textarea name="opis"></textarea><br><br>
-
-            <input type="submit" class="btn btn-success" value="dodaj" name="dodaj" />
         </form>
         <?php
         require("connection_tonery.php");
@@ -73,7 +79,7 @@
             $sql = "INSERT INTO tonery_tab (kod, oznaczenie, kolor, firma, opis) 
             VALUES ('$kod', '$oznaczenie', '$kolor', '$firma', '$opis')";
             if($kod == "") {
-                echo '<h3>Zostawiłeś puste pole</h3>';
+                echo '<h3 style="color: red">Zostawiłeś puste pole!</h3>';
             } else {
                 if (mysqli_query($conn, $sql)) {
                     echo '<script type="text/javascript">

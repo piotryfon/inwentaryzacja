@@ -96,7 +96,7 @@
                     <tr>
                         <th>kod</th>
                         <th>N/I drukarki</th>
-                        <th>data wydania tonera</th>
+                        <th>data wydania części</th>
                     </tr>
                 <?php
                     while($row = mysqli_fetch_array($result)) {

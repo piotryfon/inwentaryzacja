@@ -100,7 +100,7 @@
                         VALUES ('$_POST[kod]', '$_POST[NI_drukarki]', '$_POST[data]')"; 
                         $result_wydane = mysqli_query($conn, $query_dodaj_do_wydanych);
                         echo '<script type="text/javascript">
-                        alert("Wydano toner.");
+                        alert("Wydano toner / część.");
                         </script>';
                     }  
                 }

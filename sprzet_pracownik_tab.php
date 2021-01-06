@@ -5,7 +5,7 @@ require("connection.php");
 <html>
 <head>
     <meta charset="utf-8">
-    <title>sprzęt-pracownik</title>
+    <title>Sprzęt/pracownik</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <style>
         table {
@@ -71,8 +71,10 @@ require("connection.php");
 			<div>
 				<label for="opcja">Wybierz parametr:</label><br>
 				<select name="opcja" id="opcja">
+                    <option value="wszystko">wszystko</option>
 					<option value="login_pracownika">login pracownika</option>
                     <option value="NI">N/I sprzętu</option>
+                    <option value="SN">S/N sprzętu</option>
 				</select>
 			</div><br>
 			<div>
@@ -84,18 +86,24 @@ require("connection.php");
 		<br>
         
 		<?php
-		if (isset($_POST['search'])) {
+	if (isset($_POST['search'])) {
+            if($_POST['wartosc']===''){
+                echo '<h5 style="color: red">Wpisz wartość!</h5>';
+            } else {
 			$opcjonalna_wartosc = $_POST['opcja'];
 			$wartosc_input = $_POST['wartosc'];
-			$query = "SELECT * FROM sprzet LEFT
-							JOIN pracownicy 
-            				ON sprzet.id_pracownika = pracownicy.id_pracownika
-							WHERE $opcjonalna_wartosc LIKE '%$wartosc_input%'";
-
-			$result = mysqli_query($conn, $query);
-			if (!$result) {
-				echo "Nieprwidłowe zapytanie";
-			}
+			$query = "SELECT * FROM sprzet LEFT JOIN pracownicy ON sprzet.id_pracownika = pracownicy.id_pracownika
+                    WHERE $opcjonalna_wartosc LIKE '%$wartosc_input%'";
+            if($opcjonalna_wartosc === "wszystko") {
+                $query = "SELECT * FROM sprzet LEFT JOIN pracownicy ON sprzet.id_pracownika = pracownicy.id_pracownika
+                    WHERE (login_pracownika LIKE '%$wartosc_input%') or (NI LIKE '%$wartosc_input%') or
+                    (SN LIKE '%$wartosc_input%')";
+            }
+           
+        $result = mysqli_query($conn, $query);
+        if(mysqli_num_rows($result)===0){
+            echo '<h5 style="color: red">Brak danych!</h5>';
+        }else {
         ?>
         <table>
             <tr>
@@ -119,13 +127,15 @@ require("connection.php");
                 echo "<td>$row[status_sprz]</td>";
                 echo "</tr>";
             }
-        }
 		?>
         </table>
+        <?php
+            }
+        }
+    }
+        mysqli_close($conn);
+        ?>
     </div>
 </body>
-<?php
-mysqli_close($conn);
-?>
 </html>
 

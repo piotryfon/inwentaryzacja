@@ -77,43 +77,51 @@
             while ($row = mysqli_fetch_array($result)) {
         ?>
                 <form method="post" action="edytuj_pracownika.php">
-                    <div>
+                <div class="row">
+                    <div class="col-lg-4">
                         <div>
-                            <label>ID pracownika<label>
-                        </div>
-                        <input type="number" name="id" readonly value="<?php echo $row['id_pracownika'] ?>" />
-                    </div><br>
-                    <div>
+                            <div>
+                                <label>ID pracownika<label>
+                            </div>
+                            <input type="number" name="id" readonly value="<?php echo $row['id_pracownika'] ?>" />
+                        </div><br>
+                    </div>
+                    <div class="col-lg-4">
                         <div>
-                            <label>login pracownika<label>
-                        </div>
-                        <input type="text" name="login_pracownika" readonly value="<?php echo $row['login_pracownika'] ?>" />
-                    </div><br>
-                    <div>
+                            <div>
+                                <label>login pracownika<label>
+                            </div>
+                            <input type="text" name="login_pracownika" class="bg-success text-white" value="<?php echo $row['login_pracownika'] ?>" />
+                        </div><br>
                         <div>
-                            <label>imię<label>
-                        </div>
-                        <input type="text" name="imie" value="<?php echo $row['imie'] ?>" />
-                    </div><br>
-                    <div>
+                            <div>
+                                <label>imię<label>
+                            </div>
+                            <input type="text" name="imie"class="bg-success text-white" value="<?php echo $row['imie'] ?>" />
+                        </div><br>
                         <div>
-                            <label>nazwisko<label>
-                        </div>
-                        <input type="text" name="nazwisko" value="<?php echo $row['nazwisko'] ?>" />
-                    </div><br>
-                    <div>
+                            <div>
+                                <label>nazwisko<label>
+                            </div>
+                            <input type="text" name="nazwisko" class="bg-success text-white" value="<?php echo $row['nazwisko'] ?>" />
+                        </div><br>
+                    </div>
+                    <div class="col-lg-4">
                         <div>
-                            <label>departament<label>
-                        </div>
-                        <input type="text" name="departament" value="<?php echo $row['departament'] ?>" />
-                    </div><br>
-                    <div>
+                            <div>
+                                <label>departament<label>
+                            </div>
+                            <input type="text" name="departament" class="bg-success text-white" value="<?php echo $row['departament'] ?>" />
+                        </div><br>
                         <div>
-                            <label>pokój<label>
-                        </div>
-                        <input type="text" name="pokoj" value="<?php echo $row['pokoj'] ?>" />
-                    </div><br>
-                    <input class="btn btn-primary" type="submit" value="zatwierdz" name="zatwierdz">
+                            <div>
+                                <label>pokój<label>
+                            </div>
+                            <input type="text" name="pokoj" class="bg-success text-white" value="<?php echo $row['pokoj'] ?>" />
+                        </div><br>
+                        <input class="btn btn-primary" type="submit" value="zatwierdz" name="zatwierdz">
+                    </div>
+                </div>
                 </form>
                 <hr>
         <?php
@@ -129,7 +137,7 @@
         
                 $result = mysqli_query($conn, $query);
                 if ($result){
-                    echo "<h4>Zmiany wprowadzone</h4>";
+                    header("location: pracownik_edytowany.html");
                 } else {
                      echo "<h4>Błąd zapytania</h4>";
                     }

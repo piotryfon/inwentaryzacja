@@ -35,7 +35,7 @@
 			</ul>
 		</header>
 		<h3>Dodaj sprzęt</h3>
-		<p>Sprzęt aytomatycznie doda się jako użytkownik "magazyn".<br>
+		<p style="color: green">Sprzęt aytomatycznie doda się jako użytkownik "magazyn".<br>
 		 Jeżeli jest z nowej dostawy, dla ułatwienia wyszukiwania zaznacz status "nowy".</p>
 		<form method="post">
 			<div class="row">
@@ -63,7 +63,7 @@
 						<input type="text" name="ni" id="ni">
 					</p>
 					<p>
-						<label for="sn">* S/N (wymagane)</label><br>
+						<label for="sn">*S/N (gdy brak wpisz N/I)</label><br>
 						<input type="text" name="sn" id="sn">
 					</p>
 				</div>
@@ -74,13 +74,7 @@
 					</p>
 					<p>
 						<label for="procesor">procesor</label><br>
-						<select id="procesor" name="procesor">
-							<option>brak</option>
-							<option>i3</option>
-							<option>i5</option>
-							<option>i7</option>
-							<option>i9</option>
-						</select>
+						<input type="text" name="procesor" id="procesor">
 					</p>
 					<p>
 						<label for="ram">RAM</label><br>
@@ -115,6 +109,7 @@
 						<textarea style="width: 250px" name="opis" id="opis"></textarea>
 					</p>
 					<input class="btn btn-primary" type="submit" name="submit" value="submit">
+					<p style="color: green">* pole wymagane</p>
 				</div>
 			</div>
 		</form>
@@ -141,7 +136,7 @@
 				$sql = "INSERT INTO sprzet (rodzaj, pin, model, SN, NI, procesor, ram, dysk, status_sprz, opis) 
 				VALUES ('$rodzaj', '$pin', '$model','$sn', '$ni', '$procesor', '$ram', '$dysk', '$status','$opis')";
 				if (mysqli_query($conn, $sql)) {
-					echo "<h4>Sprzęt dodany</h4>";
+					header("location: sprzet_dodany.html");
 				
 				} else {
 					echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
