@@ -131,7 +131,7 @@
 
 
 			if ($sn == "") {
-				echo '<p>Zostawiłeś puste pole.</p>';
+				echo '<h5 style="color: red">Zostawiłeś puste pole.</h5>';
 			} else {
 				$sql = "INSERT INTO sprzet (rodzaj, pin, model, SN, NI, procesor, ram, dysk, status_sprz, opis) 
 				VALUES ('$rodzaj', '$pin', '$model','$sn', '$ni', '$procesor', '$ram', '$dysk', '$status','$opis')";

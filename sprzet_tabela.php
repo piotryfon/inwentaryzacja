@@ -69,6 +69,7 @@ $result = mysqli_query($conn, $query);
         </header>
         <div class="row">
             <div class="col-lg-12">
+                <p style="color: green">Aby wyszukać użyj Ctrl + f</p>
                 <h4>Sprzęt</h4>
                 <table>
                     <tr>
@@ -102,7 +103,6 @@ $result = mysqli_query($conn, $query);
                         echo "<td>$row[opis]</td>";
                         echo "</tr>";
                     }
-
                     ?>
                 </table>
             </div>

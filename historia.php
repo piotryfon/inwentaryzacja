@@ -89,6 +89,7 @@
             ?>
                 <table>
                     <tr>
+                        <th>SN</th>
                         <th>NI</th>
                         <th>rodzaj</th>
                         <th>status</th>
@@ -99,6 +100,7 @@
                     <?php
                         while ($row = mysqli_fetch_array($result)) {
                             echo "<tr>";
+                            echo "<td>$row[SN]</td>";
                             echo "<td>$row[NI]</td>";
                             echo "<td>$row[rodzaj]</td>";
                             echo "<td>$row[status_sprz]</td>";  

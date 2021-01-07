@@ -40,7 +40,7 @@
 		</header><br>
 		<h4>Edycja przypisania użytkownika do sprzętu.</h4>
 		<hr>
-		<p>Tu możesz wyszukać sprzęt następnie przypisać do niego pracownika oraz zmienić status sprzętu.</p>
+		<p style="color: green">Tu możesz wyszukać sprzęt następnie przypisać do niego pracownika oraz zmienić status sprzętu.</p>
 		<br>
 		<form method="POST">
 			<div>
@@ -171,7 +171,7 @@
 			if (mysqli_num_rows($result) === 0) {
 				 echo '<h5 style="color: red">Nie ma takiego pracownika lub nieprawidłowa wartość!</h5>';
 			} else {
-
+				$sn = mysqli_real_escape_string($conn, $_REQUEST['sn']);
 				$ni = mysqli_real_escape_string($conn, $_REQUEST['ni']);
 				$rodzaj = mysqli_real_escape_string($conn, $_REQUEST['rodzaj']);
 				$status = mysqli_real_escape_string($conn, $_REQUEST['status']);
@@ -180,8 +180,8 @@
 				$opis = mysqli_real_escape_string($conn, $_REQUEST['opis']);
 				$data = mysqli_real_escape_string($conn, $_REQUEST['aktu_data']);
 				
-				$query_historia = "INSERT INTO sprzet_historia (NI, rodzaj, status_sprz, login_stary, login_nowy, data_zmiany) 
-				VALUES ('$ni', '$rodzaj', '$status', '$login_stary', '$login_nowy', '$data')";
+				$query_historia = "INSERT INTO sprzet_historia (SN, NI, rodzaj, status_sprz, login_stary, login_nowy, data_zmiany) 
+				VALUES ('$sn', '$ni', '$rodzaj', '$status', '$login_stary', '$login_nowy', '$data')";
 				if ($query_historia) {
 					mysqli_query($conn, $query_historia);
 				}
