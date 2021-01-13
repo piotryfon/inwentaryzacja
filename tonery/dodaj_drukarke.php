@@ -3,13 +3,12 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Dodaj rekord tonery</title>
+    <title>Dodaj drukarkę</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <style>
 
     </style>
 </head>
-
 <body>
     <div class="container">
         <header>
@@ -38,50 +37,23 @@
             </ul>
         </header>
         <hr>
-        <h4>Dodaj rekord - toner</h4><br>
-        <form method="POST" action="dodaj_rekord.php">
-            <div class="row">
-                <div class="col-lg-5">
-                    <div>
-                        <label>*kod</label>
-                    </div>
-                    <input type="text" name="kod"><br><br>
-                    <div>
-                        <label>oznaczenie</label>
-                    </div>
-                    <input type="text" name="oznaczenie"><br><br>
-                    <div>
-                        <label>kolor</label>
-                    </div>
-                    <input type="text" name="kolor"><br><br>
-                </div>
-                <div class="col-lg-5">
-                    <div>
-                        <label>firma</label>
-                    </div>
-                    <input type="text" name="firma"><br><br>
-                    <div>
-                        <label>opis</label>
-                    </div>
-                    <textarea rows="3" cols="30" name="opis"></textarea><br><br>
-                    <input type="submit" class="btn btn-success" value="dodaj" name="dodaj" />
-                    <p style="color: green">* pole wymagane</p>
-                </div>
+        <h4>Dodaj drukarkę.</h4><br>
+        <form method="POST" action="dodaj_drukarke.php">
+            <div>
+                <label>Nazwa w domenie np. 00p2254</label>
             </div>
+            <input type="text" name="NI"><br><br>
+            <input type="submit" class="btn btn-success" value="dodaj drukarkę" name="dodaj" style="width: 200px" />
         </form>
         <?php
         require("connection_tonery.php");
       
         if(isset($_POST['dodaj'])){
-            $kod = mysqli_real_escape_string($conn, $_REQUEST['kod']);
-            $oznaczenie = mysqli_real_escape_string($conn, $_REQUEST['oznaczenie']);
-            $kolor = mysqli_real_escape_string($conn, $_REQUEST['kolor']);
-            $firma = mysqli_real_escape_string($conn, $_REQUEST['firma']);
-            $opis = mysqli_real_escape_string($conn, $_REQUEST['opis']);
+            $ni = mysqli_real_escape_string($conn, $_REQUEST['NI']);
 
-            $sql = "INSERT INTO tonery_tab (kod, oznaczenie, kolor, firma, opis) 
-            VALUES ('$kod', '$oznaczenie', '$kolor', '$firma', '$opis')";
-            if($kod == "") {
+            $sql = "INSERT INTO drukarki (NI) 
+            VALUES ('$ni')";
+            if($ni == "") {
                 echo '<h3 style="color: red">Zostawiłeś puste pole!</h3>';
             } else {
                 if (mysqli_query($conn, $sql)) {

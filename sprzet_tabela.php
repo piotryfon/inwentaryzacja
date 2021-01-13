@@ -1,9 +1,5 @@
 <?php
 require("connection.php");
-$query = "SELECT * FROM sprzet LEFT
-JOIN pracownicy 
-ON sprzet.id_pracownika = pracownicy.id_pracownika";
-$result = mysqli_query($conn, $query);
 ?>
 
 <!DOCTYPE html>
@@ -69,8 +65,24 @@ $result = mysqli_query($conn, $query);
         </header>
         <div class="row">
             <div class="col-lg-12">
-                <p style="color: green">Aby wyszukać użyj Ctrl + f</p>
                 <h4>Sprzęt</h4>
+                <form method="POST">
+                    <div>
+                        <label for="sposob">sortuj po dacie dodania sprzętu do bazy</label>
+                    </div>
+                    <select name="sposob">
+                        <option>DESC</option>
+                        <option>ASC</option>
+                    </select>
+                    <input type="submit" name="show" value="pokaż">
+                </form>
+        <?php
+        if (isset($_POST['show'])) {
+            $query = "SELECT * FROM sprzet LEFT JOIN pracownicy 
+            ON sprzet.id_pracownika = pracownicy.id_pracownika ORDER BY data_dodania $_POST[sposob]";
+            $result = mysqli_query($conn, $query);
+        ?>
+                <p style="color: green">Aby wyszukać użyj Ctrl + f</p>
                 <table>
                     <tr>
                         <th>id sprzętu</th>
@@ -85,6 +97,7 @@ $result = mysqli_query($conn, $query);
                         <th>RAM</th>
                         <th>dysk</th>
                         <th>opis</th>
+                        <th>data dodania</th>
                     </tr>
                     <?php
                     while ($row = mysqli_fetch_array($result)) {
@@ -101,8 +114,10 @@ $result = mysqli_query($conn, $query);
                         echo "<td>$row[ram]</td>";
                         echo "<td>$row[dysk]</td>";
                         echo "<td>$row[opis]</td>";
+                        echo "<td>$row[data_dodania]</td>";
                         echo "</tr>";
                     }
+        }
                     ?>
                 </table>
             </div>

@@ -38,6 +38,9 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="wydane_tonery.php">wydane tonery</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="dodaj_drukarke.php">dodaj drukarkę</a>
+                </li>
             </ul>
         </header>
         <hr>

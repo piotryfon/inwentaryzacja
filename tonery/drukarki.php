@@ -1,19 +1,11 @@
-<?php
- require("connection_tonery.php");
-
-$query = "SELECT * FROM tonery_tab";    
-$result = mysqli_query($conn, $query);
-    
-?>
 <!DOCTYPE html>
 <html>
 
 <head>
-	<meta charset="utf-8">
-	<title>Tonery tabela</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-	<style>
-     
+    <meta charset="utf-8">
+    <title>Drukarki</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style>
         table {
             border-collapse: collapse;
         }
@@ -38,12 +30,11 @@ $result = mysqli_query($conn, $query);
             background-color: #33A5FF;
             color: white;
         }
-  
-	</style>
+    </style>
 </head>
 
 <body>
-	<div class="container">
+    <div class="container">
         <header>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
@@ -70,32 +61,29 @@ $result = mysqli_query($conn, $query);
             </ul>
         </header>
         <hr>
-        <h3>Tabela z tonerami</h3>
+        <h4>Drukarki</h4><br>
+     
+        <?php
+        require("connection_tonery.php");
+        $query = "SELECT * FROM drukarki";    
+        $result = mysqli_query($conn, $query);
+        ?>
+        <h3>Tabela - drukarki</h3>
         <table>
             <tr>
-                <th>kod</th>
-                <th>oznaczenie</th>
-                <th>firma</th>
-                <th>opis</th>
-                <th>ilość</th>
+                <th>N/I</th>
             </tr>
             <?php
             while ($row = mysqli_fetch_array($result)) {
                 echo "<tr>";
-                echo "<td>$row[kod]</td>";
-                echo "<td>$row[oznaczenie]</td>";
-                echo "<td>$row[firma]</td>";
-                echo "<td>$row[opis]</td>";
-                echo "<td>$row[ilosc]</td>";
+                echo "<td>$row[NI]</td>";
                 echo "</tr>";
             }
-
             ?>
         </table>
-
-    </div>
-    <?php
+        <?php
         mysqli_close($conn);
-    ?>
+        ?>
+    </div>
 </body>
 </html>

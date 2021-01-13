@@ -72,7 +72,7 @@
                 <option>1000</option>
                 <option>5000</option>
             </select>
-            <label for="sposob">sposób</label>
+            <label for="sposob">sortuj po dacie</label>
             <select name="sposob">
                 <option>DESC</option>
                 <option>ASC</option>

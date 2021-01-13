@@ -82,11 +82,17 @@
 			if ($login_pracownika == "") {
 				echo '<h5 style="color: red">Zostawiłeś puste pole - login.</h5>';
 			} else {
-				$sql = "INSERT INTO pracownicy (login_pracownika, imie, nazwisko, departament, pokoj) VALUES ('$login_pracownika', '$imie', '$nazwisko','$departament','$pokoj')";
-				if (mysqli_query($conn, $sql)) {
-					header("location: pracownik_dodany.html");
+				$sql_check = "SELECT id_pracownika FROM pracownicy WHERE login_pracownika = '$login_pracownika'";
+				$sql_check_result = mysqli_query($conn, $sql_check);
+				if(mysqli_num_rows($sql_check_result)) {
+					echo "<h5 style='color: red'>Taki login już istnieje i nie może być ponownie dodany!</h5>";
 				} else {
-					echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+					$sql = "INSERT INTO pracownicy (login_pracownika, imie, nazwisko, departament, pokoj) VALUES ('$login_pracownika', '$imie', '$nazwisko','$departament','$pokoj')";
+					if (mysqli_query($conn, $sql)) {
+						header("location: pracownik_dodany.html");
+					} else {
+						echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+					}
 				}
 			}
 		}

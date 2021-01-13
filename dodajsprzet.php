@@ -108,6 +108,10 @@
 						<label for="opis">opis</label><br>
 						<textarea style="width: 250px" name="opis" id="opis"></textarea>
 					</p>
+					<div>
+						<label for="data">data</label>
+					</div>
+					<input readonly type="text" id="data" name="data" value="<?php echo date("Y-m-d") ?>">
 					<input class="btn btn-primary" type="submit" name="submit" value="submit">
 					<p style="color: green">* pole wymagane</p>
 				</div>
@@ -128,18 +132,23 @@
 			$dysk = mysqli_real_escape_string($conn, $_REQUEST['dysk']);
 			$status = mysqli_real_escape_string($conn, $_REQUEST['status']);
 			$opis = mysqli_real_escape_string($conn, $_REQUEST['opis']);
-
+			$data = mysqli_real_escape_string($conn, $_REQUEST['data']);
 
 			if ($sn == "") {
 				echo '<h5 style="color: red">Zostawiłeś puste pole.</h5>';
 			} else {
-				$sql = "INSERT INTO sprzet (rodzaj, pin, model, SN, NI, procesor, ram, dysk, status_sprz, opis) 
-				VALUES ('$rodzaj', '$pin', '$model','$sn', '$ni', '$procesor', '$ram', '$dysk', '$status','$opis')";
-				if (mysqli_query($conn, $sql)) {
-					header("location: sprzet_dodany.html");
-				
+				$sql_check = "SELECT id_sprzetu FROM sprzet WHERE SN = '$sn'";
+				$sql_check_result = mysqli_query($conn, $sql_check);
+				if(mysqli_num_rows($sql_check_result)){
+					echo "<h5 style='color: red'>Taki S/N już istnieje i nie może być ponownie dodany!</h5>";
 				} else {
-					echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+					$sql = "INSERT INTO sprzet (rodzaj, pin, model, SN, NI, procesor, ram, dysk, status_sprz, opis, data_dodania) 
+					VALUES ('$rodzaj', '$pin', '$model','$sn', '$ni', '$procesor', '$ram', '$dysk', '$status','$opis', '$data')";
+					if (mysqli_query($conn, $sql)) {
+						header("location: sprzet_dodany.html");
+					} else {
+						echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+					}
 				}
 				mysqli_close($conn);
 			}
