@@ -40,7 +40,7 @@
         <h4>Dodaj drukarkę.</h4><br>
         <form method="POST" action="dodaj_drukarke.php">
             <div>
-                <label>Nazwa w domenie np. 00p2254</label>
+                <label>Nazwa w domenie np. 00P2254</label>
             </div>
             <input type="text" name="NI"><br><br>
             <input type="submit" class="btn btn-success" value="dodaj drukarkę" name="dodaj" style="width: 200px" />
@@ -50,18 +50,22 @@
       
         if(isset($_POST['dodaj'])){
             $ni = mysqli_real_escape_string($conn, $_REQUEST['NI']);
-
-            $sql = "INSERT INTO drukarki (NI) 
-            VALUES ('$ni')";
             if($ni == "") {
                 echo '<h3 style="color: red">Zostawiłeś puste pole!</h3>';
             } else {
-                if (mysqli_query($conn, $sql)) {
-                    echo '<script type="text/javascript">
-                            alert("Rekord dodany.")
-                        </script>';
+                $sql_check = "SELECT id_drukarki FROM drukarki WHERE NI = '$ni'";
+				$sql_check_result = mysqli_query($conn, $sql_check);
+				if(mysqli_num_rows($sql_check_result)){
+                    echo "<h5 style='color: red'>Taka nazwa już istnieje i nie może być ponownie dodana!</h5>";
                 } else {
-                    echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+                    $sql = "INSERT INTO drukarki (NI) VALUES ('$ni')";
+                    if (mysqli_query($conn, $sql)) {
+                        echo '<script type="text/javascript">
+                                alert("Rekord dodany.")
+                            </script>';
+                    } else {
+                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+                    }
                 }
             }
         }
