@@ -66,6 +66,7 @@ require("connection.php");
 			</ul>
 		</header>
         <h5>Protokół</h5>
+        <form method="post">
         <?php
             $query = "SELECT * FROM protokol";
             $result = mysqli_query($conn, $query);
@@ -91,11 +92,25 @@ require("connection.php");
                 </tr>
         <?php
             }
+            $iloscRekordow = mysqli_num_rows($result);
         ?>
-            </table>
+            </table><br>
+            <label>ilość rekordów:</label>
+            <input type="text" style="width: 40px" readonly value="<?php echo $iloscRekordow ?>">
+            <input type="submit" class="btn btn-danger" style="width: 200px" name ="clear" value="wyczyść tabelę">
+        </form>    
+            <br><br>
         <?php
     } else {
         echo '<div class="alert alert-danger" role="alert">Tabela jest pusta!</div>';
+    }
+    if(isset($_POST['clear'])){
+        $sql = "DELETE FROM protokol";
+        if(mysqli_query($conn, $sql)){
+            $sql_AI = "ALTER TABLE protokol AUTO_INCREMENT=1";
+            mysqli_query($conn, $sql_AI);
+            header("Refresh:0; url=protokol_tabela.php");
+        } else echo '<div class="alert alert-danger" role="alert">Coś poszło nie tak!</div>';
     }
 ?>
     </div>

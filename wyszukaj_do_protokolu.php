@@ -89,7 +89,7 @@ require("connection.php");
                                 <input type="text" name="NI[]" value="<?php echo $row['NI']?>">
                                 <input type="text" name="SN[]" value="<?php echo $row['SN']?>">
                                 <input type="text" style="width: 60px" name="pokoj[]" value="<?php echo $row['pokoj']?>">
-                                <input type="button" class="btnRemove btn btn-danger" value="Remove"/>
+                                <input type="button" class="btnRemove btn btn-danger" value="Usuń"/>
                             </div>
                             <br>
                         <?php
@@ -97,8 +97,9 @@ require("connection.php");
                         ?>
                     <label>ilość rekordów:</label>
                     <input type="text" style="width: 40px" name="rows" id="selected-rows" readonly value="<?php echo mysqli_num_rows($result)?>">
-                    <input type="submit" name="dodaj" value="dodaj do protokołu">
+                    <input type="submit" name="dodaj" class="btn btn-success" value="dodaj do protokołu">
                     </form>
+                    <br><hr><br>
                     <?php
                     
                 }
@@ -117,6 +118,7 @@ require("connection.php");
                 
                 $result=$conn->prepare($sql);
                 $result->execute();
+                header("location: protokol_tabela.php");
             }
         }
         mysqli_close($conn);
