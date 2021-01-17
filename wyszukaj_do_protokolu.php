@@ -8,7 +8,9 @@ require("connection.php");
     <title>Do protokołu</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <style>
-     
+    .mid-input {
+         width: 150px;
+    }
     </style>
 </head>
 <body>
@@ -38,7 +40,7 @@ require("connection.php");
                 </li>
             </ul>
         </header>
-        <h4>Wyszukaj pracownika lub sprzęt</h4>
+        <h4>Wyszukaj pracownika lub sprzęt.</h4>
 		<form method="POST">
 			<div>
 				<label for="opcja">Wybierz parametr:</label><br>
@@ -47,6 +49,7 @@ require("connection.php");
 					<option value="login_pracownika">login pracownika</option>
                     <option value="NI">N/I sprzętu</option>
                     <option value="SN">S/N sprzętu</option>
+                    <option value="pokoj">pokój</option>
 				</select>
 			</div><br>
 			<div>
@@ -68,7 +71,7 @@ require("connection.php");
             if($opcjonalna_wartosc === "wszystko") {
                 $query = "SELECT * FROM sprzet LEFT JOIN pracownicy ON sprzet.id_pracownika = pracownicy.id_pracownika
                     WHERE (login_pracownika LIKE '%$wartosc_input%') or (NI LIKE '%$wartosc_input%') or
-                    (SN LIKE '%$wartosc_input%')";
+                    (SN LIKE '%$wartosc_input%') or (pokoj LIKE '%$wartosc_input%') ORDER BY login_pracownika";
             }
             
                 $result = mysqli_query($conn, $query);
@@ -83,11 +86,12 @@ require("connection.php");
                             $counter = $counter + 1;
                             ?>
                             <div>
-                                <input type="text" style="width: 40px" name="lp" value="<?php echo $counter ?>" readonly="">
-                                <input type="text" name="rodzaj[]" value="<?php echo $row['rodzaj']?>">
-                                <input type="text" name="model[]" value="<?php echo $row['model']?>">
-                                <input type="text" name="NI[]" value="<?php echo $row['NI']?>">
-                                <input type="text" name="SN[]" value="<?php echo $row['SN']?>">
+                                <input type="text" class="mid-input" style="width: 40px" name="lp" value="<?php echo $counter ?>" readonly="">
+                                <input type="text" class="mid-input" name="login" value="<?php echo $row['login_pracownika']?>">
+                                <input type="text" class="mid-input" name="rodzaj[]" value="<?php echo $row['rodzaj']?>">
+                                <input type="text" class="mid-input" name="model[]" value="<?php echo $row['model']?>">
+                                <input type="text" class="mid-input" name="NI[]" value="<?php echo $row['NI']?>">
+                                <input type="text" class="mid-input" name="SN[]" value="<?php echo $row['SN']?>">
                                 <input type="text" style="width: 60px" name="pokoj[]" value="<?php echo $row['pokoj']?>">
                                 <input type="button" class="btnRemove btn btn-danger" value="Usuń"/>
                             </div>

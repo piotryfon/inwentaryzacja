@@ -1,10 +1,3 @@
-<?php
- require("connection_tonery.php");
-
-$query = "SELECT * FROM tonery_tab";    
-$result = mysqli_query($conn, $query);
-    
-?>
 <!DOCTYPE html>
 <html>
 
@@ -70,32 +63,49 @@ $result = mysqli_query($conn, $query);
             </ul>
         </header>
         <hr>
-        <h3>Tabela z tonerami</h3>
-        <table>
-            <tr>
-                <th>kod</th>
-                <th>oznaczenie</th>
-                <th>firma</th>
-                <th>opis</th>
-                <th>ilość</th>
-            </tr>
-            <?php
-            while ($row = mysqli_fetch_array($result)) {
-                echo "<tr>";
-                echo "<td>$row[kod]</td>";
-                echo "<td>$row[oznaczenie]</td>";
-                echo "<td>$row[firma]</td>";
-                echo "<td>$row[opis]</td>";
-                echo "<td>$row[ilosc]</td>";
-                echo "</tr>";
-            }
+        <div id="tonery">
+            <h4>Tabela z tonerami i częściami do drukarek.</h4>
+            <table>
+                <tr>
+                    <th>kod</th>
+                    <th>oznaczenie</th>
+                    <th>firma</th>
+                    <th>opis</th>
+                    <th>ilość</th>
+                </tr>
+                <?php
+                require("connection_tonery.php");
+                $query = "SELECT * FROM tonery_tab";    
+                $result = mysqli_query($conn, $query);
 
-            ?>
-        </table>
-
+                while ($row = mysqli_fetch_array($result)) {
+                    echo "<tr>";
+                    echo "<td>$row[kod]</td>";
+                    echo "<td>$row[oznaczenie]</td>";
+                    echo "<td>$row[firma]</td>";
+                    echo "<td>$row[opis]</td>";
+                    echo "<td>$row[ilosc]</td>";
+                    echo "</tr>";
+                }
+                ?>
+            </table>
+        </div><br>
+        <button style="width: 220px" id="drukuj" class="btn btn-primary" onclick="printDiv()">Drukuj tabelę</button>
+        <br><hr><br>
     </div>
     <?php
         mysqli_close($conn);
     ?>
+    <script type="text/javascript">
+        function printDiv(tonery) {
+            let divElements = document.getElementById('tonery').innerHTML;
+            let oldPage = document.body.innerHTML;  
+            document.body.innerHTML = 
+                '<html><head><meta charset="UTF-8"><title>Stan tonerów w magazynie.</title></head><body>' + 
+                divElements + "</body>";
+            window.print();
+            document.body.innerHTML = oldPage;
+        }
+    </script>
 </body>
 </html>
