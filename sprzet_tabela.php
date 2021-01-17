@@ -95,7 +95,7 @@ require("connection.php");
                         $order = 'type';
                         if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
                             $order = $_GET['orderBy'];
-                            $sql = 'SELECT * FROM sprzet LEFT JOIN pracownicy ON sprzet.id_pracownika = pracownicy.id_pracownika ORDER BY '.$order;
+                            $sql = "SELECT * FROM sprzet LEFT JOIN pracownicy ON sprzet.id_pracownika = pracownicy.id_pracownika ORDER BY $order DESC";
                             $result = mysqli_query($conn, $sql);
                         }
                     while ($row = mysqli_fetch_array($result)) {

@@ -51,6 +51,9 @@
 							<option>słuchawki z mikrofonem</option>
 							<option>projektor</option>
 							<option>drukarka</option>
+							<option>skaner</option>
+							<option>głośnik</option>
+							<option>zestaw konferencyjny</option>
 							<option>inne</option>
 						</select>
 					</p>
@@ -140,7 +143,7 @@
 				$sql_check = "SELECT id_sprzetu FROM sprzet WHERE SN = '$sn'";
 				$sql_check_result = mysqli_query($conn, $sql_check);
 				if(mysqli_num_rows($sql_check_result)){
-					echo "<h5 style='color: red'>Taki S/N już istnieje i nie może być ponownie dodany!</h5>";
+					echo '<div class="alert alert-danger" role="alert">Taki S/N już istnieje i nie może być ponownie dodany!</div>';
 				} else {
 					$sql = "INSERT INTO sprzet (rodzaj, pin, model, SN, NI, procesor, ram, dysk, status_sprz, opis, data_dodania) 
 					VALUES ('$rodzaj', '$pin', '$model','$sn', '$ni', '$procesor', '$ram', '$dysk', '$status','$opis', '$data')";
