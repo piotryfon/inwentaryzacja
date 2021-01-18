@@ -21,26 +21,14 @@ require("connection.php");
                     <a class="nav-link active" href="index.php">str. gł</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="dodajpracownika.php">dodaj pracownika</a>
+                    <a class="nav-link active" href="wyszukaj_do_protokolu.php">wyszukaj sprzęt do protokołu</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="dodajsprzet.php">dodaj sprzęt</a>
+                    <a class="nav-link active" href="protokol_tabela.php">protokół</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="sprzet_tabela.php">sprzęt - tabela</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="pracownicy_tabela.php">pracownicy - tabela</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="sprzet_pracownik_tab.php">pracownicy/sprzęt - tabela</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="historia.php">historia zmian</a>
-                </li>
-            </ul>
+            </ul><hr>
         </header>
-        <h4>Wyszukaj pracownika lub sprzęt.</h4>
+        <h4>Wyszukaj lub sprzęt.</h4>
 		<form method="POST">
 			<div>
 				<label for="opcja">Wybierz parametr:</label><br>

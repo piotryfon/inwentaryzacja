@@ -49,6 +49,7 @@
 							<option>monitor</option>
 							<option>kamera</option>
 							<option>słuchawki z mikrofonem</option>
+							<option>telefon</option>
 							<option>projektor</option>
 							<option>drukarka</option>
 							<option>skaner</option>

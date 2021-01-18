@@ -41,32 +41,20 @@ require("connection.php");
 <body>
 	<div class="container">
 		<header>
-			<ul class="nav justify-content-center">
-				<li class="nav-item">
-					<a class="nav-link active" href="index.php">str. gł</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link active" href="dodajpracownika.php">dodaj pracownika</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link active" href="dodajsprzet.php">dodaj sprzęt</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link active" href="sprzet_tabela.php">sprzęt - tabela</a>
-				</li>
-				<li class="nav-item">
-                    <a class="nav-link active" href="pracownicy_tabela.php">pracownicy - tabela</a>
-				</li>
-				<li class="nav-item">
-                    <a class="nav-link active" href="sprzet_pracownik_tab.php">pracownicy/sprzęt - tabela</a>
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link active" href="index.php">str. gł</a>
                 </li>
-				<li class="nav-item">
-                    <a class="nav-link active" href="historia.php">historia zmian</a>
+                <li class="nav-item">
+                    <a class="nav-link active" href="wyszukaj_do_protokolu.php">wyszukaj sprzęt do protokołu</a>
                 </li>
-			</ul>
-		</header>
+                <li class="nav-item">
+                    <a class="nav-link active" href="protokol_tabela.php">protókoł</a>
+                </li>
+            </ul>
+		</header><hr>
         <div id="proto">
-            <h5>Protokół przeniesienia sprzętu komputerowego.</h5>
+            <h5>Protokół przeniesienia sprzętu informatycznego.</h5>
             <form method="post">
             <?php
                 $query = "SELECT * FROM protokol";
@@ -101,27 +89,17 @@ require("connection.php");
             <input type="submit" class="btn btn-primary" style="width: 250px" 
                     name ="print" value="drukuj tabelę" onclick="printDiv()"><br><hr><br>
             <label>ilość rekordów:</label>
-            <input type="text" style="width: 40px" readonly value="<?php echo $iloscRekordow ?>">
-            <input type="submit" class="btn btn-danger" name ="clear" value="wyczyść tabelę">
+            <input type="text" style="width: 40px" readonly value="<?php echo $iloscRekordow ?>"> 
         </form>
+            <a href="wyczysc_protokol.php">
+                <input type="submit" class="btn btn-danger" name ="clear" value="wyczyść tabelę">
+            </a>
             <br><br>
         <?php
     } else {
         echo '<div class="alert alert-danger" role="alert">Tabela jest pusta!</div>';
     }
-    if(isset($_POST['clear'])){
-        $sql = "DELETE FROM protokol";
-        if(mysqli_query($conn, $sql)){
-            $sql_AI = "ALTER TABLE protokol AUTO_INCREMENT=1";
-            mysqli_query($conn, $sql_AI);
-            if (headers_sent()) {
-                die("<h6 style='color: red'>Tabela wyczyszczona, problem z przeładowaniem strony. Spróbuj jeszcze raz.</h6><br><hr><br>");
-            }
-            else{
-                exit(header("Location: protokol_tabela.php"));
-            }
-        } else echo '<div class="alert alert-danger" role="alert">Coś poszło nie tak!</div>';
-    }
+    
 ?>
     </div>
     <script type="text/javascript">
