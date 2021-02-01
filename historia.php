@@ -92,9 +92,9 @@
                         <th>SN</th>
                         <th>NI</th>
                         <th>rodzaj</th>
-                        <th>status</th>
                         <th>stary login</th>
                         <th>nowy login</th>
+                        <th>obecny status</th>
                         <th>data zmiany</th>
                     </tr>
                     <?php
@@ -103,9 +103,9 @@
                             echo "<td>$row[SN]</td>";
                             echo "<td>$row[NI]</td>";
                             echo "<td>$row[rodzaj]</td>";
-                            echo "<td>$row[status_sprz]</td>";  
                             echo "<td>$row[login_stary]</td>";
                             echo "<td>$row[login_nowy]</td>";
+                            echo "<td>$row[status_sprz]</td>"; 
                             echo "<td>$row[data_zmiany]</td>";
                             echo "</tr>";
                         }    

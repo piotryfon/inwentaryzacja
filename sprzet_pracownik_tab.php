@@ -114,6 +114,7 @@ require("connection.php");
                 <th>S/N</th>
                 <th>login</th>
                 <th>status</th>
+                <th>opis</th>
             </tr>
         <?php
 			while ($row = mysqli_fetch_array($result)) {
@@ -125,6 +126,7 @@ require("connection.php");
                 echo "<td>$row[SN]</td>";
                 echo "<td>$row[login_pracownika]</td>";
                 echo "<td>$row[status_sprz]</td>";
+                echo "<td>$row[opis]</td>";
                 echo "</tr>";
             }
 		?>

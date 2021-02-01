@@ -27,7 +27,7 @@
             </ul>
         </header><hr>
    
-    <h4>Wyczyść tabelę - protokół</h4>
+    <h4>Czy napewno usunąć dane z tabeli?</h4>
   
     <form method="post">
         <input type="submit" class="btn btn-danger" name ="clear" value="wyczyść tabelę">
@@ -39,7 +39,7 @@
                 if(mysqli_query($conn, $sql)){
                     $sql_AI = "ALTER TABLE protokol AUTO_INCREMENT=1";
                     mysqli_query($conn, $sql_AI);
-                    echo '<div class="alert alert-success" role="alert">Tabela jest już pusta.</div>';
+                    echo '<div class="alert alert-success" role="alert">Dane usunięte.</div>';
                 } else echo '<div class="alert alert-danger" role="alert">Coś poszło nie tak!</div>';
             }
         ?>

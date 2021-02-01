@@ -73,7 +73,7 @@
             if($opcjonalna_wartosc === "wszystko"){
                 $query = "SELECT * FROM sprzet 
                     WHERE (SN LIKE '%$wartosc_input%') or (NI LIKE '%$wartosc_input%') or 
-                    (status_sprz LIKE '%$wartosc_input%') or (rodzaj LIKE '%$wartosc_input%')";
+                    (status_sprz LIKE '%$wartosc_input%') or (rodzaj LIKE '%$wartosc_input%') or (opis LIKE '%$wartosc_input%')";
             }
 
             $result = mysqli_query($conn, $query);
@@ -157,7 +157,7 @@
                                     <div>
                                         <label>opis</label>
                                     </div>
-                                    <textarea type="text" name="opis" class="bg-success text-white"><?php echo $row['opis'] ?></textarea>
+                                    <textarea rows="4" cols="30" type="text" name="opis" class="bg-success text-white"><?php echo $row['opis'] ?></textarea>
                                 </div><br>
                                 <input class="btn btn-primary" type="submit" value="zatwierdz" name="zatwierdz">
                             </div>

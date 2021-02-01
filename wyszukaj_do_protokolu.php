@@ -28,7 +28,7 @@ require("connection.php");
                 </li>
             </ul><hr>
         </header>
-        <h4>Wyszukaj lub sprzęt.</h4>
+        <h4>Wyszukaj sprzęt.</h4>
 		<form method="POST">
 			<div>
 				<label for="opcja">Wybierz parametr:</label><br>
