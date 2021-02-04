@@ -60,6 +60,12 @@
                 <li>tonery</li>
             </a>
         </ul>
+        <h5>sporządź protokół <b>wydania sprzętu komputerowego</b></h5>
+        <ul>
+            <a href="wyszukaj_komputer_proto.php">
+                <li>wybierz sprzęt do protokołu</li>
+            </a>
+        </ul>
         <h5>sporządź protokół przeniesienia sprzętu komputerowego</h5>
         <ul>
             <a href="wyszukaj_do_protokolu.php">
