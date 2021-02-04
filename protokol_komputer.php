@@ -120,11 +120,11 @@
                 $dysk = $_POST['dysk'][$i];
                 $NI = $_POST['NI'][$i];
                 $SN = $_POST['SN'][$i];
-                $pokoj = $_POST['pokoj'][$i];
+                $dodatki = $_POST['dodatki'][$i];
                 $status = $_POST['status_sprz'][$i];
                 $miejsce = $_POST['miejsce'][$i];
-                $sql="INSERT INTO protokol_wydania_komputera (imie, nazwisko, rodzaj, model, procesor, ram, dysk, ni, sn, pokoj, status_sprz, miejsce)
-                VALUES('$imie', '$nazwisko', '$rodzaj', '$model', '$procesor', '$ram', '$dysk', '$NI', '$SN','$pokoj', '$status', '$miejsce')";
+                $sql="INSERT INTO protokol_wydania_komputera (imie, nazwisko, rodzaj, model, procesor, ram, dysk, ni, sn, dodatki, status_sprz, miejsce)
+                VALUES('$imie', '$nazwisko', '$rodzaj', '$model', '$procesor', '$ram', '$dysk', '$NI', '$SN','$dodatki', '$status', '$miejsce')";
                 
                 $result=$conn->prepare($sql);
                 $result->execute();
@@ -174,6 +174,7 @@
                         <th>dysk</th>
                         <th>numer inwentarzowy</th>
                         <th>numer seryjny</th>
+                        <th>dodatkowe wyposażenie</th>
                     </tr>
                 <?php
                     while($row = mysqli_fetch_array($result)){     
@@ -186,6 +187,7 @@
                         <td><?php echo $row['dysk'] ?></td>
                         <td><?php echo $row['ni'] ?></td>
                         <td><?php echo $row['sn'] ?></td>
+                        <td><?php echo $row['dodatki'] ?></td>
                     </tr>
                     <?php
                         } //while end
@@ -199,7 +201,7 @@
                     $resultZwrot = mysqli_query($conn, $queryZwrot);
                     if(mysqli_num_rows($resultZwrot)){
                 ?>
-                    <h4>Sprzęt zwracany:</h4>
+                    <h4>Sprzęt zwrócony:</h4>
                     <table>
                         <tr>
                             <th>rodzaj</th>
@@ -209,6 +211,8 @@
                             <th>dysk</th>
                             <th>numer inwentarzowy</th>
                             <th>numer seryjny</th>
+                            <th>dodatkowe wyposażenie</th>
+
                         </tr>
                     <?php
                         while($row = mysqli_fetch_array($resultZwrot)){       
@@ -221,6 +225,7 @@
                             <td><?php echo $row['dysk'] ?></td>
                             <td><?php echo $row['ni'] ?></td>
                             <td><?php echo $row['sn'] ?></td>
+                            <td><?php echo $row['dodatki'] ?></td>
                         </tr>
                     <?php
                         }//while end
@@ -246,6 +251,7 @@
         </div>
        
     </div><!--end container-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript">
         function printDiv(proto) {
             let divElements = document.getElementById('proto').innerHTML;
@@ -260,6 +266,14 @@
         if ( window.history.replaceState ) {
             window.history.replaceState( null, null, window.location.href );
         }
+        $(document).ready(function(){
+            $('td').each(function() {
+                let el = $(this);
+                if (el.text() === '') {
+                    el.text('--------');
+                }
+            });
+        });
     </script>
 </body>
 </html>

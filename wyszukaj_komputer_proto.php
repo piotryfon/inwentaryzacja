@@ -131,8 +131,8 @@ require("connection.php");
                                         <input type="text" class="mid-input" name="SN[]" value="<?php echo $row['SN']?>">
                                     </p>
                                     <p>
-                                        <label>Pokój:</label><br>
-                                        <input type="text" style="width: 60px" name="pokoj[]" value="<?php echo $row['pokoj']?>">
+                                        <label>Dodatkowe wyposażenie:</label><br>
+                                        <textarea type="text" name="dodatki[]" rows="2" cols="20" value=""></textarea>
                                     </p> 
                                     
                                 </div>  
