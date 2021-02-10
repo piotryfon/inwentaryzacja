@@ -1,3 +1,10 @@
+<?php
+    session_start();
+
+    if(isset($_SESSION['login_user']) == false) {
+        header("location: index.php");
+    }
+?>
 <!DOCTYPE html>
 <html>
 
@@ -16,7 +23,7 @@
 			<ul class="nav justify-content-center">
 
 				<li class="nav-item">
-					<a class="nav-link active" href="index.php">str. gł</a>
+					<b><a class="nav-link active" href="main.php">str. gł</a></b>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link active" href="dodajpracownika.php">dodaj pracownika</a>
@@ -36,6 +43,9 @@
 				<li class="nav-item">
                     <a class="nav-link active" href="historia.php">historia zmian</a>
                 </li>
+				<li>
+				    <b><a class="nav-link" href="logout.php">Wyloguj się</a></b>
+			    </li>
 			</ul>
 		</header><br>
 		<h4>Edycja przypisania użytkownika do sprzętu.</h4>

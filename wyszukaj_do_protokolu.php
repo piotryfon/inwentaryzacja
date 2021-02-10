@@ -1,4 +1,9 @@
 <?php
+    session_start();
+
+    if(isset($_SESSION['login_user']) == false) {
+        header("location: index.php");
+    }
 require("connection.php");
 ?>
 <!DOCTYPE html>
@@ -18,7 +23,7 @@ require("connection.php");
         <header>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link active" href="index.php">str. gł</a>
+                    <b><a class="nav-link active" href="main.php">str. gł</a></b>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="wyszukaj_do_protokolu.php">wyszukaj sprzęt do protokołu</a>
@@ -26,6 +31,9 @@ require("connection.php");
                 <li class="nav-item">
                     <a class="nav-link active" href="protokol_tabela.php">protokół</a>
                 </li>
+                <li>
+				    <b><a class="nav-link" href="/inwentaryzacja/logout.php">Wyloguj się</a></b>
+			    </li>
             </ul><hr>
         </header>
         <h4>Wyszukaj sprzęt.</h4>

@@ -1,4 +1,10 @@
 <?php
+    session_start();
+
+    if(isset($_SESSION['login_user']) == false) {
+        header("location: index.php");
+    }
+
  require("connection.php");
 ?>
 <!DOCTYPE html>
@@ -6,33 +12,9 @@
 <head>
     <meta charset="utf-8">
     <title>sprzęt - historia</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <style>
-        table {
-            border-collapse: collapse;
-        }
-
-        table,
-        th,
-        td {
-            border-bottom: 1px solid #ddd;
-        }
-
-        th,
-        td {
-            padding: 3px 7px 3px 7px;
-            text-align: left;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        th {
-            background-color: #33A5FF;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style/table.css">
 </head>
 <body>
     <div class="container">
@@ -40,7 +22,7 @@
             <ul class="nav justify-content-center">
 
                 <li class="nav-item">
-                    <a class="nav-link active" href="index.php">str. gł</a>
+                    <b><a class="nav-link active" href="main.php">str. gł</a></b>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="dodajpracownika.php">dodaj pracownika</a>
@@ -60,6 +42,9 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="historia.php">historia zmian</a>
                 </li>
+                <li>
+				    <b><a class="nav-link" href="logout.php">Wyloguj się</a></b>
+			    </li>
             </ul>
         </header><br>
         <h4>Sprzęt - historia zmian</h4>

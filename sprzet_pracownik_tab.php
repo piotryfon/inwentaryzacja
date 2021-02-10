@@ -1,4 +1,9 @@
 <?php
+    session_start();
+
+    if(isset($_SESSION['login_user']) == false) {
+        header("location: index.php");
+    }
 require("connection.php");
 ?>
 <!DOCTYPE html>
@@ -7,43 +12,19 @@ require("connection.php");
     <meta charset="utf-8">
     <title>Sprzęt/pracownik</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style/table.css">
     <style>
-        table {
-            border-collapse: collapse;
-        }
-
-        table,
-        th,
-        td {
-            border-bottom: 1px solid #ddd;
-        }
-
-        th,
-        td {
-            padding: 3px 7px 3px 7px;
-            text-align: left;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        th {
-            background-color: #33A5FF;
-            color: white;
-            text-align: center;
-        }
         input {
             max-width: 165px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container-fluid">
         <header>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link active" href="index.php">str. gł</a>
+                    <b><a class="nav-link active" href="main.php">str. gł</a></b>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="dodajpracownika.php">dodaj pracownika</a>
@@ -63,6 +44,9 @@ require("connection.php");
                 <li class="nav-item">
                     <a class="nav-link active" href="historia.php">historia zmian</a>
                 </li>
+                <li>
+				    <b><a class="nav-link" href="logout.php">Wyloguj się</a></b>
+			    </li>
             </ul>
         </header>
         <br>
@@ -110,11 +94,16 @@ require("connection.php");
                 <th>id sprzętu</th>
                 <th>rodzaj</th>
                 <th>model</th>
+                <th>pin</th>
+                <th>procesor</th>
+                <th>ram</th>
+                <th>dysk</th>
                 <th>N/I</th>
                 <th>S/N</th>
                 <th>login</th>
                 <th>status</th>
                 <th>opis</th>
+                <th>data dodania <br> sprzętu do bazy</th>
             </tr>
         <?php
 			while ($row = mysqli_fetch_array($result)) {
@@ -122,11 +111,16 @@ require("connection.php");
                 echo "<td>$row[id_sprzetu]</td>";
                 echo "<td>$row[rodzaj]</td>";
                 echo "<td>$row[model]</td>";
+                echo "<td>$row[pin]</td>";
+                echo "<td>$row[procesor]</td>";
+                echo "<td>$row[ram]</td>";
+                echo "<td>$row[dysk]</td>";
                 echo "<td>$row[NI]</td>";
                 echo "<td>$row[SN]</td>";
                 echo "<td>$row[login_pracownika]</td>";
                 echo "<td>$row[status_sprz]</td>";
                 echo "<td>$row[opis]</td>";
+                echo "<td>$row[data_dodania]</td>";
                 echo "</tr>";
             }
 		?>

@@ -1,4 +1,9 @@
 <?php
+    session_start();
+
+    if(isset($_SESSION['login_user']) == false) {
+        header("location: index.php");
+    }
 require("connection.php");
 ?>
 <!DOCTYPE html>
@@ -7,35 +12,9 @@ require("connection.php");
 <head>
 	<meta charset="UTF-8">
 	<title>protokół tabela</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <style>
-        table {
-            border-collapse: collapse;
-        }
-
-        table,
-        th,
-        td {
-            border-bottom: 1px solid #ddd;
-        }
-
-        th,
-        td {
-            padding: 3px 7px 3px 7px;
-            text-align: left;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        th {
-            background-color: #33A5FF;
-            color: white;
-            text-align: center;
-        }
-       
-    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style/table.css">
 </head>
 
 <body>
@@ -43,7 +22,7 @@ require("connection.php");
 		<header>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link active" href="index.php">str. gł</a>
+                    <b><a class="nav-link active" href="main.php">str. gł</a></b>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="wyszukaj_do_protokolu.php">wyszukaj sprzęt do protokołu</a>
@@ -51,6 +30,9 @@ require("connection.php");
                 <li class="nav-item">
                     <a class="nav-link active" href="protokol_tabela.php">protókoł</a>
                 </li>
+                <li>
+				    <b><a class="nav-link" href="/inwentaryzacja/logout.php">Wyloguj się</a></b>
+			    </li>
             </ul>
 		</header><hr>
         <div id="proto">

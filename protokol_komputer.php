@@ -1,3 +1,10 @@
+<?php
+    session_start();
+
+    if(isset($_SESSION['login_user']) == false) {
+        header("location: index.php");
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,7 +90,7 @@
         
             <ul class="nav justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link active" href="index.php"><b>str. gł</b></a>
+                    <b><a class="nav-link active" href="main.php">str. gł</a></b>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="wyszukaj_komputer_proto.php">wyszukaj sprzęt do protokołu</a>
@@ -91,6 +98,9 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="protokol_komputer.php">protokół wydania sprzętu</a>
                 </li>
+                <li>
+				    <b><a class="nav-link" href="/inwentaryzacja/logout.php">Wyloguj się</a></b>
+			    </li>
             </ul>
         <hr>
         <input type="submit" class="btn btn-primary" style="width: 250px" 
