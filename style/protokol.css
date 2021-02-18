@@ -1,0 +1,75 @@
+
+ body {
+    margin: 0;
+}
+#sig-container {
+    display: flex;
+    align-content: flex-end;
+    align-content: center;
+}
+.sig {
+    margin: 200px 50px;
+    border: 1px dashed grey;
+    box-sizing: border-box;
+    padding: 120px 10px 10px 10px;
+    font-size: 12px;
+}
+header {
+    display: flex;
+    flex-direction: row;
+}
+#nfz-logo {
+    width: 180px;
+}
+#nfz-opis {
+   margin-left: 60px;
+}
+@media print
+{
+    @page {
+    margin-top: 0;
+    margin-bottom: 0;
+    }
+    body  {
+    padding-top: 72px;
+    padding-bottom: 72px ;
+    }
+} 
+#main-proto {
+    border-bottom: 2px solid grey;
+    height: 1250px;
+}
+footer {
+    text-align: center;
+    color: grey;
+}
+table {
+    border-collapse: collapse;
+}
+table,
+th,
+td {
+    border-bottom: 1px solid #ddd;
+}
+th,
+td {
+    padding: 3px 7px 3px 7px;
+    text-align: left;
+    border-left: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+.tabela-protokol tr th {
+    border-bottom: 1px solid #666;
+    border-left: 1px solid #666;
+}
+.tabela-protokol td {
+    border-left: 1px solid #666;
+    border-bottom: 1px solid #666;
+}
+.tabela-protokol th {
+    background-color: white;
+    color: #666;
+}

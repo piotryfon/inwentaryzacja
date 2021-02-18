@@ -69,12 +69,12 @@ if (isset($_POST['submit'])) {
 	$opis = mysqli_real_escape_string($conn, $_REQUEST['opis']);
 	$data = mysqli_real_escape_string($conn, $_REQUEST['data']);
 
-	if (($sn === "") and ($ni === "")) {
+	if (($sn === "") or ($ni === "")) {
 		echo '<div class="alert alert-danger" role="alert">Zostawiłeś puste pole!</div>';
 	} else {
-		$sql_check = "SELECT id_sprzetu FROM sprzet WHERE SN = '$sn'";
+		$sql_check = "SELECT * FROM sprzet WHERE (SN = '$sn') OR (NI = '$ni')";
 		$sql_check_result = mysqli_query($conn, $sql_check);
-		if(mysqli_num_rows($sql_check_result) and $sn !== ""){
+		if(mysqli_num_rows($sql_check_result)){
 			echo '<div class="alert alert-danger" role="alert">Taki S/N już istnieje i nie może być ponownie dodany!</div>';
 		} else {
 			$sql = "INSERT INTO sprzet (rodzaj, pin, model, SN, NI, procesor, ram, dysk, status_sprz, opis, data_dodania) 
@@ -122,7 +122,7 @@ if (isset($_POST['submit'])) {
 						<input type="text" name="model" id="model">
 					</p>
 					<div id="identyfikacja">
-						<p style="color: green">Przynajmniej jedno z pól <br> musi być wypełnione.</p>
+						<p style="color: green">Oba pola muszą być wypełnione.</p>
 						<p>
 							<label for="ni">N/I</label><br>
 							<input type="text" name="ni" id="ni">

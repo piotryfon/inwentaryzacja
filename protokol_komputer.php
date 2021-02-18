@@ -12,78 +12,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style/protokol.css">
     <title>Protokół wydania sprzętu komputerowego w Centrali NFZ</title>
-    <style>
-        body {
-            margin: 0;
-        }
-        table {
-            border-collapse: collapse;
-        }
-
-        table,
-        th,
-        td {
-            border-bottom: 1px solid #ddd;
-        }
-
-        th,
-        td {
-            padding: 3px 7px 3px 7px;
-            text-align: left;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        th {
-            background-color: #33A5FF;
-            color: white;
-        }
-        #sig-container {
-            display: flex;
-            align-content: flex-end;
-            align-content: center;
-        }
-        .sig {
-            margin: 200px 100px;
-            border: 1px dashed grey;
-			box-sizing: border-box;
-            padding: 120px 50px 10px 50px;
-            font-size: 11px;
-        }
-        header {
-            display: flex;
-            flex-direction: row;
-        }
-        #nfz-logo {
-            width: 180px;
-        }
-        #nfz-opis {
-           margin-left: 60px;
-        }
-        @media print
-        {
-            @page {
-            margin-top: 0;
-            margin-bottom: 0;
-            }
-            body  {
-            padding-top: 72px;
-            padding-bottom: 72px ;
-            }
-        } 
-        #main-proto {
-            border-bottom: 2px solid grey;
-            height: 1250px;
-        }
-        footer {
-            text-align: center;
-            color: grey;
-        }
-    </style>
-
 </head>
 <body>
     <div class="container">
@@ -162,7 +92,7 @@
                     $miejsce = $dane['miejsce'];
             ?>
                 <h4>Osoba której powierza się opiekę nad środkiem trwałym:</h4>
-                <h5>Nazwisko i imię: <?php echo ucfirst($nazwisko)?> <?php echo ucfirst($imie)?></h5>
+                <h5>Nazwisko i imię: <b><?php echo ucfirst($nazwisko)?> <?php echo ucfirst($imie)?></b></h5>
                 <h5>Miejsce użytkowania: <?php echo $miejsce?></h5><br>
                 <h4>Sprzęt wydany:</h4>
             <?php
@@ -175,7 +105,7 @@
                 $result = mysqli_query($conn, $query);
                 if(mysqli_num_rows($result)){
                 ?>
-                <table>
+                <table class="tabela-protokol">
                     <tr>
                         <th>rodzaj</th>
                         <th>model</th>
@@ -212,7 +142,7 @@
                     if(mysqli_num_rows($resultZwrot)){
                 ?>
                     <h4>Sprzęt zwrócony:</h4>
-                    <table>
+                    <table class="tabela-protokol">
                         <tr>
                             <th>rodzaj</th>
                             <th>model</th>
@@ -251,8 +181,8 @@
                     }
                 ?>
                 <div id="sig-container">
-                    <div class="sig"><?php echo date("Y-m-d") ?> Podpis osoby wydającej sprzęt</div> 
-                    <div class="sig"><?php echo date("Y-m-d") ?> Podpis osoby otrzymującej sprzęt</div>
+                    <div class="sig">Data: <?php echo date("Y-m-d") ?> Podpis osoby wydającej sprzęt</div> 
+                    <div class="sig">Data: <?php echo date("Y-m-d") ?> Podpis osoby otrzymującej sprzęt</div>
                 </div>
             </div>
             <footer>
