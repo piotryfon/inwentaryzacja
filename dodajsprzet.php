@@ -36,13 +36,10 @@
 					<a class="nav-link active" href="dodajsprzet.php">dodaj sprzęt</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" href="sprzet_tabela.php">sprzęt - tabela</a>
-				</li>
-				<li class="nav-item">
                     <a class="nav-link active" href="pracownicy_tabela.php">pracownicy - tabela</a>
 				</li>
 				<li class="nav-item">
-                    <a class="nav-link active" href="sprzet_pracownik_tab.php">pracownicy/sprzęt - tabela</a>
+                    <a class="nav-link active" href="sprzet_pracownik_tab.php">sprzęt - pracownik</a>
                 </li>
 				<li class="nav-item">
                     <a class="nav-link active" href="historia.php">historia zmian</a>
@@ -75,7 +72,7 @@ if (isset($_POST['submit'])) {
 		$sql_check = "SELECT * FROM sprzet WHERE (SN = '$sn') OR (NI = '$ni')";
 		$sql_check_result = mysqli_query($conn, $sql_check);
 		if(mysqli_num_rows($sql_check_result)){
-			echo '<div class="alert alert-danger" role="alert">Taki S/N już istnieje i nie może być ponownie dodany!</div>';
+			echo '<div class="alert alert-danger" role="alert">Taki S/N lub N/I już istnieje i nie może być ponownie dodany!</div>';
 		} else {
 			$sql = "INSERT INTO sprzet (rodzaj, pin, model, SN, NI, procesor, ram, dysk, status_sprz, opis, data_dodania) 
 			VALUES ('$rodzaj', '$pin', '$model','$sn', '$ni', '$procesor', '$ram', '$dysk', '$status','$opis', '$data')";
@@ -113,6 +110,7 @@ if (isset($_POST['submit'])) {
 							<option>drukarka</option>
 							<option>skaner</option>
 							<option>głośnik</option>
+							<option>pendrive</option>
 							<option>zestaw konferencyjny</option>
 							<option>inne</option>
 						</select>

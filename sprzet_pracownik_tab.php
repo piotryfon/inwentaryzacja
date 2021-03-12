@@ -33,13 +33,10 @@ require("connection.php");
                     <a class="nav-link active" href="dodajsprzet.php">dodaj sprzęt</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="sprzet_tabela.php">sprzęt - tabela</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link active" href="pracownicy_tabela.php">pracownicy - tabela</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="sprzet_pracownik_tab.php">pracownicy/sprzęt - tabela</a>
+                    <a class="nav-link active" href="sprzet_pracownik_tab.php">sprzęt - pracownik</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="historia.php">historia zmian</a>
@@ -59,6 +56,8 @@ require("connection.php");
 					<option value="login_pracownika">login pracownika</option>
                     <option value="NI">N/I sprzętu</option>
                     <option value="SN">S/N sprzętu</option>
+                    <option value="model">model</option>
+                    <option value="status_sprz">status</option>
 				</select>
 			</div><br>
 			<div>
@@ -81,7 +80,7 @@ require("connection.php");
             if($opcjonalna_wartosc === "wszystko") {
                 $query = "SELECT * FROM sprzet LEFT JOIN pracownicy ON sprzet.id_pracownika = pracownicy.id_pracownika
                     WHERE (login_pracownika LIKE '%$wartosc_input%') or (NI LIKE '%$wartosc_input%') or
-                    (SN LIKE '%$wartosc_input%')";
+                    (SN LIKE '%$wartosc_input%') or (model LIKE '%$wartosc_input%') or (status_sprz LIKE '%$wartosc_input%')";
             }
            
         $result = mysqli_query($conn, $query);

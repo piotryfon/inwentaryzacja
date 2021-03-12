@@ -33,13 +33,10 @@
                     <a class="nav-link active" href="dodajsprzet.php">dodaj sprzęt</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="sprzet_tabela.php">sprzęt - tabela</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link active" href="pracownicy_tabela.php">pracownicy - tabela</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="sprzet_pracownik_tab.php">pracownicy/sprzęt - tabela</a>
+                    <a class="nav-link active" href="sprzet_pracownik_tab.php">sprzęt - pracownik</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="historia.php">historia zmian</a>
@@ -84,8 +81,13 @@
         </ul>
         <h5>przydatne linki</h5>
         <ul>
-            <a href="#">
-                <li>SharePoint</li>
+            <a href="#" target="_blank">
+                <li>SharePoint - strona główna</li>
+            </a>
+        </ul>
+        <ul>
+            <a href="#" target="_blank">
+                <li>SharePoint - procedury</li>
             </a>
         </ul>
 

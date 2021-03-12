@@ -54,12 +54,13 @@
                     <th>kod</th>
                     <th>oznaczenie</th>
                     <th>firma</th>
+                    <th>kolor</th>
                     <th>opis</th>
                     <th>ilość</th>
                 </tr>
                 <?php
                 require("connection_tonery.php");
-                $query = "SELECT * FROM tonery_tab";    
+                $query = "SELECT * FROM tonery_tab ORDER BY firma";    
                 $result = mysqli_query($conn, $query);
 
                 while ($row = mysqli_fetch_array($result)) {
@@ -67,6 +68,7 @@
                     echo "<td>$row[kod]</td>";
                     echo "<td>$row[oznaczenie]</td>";
                     echo "<td>$row[firma]</td>";
+                    echo "<td>$row[kolor]</td>";
                     echo "<td>$row[opis]</td>";
                     echo "<td>$row[ilosc]</td>";
                     echo "</tr>";
