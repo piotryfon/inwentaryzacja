@@ -49,7 +49,7 @@
 
         <h3>Aplikacja inwentaryzacyjna.</h3>
         <hr>
-        <h5>Tu możesz edytować dane:</h5>
+        <h5>Edytuj dane:</h5>
         <ul>
             <a href="edytuj_pracownika.php">
                 <li>edytuj pracownika</li>
@@ -58,28 +58,28 @@
                 <li>edytuj sprzęt</li>
             </a>
             <a href="edytuj_status.php">
-                <li>edytuj status sprzętu i przypisz do pracownika</li>
+                <li><b>przypisz sprzęt do pracownika</b></li>
             </a>
         </ul>
-        <h5>lub skorzystaj z aplikacji inwentaryzującej tonery</h5>
+        <h5>Skorzystaj z aplikacji inwentaryzującej tonery</h5>
         <ul>
             <a href="tonery/tonery_tabela.php">
-                <li>tonery</li>
+                <li><b>tonery</b></li>
             </a>
         </ul>
-        <h5>sporządź protokół <b>wydania sprzętu komputerowego</b></h5>
+        <h5>Sporządź protokół wydania oraz zwrotu sprzętu komputerowego</h5>
         <ul>
             <a href="wyszukaj_komputer_proto.php">
-                <li>wybierz sprzęt do protokołu</li>
+                <li><b>wybierz sprzęt do protokołu</b></li>
             </a>
         </ul>
-        <h5>sporządź protokół przeniesienia sprzętu komputerowego</h5>
+        <h5>Sporządź protokół przeniesienia sprzętu komputerowego</h5>
         <ul>
             <a href="wyszukaj_do_protokolu.php">
                 <li>wybierz sprzęt do przeniesienia</li>
             </a>
         </ul>
-        <h5>przydatne linki</h5>
+        <h5>Przydatne linki</h5>
         <ul>
             <a href="#" target="_blank">
                 <li>SharePoint - strona główna</li>

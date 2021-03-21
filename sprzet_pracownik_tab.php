@@ -57,6 +57,7 @@ require("connection.php");
                     <option value="NI">N/I sprzętu</option>
                     <option value="SN">S/N sprzętu</option>
                     <option value="model">model</option>
+                    <option value="rodzaj">rodzaj</option>
                     <option value="status_sprz">status</option>
 				</select>
 			</div><br>
@@ -80,7 +81,7 @@ require("connection.php");
             if($opcjonalna_wartosc === "wszystko") {
                 $query = "SELECT * FROM sprzet LEFT JOIN pracownicy ON sprzet.id_pracownika = pracownicy.id_pracownika
                     WHERE (login_pracownika LIKE '%$wartosc_input%') or (NI LIKE '%$wartosc_input%') or
-                    (SN LIKE '%$wartosc_input%') or (model LIKE '%$wartosc_input%') or (status_sprz LIKE '%$wartosc_input%')";
+                    (SN LIKE '%$wartosc_input%') or (model LIKE '%$wartosc_input%') or (status_sprz LIKE '%$wartosc_input%') or (rodzaj LIKE '%$wartosc_input%')";
             }
            
         $result = mysqli_query($conn, $query);
