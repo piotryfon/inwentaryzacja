@@ -67,7 +67,7 @@ require("connection.php");
             if($opcjonalna_wartosc === "wszystko") {
                 $query = "SELECT * FROM sprzet LEFT JOIN pracownicy ON sprzet.id_pracownika = pracownicy.id_pracownika
                     WHERE (login_pracownika LIKE '%$wartosc_input%') or (NI LIKE '%$wartosc_input%') or
-                    (SN LIKE '%$wartosc_input%') or (pokoj LIKE '%$wartosc_input%') ORDER BY login_pracownika";
+                    (SN = '$wartosc_input') or (pokoj LIKE '%$wartosc_input%') ORDER BY login_pracownika";
             }
             
                 $result = mysqli_query($conn, $query);

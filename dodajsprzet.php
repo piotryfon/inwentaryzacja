@@ -64,8 +64,8 @@ if (isset($_POST['submit'])) {
 	$dysk = mysqli_real_escape_string($conn, $_REQUEST['dysk']);
 	$status = mysqli_real_escape_string($conn, $_REQUEST['status']);
 	$opis = mysqli_real_escape_string($conn, $_REQUEST['opis']);
+	$nr_dostawy = mysqli_real_escape_string($conn, $_REQUEST['nr_dostawy']);
 	$data = mysqli_real_escape_string($conn, $_REQUEST['data']);
-
 	if (($sn === "") or ($ni === "")) {
 		echo '<div class="alert alert-danger" role="alert">Zostawiłeś puste pole!</div>';
 	} else {
@@ -74,8 +74,8 @@ if (isset($_POST['submit'])) {
 		if(mysqli_num_rows($sql_check_result)){
 			echo '<div class="alert alert-danger" role="alert">Taki S/N lub N/I już istnieje i nie może być ponownie dodany!</div>';
 		} else {
-			$sql = "INSERT INTO sprzet (rodzaj, pin, model, SN, NI, procesor, ram, dysk, status_sprz, opis, data_dodania) 
-			VALUES ('$rodzaj', '$pin', '$model','$sn', '$ni', '$procesor', '$ram', '$dysk', '$status','$opis', '$data')";
+			$sql = "INSERT INTO sprzet (rodzaj, pin, model, SN, NI, procesor, ram, dysk, status_sprz, opis, nr_dostawy, data_dodania) 
+			VALUES ('$rodzaj', '$pin', '$model','$sn', '$ni', '$procesor', '$ram', '$dysk', '$status','$opis', '$nr_dostawy', '$data')";
 			if (mysqli_query($conn, $sql)) {
 				//header("location: sprzet_dodany.html");
 				echo '<script type="text/javascript">
@@ -171,6 +171,10 @@ if (isset($_POST['submit'])) {
 					<p>
 						<label for="opis">opis</label><br>
 						<textarea style="width: 250px" name="opis" id="opis"></textarea>
+					</p>
+					<p>
+						<label for="nr_dostawy">nr_dostawy</label><br>
+						<input type="number" min="0" max="999" name="nr_dostawy" id="nr_dostawy">
 					</p>
 					<div>
 						<label for="data">data</label>

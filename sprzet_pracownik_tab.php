@@ -53,6 +53,7 @@ require("connection.php");
 				<label for="opcja">Wybierz parametr:</label><br>
 				<select name="opcja" id="opcja">
                     <option value="wszystko">wszystko</option>
+                    <option value="nr_dostawy">nr dostawy</option>
 					<option value="login_pracownika">login pracownika</option>
                     <option value="NI">N/I sprzętu</option>
                     <option value="SN">S/N sprzętu</option>
@@ -77,11 +78,11 @@ require("connection.php");
 			$opcjonalna_wartosc = $_POST['opcja'];
 			$wartosc_input = $_POST['wartosc'];
 			$query = "SELECT * FROM sprzet LEFT JOIN pracownicy ON sprzet.id_pracownika = pracownicy.id_pracownika
-                    WHERE $opcjonalna_wartosc LIKE '%$wartosc_input%'";
+                    WHERE $opcjonalna_wartosc LIKE '$wartosc_input'";
             if($opcjonalna_wartosc === "wszystko") {
                 $query = "SELECT * FROM sprzet LEFT JOIN pracownicy ON sprzet.id_pracownika = pracownicy.id_pracownika
-                    WHERE (login_pracownika LIKE '%$wartosc_input%') or (NI LIKE '%$wartosc_input%') or
-                    (SN LIKE '%$wartosc_input%') or (model LIKE '%$wartosc_input%') or (status_sprz LIKE '%$wartosc_input%') or (rodzaj LIKE '%$wartosc_input%')";
+                    WHERE (login_pracownika LIKE '%$wartosc_input%') or (NI LIKE '%$wartosc_input%') or 
+                    (SN = '$wartosc_input') or (model LIKE '%$wartosc_input%') or (status_sprz LIKE '%$wartosc_input%') or (rodzaj LIKE '%$wartosc_input%')";
             }
            
         $result = mysqli_query($conn, $query);
@@ -102,6 +103,7 @@ require("connection.php");
                 <th>S/N</th>
                 <th>login</th>
                 <th>status</th>
+                <th>nr dostawy</th>
                 <th>opis</th>
                 <th>data dodania <br> sprzętu do bazy</th>
             </tr>
@@ -119,6 +121,7 @@ require("connection.php");
                 echo "<td>$row[SN]</td>";
                 echo "<td>$row[login_pracownika]</td>";
                 echo "<td>$row[status_sprz]</td>";
+                echo "<td>$row[nr_dostawy]</td>";
                 echo "<td>$row[opis]</td>";
                 echo "<td>$row[data_dodania]</td>";
                 echo "</tr>";

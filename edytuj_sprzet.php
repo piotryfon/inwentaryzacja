@@ -79,7 +79,7 @@
                     WHERE $opcjonalna_wartosc LIKE '%$wartosc_input%'";
             if($opcjonalna_wartosc === "wszystko"){
                 $query = "SELECT * FROM sprzet 
-                    WHERE (SN LIKE '%$wartosc_input%') or (NI LIKE '%$wartosc_input%') or 
+                    WHERE (SN = '$wartosc_input') or (NI LIKE '%$wartosc_input%') or 
                     (status_sprz LIKE '%$wartosc_input%') or (rodzaj LIKE '%$wartosc_input%') or (opis LIKE '%$wartosc_input%')";
             }
 
@@ -162,6 +162,12 @@
                                 </div><br>
                                 <div>
                                     <div>
+                                        <label>nr dostawy</label>
+                                    </div>
+                                    <input type="number" min="0" max="999" name="nr_dostawy" class="bg-success text-white" value="<?php echo $row['nr_dostawy'] ?>" />
+                                </div><br>
+                                <div>
+                                    <div>
                                         <label>opis</label>
                                     </div>
                                     <textarea rows="4" cols="30" type="text" name="opis" class="bg-success text-white"><?php echo $row['opis'] ?></textarea>
@@ -181,7 +187,7 @@
             $query = "UPDATE sprzet SET 
                             rodzaj = '$_POST[rodzaj]', opis = '$_POST[opis]',
                             pin = '$_POST[pin]', model = '$_POST[model]',
-                            SN = '$_POST[sn]', NI = '$_POST[ni]',
+                            SN = '$_POST[sn]', NI = '$_POST[ni]', nr_dostawy = '$_POST[nr_dostawy]',
                             procesor = '$_POST[procesor]', ram = '$_POST[ram]',
                             dysk = '$_POST[dysk]', status_sprz = '$_POST[status]'
                             WHERE id_sprzetu ='" . $_POST['id'] . "' ";
