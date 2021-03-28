@@ -5,6 +5,7 @@
         header("location: index.php");
     }
     require("connection_tonery.php");
+    require("../test_input.php");
     $query_drukarki = "SELECT NI FROM drukarki ORDER BY NI ASC";
     $result_drukarki = mysqli_query($conn, $query_drukarki);
 ?>
@@ -53,7 +54,7 @@
         </header>
         <hr>
         <h4>Wydaj toner</h4><br>
-        <form method="POST">
+        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <div>
                 <label for="kod">kod</label>
             </div>
@@ -79,8 +80,8 @@
         <?php
     
         if(isset($_POST['wydaj_toner'])){
-
-            $query_is_value = "SELECT id FROM tonery_tab WHERE kod = '$_POST[kod]'";
+            $kod = test_input($_POST['kod']);
+            $query_is_value = "SELECT id FROM tonery_tab WHERE kod = '$kod'";
             $result_is_value = mysqli_query($conn, $query_is_value);
 
             if(mysqli_num_rows($result_is_value)===0){
@@ -90,7 +91,7 @@
             } 
             else {
 
-                $query_ilosc = "SELECT ilosc from tonery_tab WHERE kod = '$_POST[kod]'";
+                $query_ilosc = "SELECT ilosc from tonery_tab WHERE kod = '$kod'";
                 $result_ilosc = mysqli_query($conn, $query_ilosc);
                 $row = mysqli_fetch_array($result_ilosc);
                 
@@ -105,10 +106,10 @@
                             <h5 style="color: red">Toner nie może być wydany - brak w magazynie!</h5>
                             ';
                     } else {
-                        $query_odejmij = "UPDATE tonery_tab SET ilosc = ilosc-1 WHERE kod = '$_POST[kod]'";
+                        $query_odejmij = "UPDATE tonery_tab SET ilosc = ilosc-1 WHERE kod = '$kod'";
                         $result_odejmij = mysqli_query($conn, $query_odejmij);  
                         $query_dodaj_do_wydanych = "INSERT INTO wydane_tonery (kod, NI_drukarki, data_wydania) 
-                        VALUES ('$_POST[kod]', '$_POST[NI_drukarki]', '$_POST[data]')"; 
+                        VALUES ('$kod', '$_POST[NI_drukarki]', '$_POST[data]')"; 
                         $result_wydane = mysqli_query($conn, $query_dodaj_do_wydanych);
                         echo '<script type="text/javascript">
                         alert("Wydano toner / część.");

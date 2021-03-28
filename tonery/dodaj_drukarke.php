@@ -48,7 +48,7 @@
         </header>
         <hr>
         <h4>Dodaj drukarkę.</h4><br>
-        <form method="POST" action="dodaj_drukarke.php">
+        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <div>
                 <label>Nazwa w domenie np. 00P2254</label>
             </div>
@@ -57,9 +57,9 @@
         </form>
         <?php
         require("connection_tonery.php");
-      
+        require("../test_input.php");
         if(isset($_POST['dodaj'])){
-            $ni = mysqli_real_escape_string($conn, $_REQUEST['NI']);
+            $ni = test_input(($_POST['NI']));
             if($ni == "") {
                 echo '<h3 style="color: red">Zostawiłeś puste pole!</h3>';
             } else {

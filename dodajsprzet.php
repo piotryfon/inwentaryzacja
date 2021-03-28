@@ -52,20 +52,22 @@
 		<?php
 
 require("connection.php");
-
+require("test_input.php");
 if (isset($_POST['submit'])) {
-	$rodzaj = mysqli_real_escape_string($conn, $_REQUEST['rodzaj']);
-	$pin = mysqli_real_escape_string($conn, $_REQUEST['pin']);
-	$model = mysqli_real_escape_string($conn, $_REQUEST['model']);
-	$sn = mysqli_real_escape_string($conn, $_REQUEST['sn']);
-	$ni = mysqli_real_escape_string($conn, $_REQUEST['ni']);
-	$procesor = mysqli_real_escape_string($conn, $_REQUEST['procesor']);
-	$ram = mysqli_real_escape_string($conn, $_REQUEST['ram']);
-	$dysk = mysqli_real_escape_string($conn, $_REQUEST['dysk']);
-	$status = mysqli_real_escape_string($conn, $_REQUEST['status']);
-	$opis = mysqli_real_escape_string($conn, $_REQUEST['opis']);
-	$nr_dostawy = mysqli_real_escape_string($conn, $_REQUEST['nr_dostawy']);
-	$data = mysqli_real_escape_string($conn, $_REQUEST['data']);
+	
+		$rodzaj = test_input($_POST["rodzaj"]);
+		$pin = test_input($_POST["pin"]);
+		$model = test_input($_POST["model"]);
+		$sn = test_input($_POST["sn"]);
+		$ni = test_input($_POST["ni"]);
+		$procesor = test_input($_POST["procesor"]);
+		$ram = test_input($_POST["ram"]);
+		$dysk = test_input($_POST["dysk"]);
+		$status = test_input($_POST["status"]);
+		$opis = test_input($_POST["opis"]);
+		$nr_dostawy = test_input($_POST["nr_dostawy"]);
+		$data = test_input($_POST["data"]);
+
 	if (($sn === "") or ($ni === "")) {
 		echo '<div class="alert alert-danger" role="alert">Zostawiłeś puste pole!</div>';
 	} else {
@@ -77,11 +79,10 @@ if (isset($_POST['submit'])) {
 			$sql = "INSERT INTO sprzet (rodzaj, pin, model, SN, NI, procesor, ram, dysk, status_sprz, opis, nr_dostawy, data_dodania) 
 			VALUES ('$rodzaj', '$pin', '$model','$sn', '$ni', '$procesor', '$ram', '$dysk', '$status','$opis', '$nr_dostawy', '$data')";
 			if (mysqli_query($conn, $sql)) {
-				//header("location: sprzet_dodany.html");
+				
 				echo '<script type="text/javascript">
 				alert("Sprzęt dodany.");
 				</script>';
-				echo '<div class="alert alert-success" role="alert">Sprzęt dodany.</div>';
 			} else {
 				echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
 			}
@@ -93,7 +94,7 @@ if (isset($_POST['submit'])) {
 		<h3>Dodaj sprzęt</h3>
 		<p style="color: green">Sprzęt aytomatycznie doda się jako użytkownik "magazyn".<br>
 		 Jeżeli jest z nowej dostawy, dla ułatwienia wyszukiwania zaznacz status "nowy".</p>
-		<form method="post">
+		<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 			<div class="row">
 				<div class="col-md-4">
 					<p>
@@ -173,7 +174,7 @@ if (isset($_POST['submit'])) {
 						<textarea style="width: 250px" name="opis" id="opis"></textarea>
 					</p>
 					<p>
-						<label for="nr_dostawy">nr_dostawy</label><br>
+						<label for="nr_dostawy">nr dostawy</label><br>
 						<input type="number" min="0" max="999" name="nr_dostawy" id="nr_dostawy">
 					</p>
 					<div>
@@ -184,13 +185,22 @@ if (isset($_POST['submit'])) {
 				</div>
 			</div>
 		</form>
-	
-
 	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript">
         if ( window.history.replaceState ) {
             window.history.replaceState( null, null, window.location.href );
         }
+		$(document).ready(function(){
+			$('form').on('focus', 'input[type=number]', function (e) {
+				$(this).on('wheel.disableScroll', function (e) {
+				e.preventDefault()
+				})
+			})
+				$('form').on('blur', 'input[type=number]', function (e) {
+				$(this).off('wheel.disableScroll')
+			})
+		});
     </script>
 </body>
 

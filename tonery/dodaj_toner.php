@@ -58,19 +58,20 @@
         </form>
         <?php
         require("connection_tonery.php");
-      
+        require("../test_input.php");
+
         if(isset($_POST['dodaj'])){
 
-            $ilosc = mysqli_real_escape_string($conn, $_REQUEST['ilosc']);
-
-            $query_is_value = "SELECT id FROM tonery_tab WHERE kod = '$_POST[kod]'";
+            $ilosc = $_POST['ilosc'];
+            $kod = test_input($_POST['kod']);
+            $query_is_value = "SELECT id FROM tonery_tab WHERE kod = '$kod'";
             $result_is_value = mysqli_query($conn, $query_is_value);
 
             if(mysqli_num_rows($result_is_value)===0){
                 echo '<h5 style="color: red">Nieprawidłowy kod!</h5>';
             } 
             else {
-                $query_update = "UPDATE tonery_tab SET ilosc = ilosc + $ilosc WHERE kod = '$_POST[kod]'";
+                $query_update = "UPDATE tonery_tab SET ilosc = ilosc + $ilosc WHERE kod = '$kod'";
                 $result_updete = mysqli_query($conn, $query_update);   
                
                header("location: dodano_toner.html");
@@ -80,10 +81,23 @@
        
         ?>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript">
         if ( window.history.replaceState ) {
             window.history.replaceState( null, null, window.location.href );
         }
+        
+        $(document).ready(function(){
+            $('form').on('focus', 'input[type=number]', function (e) {
+                $(this).on('wheel.disableScroll', function (e) {
+                e.preventDefault()
+                })
+            })
+                $('form').on('blur', 'input[type=number]', function (e) {
+                $(this).off('wheel.disableScroll')
+            })
+        });
+
     </script>
 </body>
 

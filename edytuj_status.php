@@ -13,7 +13,10 @@
 	<title>edytuj status sprzętu</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<style>
-	
+	.btn-warning {
+		margin-top: 100px;
+		font-size: 18px;
+	}
 	</style>
 </head>
 
@@ -45,11 +48,11 @@
 			    </li>
 			</ul>
 		</header><br>
-		<h4>Edycja przypisania użytkownika do sprzętu.</h4>
+		<h4>Przypisz użytkownika do sprzętu.</h4>
 		<hr>
 		<p style="color: green">Tu możesz wyszukać sprzęt następnie przypisać do niego pracownika oraz zmienić status sprzętu.</p>
 		<br>
-		<form method="POST">
+		<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 			<div>
 				<label for="opcja">Wybierz parametr:</label><br>
 				<select name="opcja" id="opcja">
@@ -61,19 +64,19 @@
 			</div><br>
 			<div>
 				<input type="text" name="wartosc" placeholder="Wpisz wartość">
-			</div><br>
-			<input class="btn btn-primary" type="submit" name="search" value="przeszukaj dane">
+				<input class="btn btn-primary" type="submit" name="search" value="przeszukaj dane">
+			</div>
 		</form>
 		<hr><br>
 		<?php
 		require("connection.php");
-
+		require("test_input.php");
 		if (isset($_POST['search'])) {
 			if($_POST['wartosc']===''){
-				echo'Nie wpisałeś żadnej wartości.';
+				echo'<h4 style="color: red">Nie wpisałeś żadnej wartości...</h4>';
 			} else {
 				$opcjonalna_wartosc = $_POST['opcja'];
-				$wartosc_input = $_POST['wartosc'];
+				$wartosc_input = test_input($_POST['wartosc']);
 				$query = "SELECT * FROM sprzet LEFT JOIN pracownicy 
 								ON sprzet.id_pracownika = pracownicy.id_pracownika
 								WHERE $opcjonalna_wartosc LIKE '%$wartosc_input%'";
@@ -90,9 +93,9 @@
 
 					while ($row = mysqli_fetch_array($result)) {
 					?>
-						<form method="POST" action="edytuj_status.php">
+						<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 							<div class="row">
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<div>
 										<div>
 											<label>ID sprzętu</label>
@@ -124,7 +127,7 @@
 										<input type="text" name="pin" readonly value="<?php echo $row['pin'] ?>" />
 									</div><br>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<div>
 										<div>
 											<label>status</label>
@@ -141,26 +144,27 @@
 										</select>
 									</div><br>
 									<div>
-										<form method="post">
-											<div>
-												<label>login</label>
-											</div>
-											<input type="text" readonly name="login_pracownika" value="<?php echo $row['login_pracownika'] ?>" /><br><br>
-											<div>
-												<label>wpisz nowy login lub "magazyn" albo "nfz"</label>
-											</div>
-											<input type="text" name="nowy_login" value="" class="bg-success text-white" /><br><br>
-											<div>
-												<label>opis</label>
-											</div>
-											<textarea rows="4" cols="30" name="opis" class="bg-success text-white"><?php echo $row['opis'] ?></textarea>
-											<div>
-												<label>data</label>
-											</div>
-											<input type="text" readonly name="aktu_data" value="<?php echo date("Y-m-d") ?>" />
-											<input class="btn btn-primary" type="submit" name="zatwierdz" value="zatwierdź">
-										</form>
-									</div><br>
+										
+										<div>
+											<label>login</label>
+										</div>
+										<input type="text" readonly name="login_pracownika" value="<?php echo $row['login_pracownika'] ?>" /><br><br>
+										<div>
+											<label>wpisz nowy login lub "magazyn" albo "nfz"</label>
+										</div>
+										<input type="text" name="nowy_login" value="" class="bg-success text-white" /><br><br>
+										<div>
+											<label>opis</label>
+										</div>
+										<textarea rows="4" cols="30" name="opis" class="bg-success text-white"><?php echo $row['opis'] ?></textarea>
+										<div>
+											<label>data</label>
+										</div>
+										<input type="text" readonly name="aktu_data" value="<?php echo date("Y-m-d") ?>" />
+									</div>
+								</div>
+								<div class="col-md-2">
+								<input class="btn btn-warning" type="submit" name="zatwierdz" value="zatwierdź zmiany">
 								</div>
 							</div>
 						</form>
@@ -177,14 +181,15 @@
 			if (mysqli_num_rows($result) === 0) {
 				 echo '<h5 style="color: red">Nie ma takiego pracownika lub nieprawidłowa wartość!</h5>';
 			} else {
-				$sn = mysqli_real_escape_string($conn, $_REQUEST['sn']);
-				$ni = mysqli_real_escape_string($conn, $_REQUEST['ni']);
-				$rodzaj = mysqli_real_escape_string($conn, $_REQUEST['rodzaj']);
-				$status = mysqli_real_escape_string($conn, $_REQUEST['status']);
-				$login_stary = mysqli_real_escape_string($conn, $_REQUEST['login_pracownika']);
-				$login_nowy = mysqli_real_escape_string($conn, $_REQUEST['nowy_login']);
-				$opis = mysqli_real_escape_string($conn, $_REQUEST['opis']);
-				$data = mysqli_real_escape_string($conn, $_REQUEST['aktu_data']);
+				
+				$sn = test_input($_POST['sn']);
+				$ni = test_input($_POST['ni']);
+				$rodzaj = test_input($_POST['rodzaj']);
+				$status = test_input($_POST['status']);
+				$login_stary = test_input($_POST['login_pracownika']);
+				$login_nowy = test_input($_POST['nowy_login']);
+				$opis = test_input($_POST['opis']);
+				$data = test_input($_POST['aktu_data']);
 				
 				$query_historia = "INSERT INTO sprzet_historia (SN, NI, rodzaj, status_sprz, login_stary, login_nowy, data_zmiany) 
 				VALUES ('$sn', '$ni', '$rodzaj', '$status', '$login_stary', '$login_nowy', '$data')";
@@ -197,7 +202,7 @@
 				$row_login_sprzet = mysqli_fetch_array($result_login_sprzet);
 				$row_na_int = (int)$row_login_sprzet['id_pracownika'];
 
-				$query_update = "UPDATE sprzet SET id_pracownika = $row_na_int, status_sprz = '$_POST[status]', opis = '$_POST[opis]' WHERE id_sprzetu ='" . $_POST['id_sprzetu'] . "'";
+				$query_update = "UPDATE sprzet SET id_pracownika = $row_na_int, status_sprz = '$status', opis = '$opis' WHERE id_sprzetu ='" . $_POST['id_sprzetu'] . "'";
 
 				if ($query_update) {
 					mysqli_query($conn, $query_update);

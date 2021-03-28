@@ -49,6 +49,11 @@
 
         <h3>Aplikacja inwentaryzacyjna.</h3>
         <hr>
+        <ul>
+            <a href="sprzet_tabela.php">
+                <li>sprzęt/pracownik - tabela</li>
+            </a>
+        </ul>
         <h5>Edytuj dane:</h5>
         <ul>
             <a href="edytuj_pracownika.php">
@@ -87,7 +92,7 @@
         </ul>
         <ul>
             <a href="#" target="_blank">
-                <li>SharePoint - procedury</li>
+                <li>SharePoint - macierz</li>
             </a>
         </ul>
 

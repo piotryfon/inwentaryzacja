@@ -20,22 +20,22 @@
     <header>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
-                    <b><a class="nav-link active" href="main.php">str. gł</a></b>
+                    <b><a class="nav-link active" href="../main.php">str. gł</a></b>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="dodajpracownika.php">dodaj pracownika</a>
+                    <a class="nav-link active" href="../dodajpracownika.php">dodaj pracownika</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="dodajsprzet.php">dodaj sprzęt</a>
+                    <a class="nav-link active" href="../dodajsprzet.php">dodaj sprzęt</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="pracownicy_tabela.php">pracownicy - tabela</a>
+                    <a class="nav-link active" href="../pracownicy_tabela.php">pracownicy - tabela</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="sprzet_pracownik_tab.php">sprzęt - pracownik</a>
+                    <a class="nav-link active" href="../sprzet_pracownik_tab.php">sprzęt - pracownik</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="historia.php">historia zmian</a>
+                    <a class="nav-link active" href="../historia.php">historia zmian</a>
                 </li>
             </ul>
         </header>
@@ -48,7 +48,7 @@
             </form>
             <?php
         
-                require("connection.php");
+                require("../connection.php");
                
                 if(isset($_POST['delete'])){
                     $id_sprzetu = $_POST['id_sprzetu'];

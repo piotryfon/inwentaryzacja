@@ -45,7 +45,7 @@
 		<h3>Dodaj pracownika</h3>
 		<p style="color: green">Zanim dodasz pracownika, sprawdź czy taki login istnieje w 
 		<a href="pracownicy_tabela.php">pracownicy-tabela</a>.</p>
-		<form method="post">
+		<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 			<div class="row">
 				<div class="col-md-4 offset-4">
 					<p>
@@ -78,14 +78,15 @@
 
 		<?php
 		require("connection.php");
-
+		require("test_input.php");
 		if (isset($_POST['submit'])) {
-			$login_pracownika = mysqli_real_escape_string($conn, $_REQUEST['login_pracownika']);
-			$imie = mysqli_real_escape_string($conn, $_REQUEST['imie']);
-			$nazwisko = mysqli_real_escape_string($conn, $_REQUEST['nazwisko']);
-			$departament = mysqli_real_escape_string($conn, $_REQUEST['departament']);
-			$pokoj = mysqli_real_escape_string($conn, $_REQUEST['pokoj']);
-
+		
+				$login_pracownika = test_input($_POST["login_pracownika"]);
+				$imie = test_input($_POST["imie"]);
+				$nazwisko = test_input($_POST["nazwisko"]);
+				$departament = test_input($_POST["departament"]);
+				$pokoj = test_input($_POST["pokoj"]);
+			  
 			if ($login_pracownika == "") {
 				echo '<h5 style="color: red">Zostawiłeś puste pole - login.</h5>';
 			} else {

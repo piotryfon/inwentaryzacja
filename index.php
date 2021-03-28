@@ -18,7 +18,7 @@ if (isset($_SESSION['login_user'])) {
 	<div class="container">
         <br>
 		<h3><em>Zaloguj się do aplikacji inwentaryzacyjnej HelpDesk</em></h3>
-		<form action="" method="post">
+		<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
             <label>Hasło:</label><br>
             <input name="password" placeholder="Hasło" type="password"><br>
             <br>

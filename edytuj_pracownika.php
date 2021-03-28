@@ -50,7 +50,7 @@
         <hr>
         <p>Wyszukaj pracownika</p>
         <br>
-        <form method="post">
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <div>
                 <label for="opcja">Wybierz parametr:</label><br>
                 <select name="opcja" id="opcja">
@@ -61,86 +61,95 @@
             </div><br>
             <div>
                 <input type="text" name="wartosc" placeholder="Wpisz wartość">
-            </div><br>
-            <input class="btn btn-primary" type="submit" name="search" value="przeszukaj dane">
+                <input class="btn btn-primary" type="submit" name="search" value="przeszukaj dane">
+            </div>
         </form>
         <hr>
         <br>
 
         <?php
         require("connection.php");
+        require("test_input.php");
 
         if (isset($_POST['search'])) {
+            
             $opcjonalna_wartosc = $_POST['opcja'];
-            $wartosc_input = $_POST['wartosc'];
-            $query = "SELECT * FROM pracownicy 
-					WHERE $opcjonalna_wartosc LIKE '%$wartosc_input%'";
+            $wartosc_input = test_input($_POST['wartosc']);
+            if($_POST['wartosc']=='') {
+                echo "<h4 style='color: red'>Zostawiłeś puste pole...</h4>";
+            } else {
 
-            $result = mysqli_query($conn, $query);
-            if (!$result) {
-                echo "Nieprwidłowe zapytanie";
-            }
+                $query = "SELECT * FROM pracownicy 
+                        WHERE $opcjonalna_wartosc LIKE '%$wartosc_input%'";
 
-            while ($row = mysqli_fetch_array($result)) {
-        ?>
-                <form method="post" action="edytuj_pracownika.php">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div>
+                $result = mysqli_query($conn, $query);
+                if (!$result) {
+                    echo "Nieprwidłowe zapytanie";
+                }
+
+                while ($row = mysqli_fetch_array($result)) {
+            ?>
+                    <form method="post" action="edytuj_pracownika.php">
+                    <div class="row">
+                        <div class="col-lg-4">
                             <div>
-                                <label>ID pracownika<label>
-                            </div>
-                            <input type="number" name="id" readonly value="<?php echo $row['id_pracownika'] ?>" />
-                        </div><br>
+                                <div>
+                                    <label>ID pracownika<label>
+                                </div>
+                                <input type="number" name="id" readonly value="<?php echo $row['id_pracownika'] ?>" />
+                            </div><br>
+                        </div>
+                        <div class="col-lg-4">
+                            <div>
+                                <div>
+                                    <label>login pracownika<label>
+                                </div>
+                                <input type="text" name="login_pracownika" class="bg-success text-white" value="<?php echo $row['login_pracownika'] ?>" />
+                            </div><br>
+                            <div>
+                                <div>
+                                    <label>imię<label>
+                                </div>
+                                <input type="text" name="imie"class="bg-success text-white" value="<?php echo $row['imie'] ?>" />
+                            </div><br>
+                            <div>
+                                <div>
+                                    <label>nazwisko<label>
+                                </div>
+                                <input type="text" name="nazwisko" class="bg-success text-white" value="<?php echo $row['nazwisko'] ?>" />
+                            </div><br>
+                        </div>
+                        <div class="col-lg-4">
+                            <div>
+                                <div>
+                                    <label>departament<label>
+                                </div>
+                                <input type="text" name="departament" class="bg-success text-white" value="<?php echo $row['departament'] ?>" />
+                            </div><br>
+                            <div>
+                                <div>
+                                    <label>pokój<label>
+                                </div>
+                                <input type="text" name="pokoj" class="bg-success text-white" value="<?php echo $row['pokoj'] ?>" />
+                            </div><br>
+                            <input class="btn btn-warning" type="submit" value="zapisz zmiany" name="zatwierdz">
+                        </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div>
-                            <div>
-                                <label>login pracownika<label>
-                            </div>
-                            <input type="text" name="login_pracownika" class="bg-success text-white" value="<?php echo $row['login_pracownika'] ?>" />
-                        </div><br>
-                        <div>
-                            <div>
-                                <label>imię<label>
-                            </div>
-                            <input type="text" name="imie"class="bg-success text-white" value="<?php echo $row['imie'] ?>" />
-                        </div><br>
-                        <div>
-                            <div>
-                                <label>nazwisko<label>
-                            </div>
-                            <input type="text" name="nazwisko" class="bg-success text-white" value="<?php echo $row['nazwisko'] ?>" />
-                        </div><br>
-                    </div>
-                    <div class="col-lg-4">
-                        <div>
-                            <div>
-                                <label>departament<label>
-                            </div>
-                            <input type="text" name="departament" class="bg-success text-white" value="<?php echo $row['departament'] ?>" />
-                        </div><br>
-                        <div>
-                            <div>
-                                <label>pokój<label>
-                            </div>
-                            <input type="text" name="pokoj" class="bg-success text-white" value="<?php echo $row['pokoj'] ?>" />
-                        </div><br>
-                        <input class="btn btn-primary" type="submit" value="zatwierdz" name="zatwierdz">
-                    </div>
-                </div>
-                </form>
-                <hr>
-        <?php
+                    </form>
+                    <hr>
+            <?php
+                }
             }
         }
         if (isset($_POST['zatwierdz'])) {
-           
-            $query = "UPDATE pracownicy SET 
-                            login_pracownika = '$_POST[login_pracownika]',
-                            imie = '$_POST[imie]', nazwisko = '$_POST[nazwisko]',
-                            departament = '$_POST[departament]', pokoj = '$_POST[pokoj]'
-                            WHERE id_pracownika ='".$_POST['id']."' ";
+         
+           $login = test_input($_POST['login_pracownika']);
+           $imie = test_input($_POST['imie']);
+           $nazwisko = test_input($_POST['nazwisko']);
+           $departament = test_input($_POST['pokoj']);
+           $pokoj = test_input($_POST['departament']);
+            $query = "UPDATE pracownicy SET login_pracownika = '$login', imie = '$imie', nazwisko = '$nazwisko', departament = '$departament', pokoj = '$pokoj'
+                        WHERE id_pracownika ='".$_POST['id']."' ";
         
                 $result = mysqli_query($conn, $query);
                 if ($result){

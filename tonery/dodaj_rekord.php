@@ -49,7 +49,7 @@
         </header>
         <hr>
         <h4>Dodaj rekord - toner</h4><br>
-        <form method="POST" action="dodaj_rekord.php">
+        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <div class="row">
                 <div class="col-lg-5">
                     <div>
@@ -81,13 +81,13 @@
         </form>
         <?php
         require("connection_tonery.php");
-      
+        require("../test_input.php");
         if(isset($_POST['dodaj'])){
-            $kod = mysqli_real_escape_string($conn, $_REQUEST['kod']);
-            $oznaczenie = mysqli_real_escape_string($conn, $_REQUEST['oznaczenie']);
-            $kolor = mysqli_real_escape_string($conn, $_REQUEST['kolor']);
-            $firma = mysqli_real_escape_string($conn, $_REQUEST['firma']);
-            $opis = mysqli_real_escape_string($conn, $_REQUEST['opis']);
+            $kod = test_input($_POST['kod']);
+            $oznaczenie = test_input($_POST['oznaczenie']);
+            $kolor = test_input($_POST['kolor']);
+            $firma = test_input($_POST['firma']);
+            $opis = test_input($_POST['opis']);
 
             $sql = "INSERT INTO tonery_tab (kod, oznaczenie, kolor, firma, opis) 
             VALUES ('$kod', '$oznaczenie', '$kolor', '$firma', '$opis')";

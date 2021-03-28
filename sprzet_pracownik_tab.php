@@ -5,6 +5,7 @@
         header("location: index.php");
     }
 require("connection.php");
+require("test_input.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -48,7 +49,7 @@ require("connection.php");
         </header>
         <br>
         <h4>Wyszukaj pracownika lub sprzęt</h4>
-		<form method="POST">
+		<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 			<div>
 				<label for="opcja">Wybierz parametr:</label><br>
 				<select name="opcja" id="opcja">
@@ -64,8 +65,8 @@ require("connection.php");
 			</div><br>
 			<div>
 				<input type="text" name="wartosc" placeholder="Wpisz wartość">
-			</div><br>
-			<input class="btn btn-primary" type="submit" name="search" value="przeszukaj dane">
+                <input class="btn btn-primary" type="submit" name="search" value="przeszukaj dane">
+			</div>
 		</form>
 		<hr>
 		<br>
@@ -76,7 +77,7 @@ require("connection.php");
                 echo '<h5 style="color: red">Wpisz wartość!</h5>';
             } else {
 			$opcjonalna_wartosc = $_POST['opcja'];
-			$wartosc_input = $_POST['wartosc'];
+			$wartosc_input = test_input($_POST['wartosc']);
 			$query = "SELECT * FROM sprzet LEFT JOIN pracownicy ON sprzet.id_pracownika = pracownicy.id_pracownika
                     WHERE $opcjonalna_wartosc LIKE '$wartosc_input'";
             if($opcjonalna_wartosc === "wszystko") {

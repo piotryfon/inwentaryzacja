@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <style>
 
-
     </style>
 </head>
 
@@ -50,7 +49,7 @@
         <hr>
         <p>Wyszukaj sprzęt</p>
         <br>
-        <form method="post">
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <div>
                 <label for="opcja">Wybierz parametr:</label><br>
                 <select name="opcja" id="opcja">
@@ -62,134 +61,149 @@
                 </select>
             </div><br>
             <div>
-                <input type="text" name="wartosc" placeholder="Wpisz wartość">
-            </div><br>
-            <input class="btn btn-primary" type="submit" name="search" value="przeszukaj dane">
+                <input type="text" name="wartosc" placeholder="Wpisz wartość"> 
+                <input class="btn btn-primary" type="submit" name="search" value="przeszukaj dane">
+            </div>
         </form>
         <hr>
         <br>
 
         <?php
         require("connection.php");
+        require("test_input.php");
 
         if (isset($_POST['search'])) {
             $opcjonalna_wartosc = $_POST['opcja'];
-            $wartosc_input = $_POST['wartosc'];
-            $query = "SELECT * FROM sprzet 
-                    WHERE $opcjonalna_wartosc LIKE '%$wartosc_input%'";
-            if($opcjonalna_wartosc === "wszystko"){
-                $query = "SELECT * FROM sprzet 
-                    WHERE (SN = '$wartosc_input') or (NI LIKE '%$wartosc_input%') or 
-                    (status_sprz LIKE '%$wartosc_input%') or (rodzaj LIKE '%$wartosc_input%') or (opis LIKE '%$wartosc_input%')";
-            }
-
-            $result = mysqli_query($conn, $query);
-            if (!$result) {
-                echo "Nieprwidłowe zapytanie";
-            }
-            $row = mysqli_num_rows($result);
-            if ($row < 1) {
-                echo "Nie ma takiego sprzętu.";
-                mysqli_free_result($result);
+            $wartosc_input = test_input($_POST['wartosc']);
+            if($_POST['wartosc']=='') {
+                echo "<h4 style='color: red'>Zostawiłeś puste pole...</h4>";
             } else {
+                
+                $query = "SELECT * FROM sprzet 
+                        WHERE $opcjonalna_wartosc LIKE '%$wartosc_input%'";
+                if($opcjonalna_wartosc === "wszystko"){
+                    $query = "SELECT * FROM sprzet 
+                        WHERE (SN = '$wartosc_input') or (NI LIKE '%$wartosc_input%') or 
+                        (status_sprz LIKE '%$wartosc_input%') or (rodzaj LIKE '%$wartosc_input%') or (opis LIKE '%$wartosc_input%')";
+                }
 
-                while ($row = mysqli_fetch_array($result)) {
-        ?>
-                    <form method="post" action="edytuj_sprzet.php">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div>
-                                    <div>
-                                        <label>ID sprzętu</label>
-                                    </div>
-                                    <input type="number" name="id" readonly value="<?php echo $row['id_sprzetu'] ?>" />
-                                </div><br>
-                                <div>
-                                    <div>
-                                        <label>rodzaj</label>
-                                    </div>
-                                    <input type="text" name="rodzaj" class="bg-success text-white" value="<?php echo $row['rodzaj'] ?>" />
-                                </div><br>
-                                <div>
-                                    <div>
-                                        <label>pin</label>
-                                    </div>
-                                    <input type="text" name="pin" class="bg-success text-white" value="<?php echo $row['pin'] ?>" />
-                                </div><br>
-                                <div>
-                                    <div>
-                                        <label>model</label>
-                                    </div>
-                                    <input type="text" name="model" class="bg-success text-white" value="<?php echo $row['model'] ?>" />
-                                </div><br>
-                                <div>
-                                    <div>
-                                        <label>N/I</label>
-                                    </div>
-                                    <input type="text" name="ni" class="bg-success text-white" value="<?php echo $row['NI'] ?>" />
-                                </div><br>
-                                <div>
-                                    <div>
-                                        <label>S/N</label>
-                                    </div>
-                                    <input type="text" name="sn" class="bg-success text-white" value="<?php echo $row['SN'] ?>" />
-                                </div><br>
-                            </div>
-                            <div class="col-lg-6">
-                                <div>
-                                    <div>
-                                        <label>procesor</label>
-                                    </div>
-                                    <input type="text" name="procesor" class="bg-success text-white" value="<?php echo $row['procesor'] ?>" />
-                                </div><br>
-                                <div>
-                                    <div>
-                                        <label>RAM</label>
-                                    </div>
-                                    <input type="text" name="ram" class="bg-success text-white" value="<?php echo $row['ram'] ?>" />
-                                </div><br>
-                                <div>
-                                    <div>
-                                        <label>dysk</label>
-                                    </div>
-                                    <input type="text" name="dysk" class="bg-success text-white" value="<?php echo $row['dysk'] ?>" />
-                                </div><br>
-                                <div>
-                                    <div>
-                                        <label>status</label>
-                                    </div>
-                                    <input type="text" name="status" class="bg-success text-white" value="<?php echo $row['status_sprz'] ?>" />
-                                </div><br>
-                                <div>
-                                    <div>
-                                        <label>nr dostawy</label>
-                                    </div>
-                                    <input type="number" min="0" max="999" name="nr_dostawy" class="bg-success text-white" value="<?php echo $row['nr_dostawy'] ?>" />
-                                </div><br>
-                                <div>
-                                    <div>
-                                        <label>opis</label>
-                                    </div>
-                                    <textarea rows="4" cols="30" type="text" name="opis" class="bg-success text-white"><?php echo $row['opis'] ?></textarea>
-                                </div><br>
-                                <input class="btn btn-primary" type="submit" value="zatwierdz" name="zatwierdz">
-                            </div>
-                        </div>
+                $result = mysqli_query($conn, $query);
+                if (!$result) {
+                    echo "Nieprwidłowe zapytanie";
+                }
+                $row = mysqli_num_rows($result);
+                if ($row < 1) {
+                    echo "Nie ma takiego sprzętu.";
+                    mysqli_free_result($result);
+                } else {
 
-                    </form>
-                    <hr>
-        <?php
+                    while ($row = mysqli_fetch_array($result)) {
+            ?>
+                        <form method="post" action="edytuj_sprzet.php">
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <div>
+                                        <div>
+                                            <label>ID sprzętu</label>
+                                        </div>
+                                        <input type="number" name="id" readonly value="<?php echo $row['id_sprzetu'] ?>" />
+                                    </div><br>
+                                    <div>
+                                        <div>
+                                            <label>rodzaj</label>
+                                        </div>
+                                        <input type="text" name="rodzaj" class="bg-success text-white" value="<?php echo $row['rodzaj'] ?>" />
+                                    </div><br>
+                                    <div>
+                                        <div>
+                                            <label>pin</label>
+                                        </div>
+                                        <input type="text" name="pin" class="bg-success text-white" value="<?php echo $row['pin'] ?>" />
+                                    </div><br>
+                                    <div>
+                                        <div>
+                                            <label>model</label>
+                                        </div>
+                                        <input type="text" name="model" class="bg-success text-white" value="<?php echo $row['model'] ?>" />
+                                    </div><br>
+                                    <div>
+                                        <div>
+                                            <label>N/I</label>
+                                        </div>
+                                        <input type="text" name="ni" class="bg-success text-white" value="<?php echo $row['NI'] ?>" />
+                                    </div><br>
+                                    <div>
+                                        <div>
+                                            <label>S/N</label>
+                                        </div>
+                                        <input type="text" name="sn" class="bg-success text-white" value="<?php echo $row['SN'] ?>" />
+                                    </div><br>
+                                </div>
+                                <div class="col-lg-5">
+                                    <div>
+                                        <div>
+                                            <label>procesor</label>
+                                        </div>
+                                        <input type="text" name="procesor" class="bg-success text-white" value="<?php echo $row['procesor'] ?>" />
+                                    </div><br>
+                                    <div>
+                                        <div>
+                                            <label>RAM</label>
+                                        </div>
+                                        <input type="text" name="ram" class="bg-success text-white" value="<?php echo $row['ram'] ?>" />
+                                    </div><br>
+                                    <div>
+                                        <div>
+                                            <label>dysk</label>
+                                        </div>
+                                        <input type="text" name="dysk" class="bg-success text-white" value="<?php echo $row['dysk'] ?>" />
+                                    </div><br>
+                                    <div>
+                                        <div>
+                                            <label>status</label>
+                                        </div>
+                                        <input type="text" name="status" class="bg-success text-white" value="<?php echo $row['status_sprz'] ?>" />
+                                    </div><br>
+                                    <div>
+                                        <div>
+                                            <label>nr dostawy</label>
+                                        </div>
+                                        <input type="number" min="0" max="999" name="nr_dostawy" class="bg-success text-white" value="<?php echo $row['nr_dostawy'] ?>" />
+                                    </div><br>
+                                    <input class="btn btn-warning" type="submit" value="zapisz zmiany" name="zatwierdz">
+                                    <div>
+                                        <div>
+                                            <label>opis</label>
+                                        </div>
+                                        <textarea rows="2" cols="25" type="text" name="opis" class="bg-success text-white"><?php echo $row['opis'] ?></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                        <hr>
+            <?php
+                    }
                 }
             }
         }
         if (isset($_POST['zatwierdz'])) {
 
+            $rodzaj = test_input($_POST['rodzaj']);
+            $opis = test_input($_POST['opis']);
+            $pin = test_input($_POST['pin']);
+            $model = test_input($_POST['model']);
+            $sn = test_input($_POST['sn']);
+            $ni = test_input($_POST['ni']);
+            $nr_dostawy = test_input($_POST['nr_dostawy']);
+            $procesor = test_input($_POST['procesor']);
+            $ram = test_input($_POST['ram']);
+            $dysk = test_input($_POST['dysk']);
+            $status = test_input($_POST['status']);
+
             $query = "UPDATE sprzet SET 
-                            rodzaj = '$_POST[rodzaj]', opis = '$_POST[opis]',
-                            pin = '$_POST[pin]', model = '$_POST[model]',
-                            SN = '$_POST[sn]', NI = '$_POST[ni]', nr_dostawy = '$_POST[nr_dostawy]',
-                            procesor = '$_POST[procesor]', ram = '$_POST[ram]',
-                            dysk = '$_POST[dysk]', status_sprz = '$_POST[status]'
+                            rodzaj = '$rodzaj', opis = '$opis', pin = '$pin', model = '$model', SN = '$sn', NI = '$ni', nr_dostawy = '$nr_dostawy',
+                            procesor = '$procesor', ram = '$ram', dysk = '$dysk', status_sprz = '$status'
                             WHERE id_sprzetu ='" . $_POST['id'] . "' ";
 
             $result = mysqli_query($conn, $query);
@@ -204,6 +218,20 @@
     <?php
     mysqli_close($conn);
     ?>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('form').on('focus', 'input[type=number]', function (e) {
+            $(this).on('wheel.disableScroll', function (e) {
+            e.preventDefault()
+            })
+        })
+            $('form').on('blur', 'input[type=number]', function (e) {
+            $(this).off('wheel.disableScroll')
+        })
+    });
+</script>
 </body>
 
 </html>

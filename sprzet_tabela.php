@@ -46,7 +46,7 @@ require("connection.php");
         </header>
         <div class="row">
             <div class="col-lg-12">
-                <h4>Sprzęt</h4>
+                <h4>Sprzęt/pracownik - tabela</h4>
                 <table>
                     <tr>
                         <th>id sprzętu</th>
