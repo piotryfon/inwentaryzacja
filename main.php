@@ -80,7 +80,7 @@
         </ul>
         <h5>Sporządź protokół przeniesienia sprzętu komputerowego</h5>
         <ul>
-            <a href="wyszukaj_do_protokolu.php">
+            <a href="przeprowadzka/wyszukaj_do_protokolu.php">
                 <li>wybierz sprzęt do przeniesienia</li>
             </a>
         </ul>

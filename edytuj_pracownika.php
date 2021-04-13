@@ -146,8 +146,8 @@
            $login = test_input($_POST['login_pracownika']);
            $imie = test_input($_POST['imie']);
            $nazwisko = test_input($_POST['nazwisko']);
-           $departament = test_input($_POST['pokoj']);
-           $pokoj = test_input($_POST['departament']);
+           $pokoj = test_input($_POST['pokoj']);
+           $departament = test_input($_POST['departament']);
             $query = "UPDATE pracownicy SET login_pracownika = '$login', imie = '$imie', nazwisko = '$nazwisko', departament = '$departament', pokoj = '$pokoj'
                         WHERE id_pracownika ='".$_POST['id']."' ";
         

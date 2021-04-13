@@ -4,8 +4,8 @@
     if(isset($_SESSION['login_user']) == false) {
         header("location: index.php");
     }
-require("connection.php");
-require("test_input.php");
+require("../connection.php");
+require("../test_input.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,7 +24,7 @@ require("test_input.php");
         <header>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
-                    <b><a class="nav-link active" href="main.php">str. gł</a></b>
+                    <b><a class="nav-link active" href="/inwentaryzacja/main.php">str. gł</a></b>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="wyszukaj_do_protokolu.php">wyszukaj sprzęt do protokołu</a>

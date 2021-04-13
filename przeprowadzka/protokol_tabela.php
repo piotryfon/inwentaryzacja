@@ -4,7 +4,7 @@
     if(isset($_SESSION['login_user']) == false) {
         header("location: index.php");
     }
-require("connection.php");
+require("../connection.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +14,7 @@ require("connection.php");
 	<title>protokół tabela</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="style/table.css">
+    <link rel="stylesheet" href="../style/table.css">
 </head>
 
 <body>
@@ -22,7 +22,7 @@ require("connection.php");
 		<header>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
-                    <b><a class="nav-link active" href="main.php">str. gł</a></b>
+                    <b><a class="nav-link active" href="/inwentaryzacja/main.php">str. gł</a></b>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="wyszukaj_do_protokolu.php">wyszukaj sprzęt do protokołu</a>

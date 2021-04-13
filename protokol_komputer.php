@@ -91,13 +91,13 @@
                     $nazwisko = $dane['nazwisko'];
                     $miejsce = $dane['miejsce'];
             ?>
-                <h4>Osoba której powierza się opiekę nad środkiem trwałym:</h4>
-                <h5>Nazwisko i imię: <b><?php echo ucfirst($nazwisko)?> <?php echo ucfirst($imie)?></b></h5>
+                <h5>Osoba której powierza się opiekę nad środkiem trwałym:</h5>
+                <h4>Nazwisko i imię: <b><?php echo ucfirst($nazwisko)?> <?php echo ucfirst($imie)?></b></h4>
                 <h5>Miejsce użytkowania: <?php echo $miejsce?></h5><br>
-                <h4>Sprzęt wydany:</h4>
+                <h5>Sprzęt wydany:</h5>
             <?php
                 } else {
-                    echo '<h4>Brak sprzętu do wydania</h4>';
+                    echo '<h4>Brak sprzętu do wydania.</h4><hr>';
                 }
             ?>          
             <?php
@@ -141,7 +141,9 @@
                     $resultZwrot = mysqli_query($conn, $queryZwrot);
                     if(mysqli_num_rows($resultZwrot)){
                 ?>
-                    <h4>Sprzęt zwrócony:</h4>
+                    <h5>Osoba zwracająca sprzęt:</h5>
+                    <h4>Nazwisko i imię: <b><?php echo ucfirst($nazwisko)?> <?php echo ucfirst($imie)?></b></h4>
+                    <h5>Sprzęt zwrócony:</h5>
                     <table class="tabela-protokol">
                         <tr>
                             <th>rodzaj</th>
@@ -177,12 +179,12 @@
                     }//end while
                     else 
                     {
-                        echo '<h4>Brak sprzętu do zwrócenia</h4>';
+                        echo '<h4>Brak sprzętu do zwrócenia.</h4>';
                     }
                 ?>
                 <div id="sig-container">
-                    <div class="sig">Data: <?php echo date("Y-m-d") ?> Podpis osoby wydającej sprzęt</div> 
-                    <div class="sig">Data: <?php echo date("Y-m-d") ?> Podpis osoby otrzymującej sprzęt</div>
+                    <div class="sig">Data: <?php echo date("Y-m-d") ?> Podpis osoby wydającej/przyjmującej sprzęt</div> 
+                    <div class="sig">Data: <?php echo date("Y-m-d") ?> Podpis osoby otrzymującej/zwracającej sprzęt</div>
                 </div>
             </div>
             <footer>

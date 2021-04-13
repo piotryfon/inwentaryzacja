@@ -23,7 +23,7 @@
         <header>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
-                    <b><a class="nav-link active" href="main.php">str. gł</a></b>
+                    <b><a class="nav-link active" href="/inwentaryzacja/main.php">str. gł</a></b>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="wyszukaj_do_protokolu.php">wyszukaj sprzęt do protokołu</a>
@@ -43,7 +43,7 @@
         <input type="submit" class="btn btn-danger" name ="clear" value="wyczyść tabelę">
     </form>
         <?php
-            require("connection.php");
+            require("../connection.php");
             if(isset($_POST['clear'])){
                 $sql = "DELETE FROM protokol";
                 if(mysqli_query($conn, $sql)){

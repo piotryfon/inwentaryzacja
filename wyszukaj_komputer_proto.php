@@ -52,6 +52,7 @@ require("test_input.php");
                     <option value="login_pracownika">login pracownika</option>
                     <option value="NI">N/I sprzętu</option>
                     <option value="SN">S/N sprzętu</option>
+                    <option value="rodzaj">rodzaj</option>
 				</select>
 			</div><br>
 			<div>
@@ -72,7 +73,7 @@ require("test_input.php");
                     WHERE $opcjonalna_wartosc LIKE '%$wartosc_input%'";
             if($opcjonalna_wartosc === "wszystko") {
                 $query = "SELECT * FROM sprzet LEFT JOIN pracownicy ON sprzet.id_pracownika = pracownicy.id_pracownika
-                    WHERE (login_pracownika LIKE '%$wartosc_input%') or (NI LIKE '%$wartosc_input%') or (SN = '$wartosc_input')";
+                    WHERE (login_pracownika LIKE '%$wartosc_input%') or (NI LIKE '%$wartosc_input%') or (SN = '$wartosc_input') or (rodzaj = '$wartosc_input')";
             }
                 $result = mysqli_query($conn, $query);
                 if(mysqli_num_rows($result)===0){
