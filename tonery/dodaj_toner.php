@@ -2,50 +2,33 @@
     session_start();
 
     if(isset($_SESSION['login_user']) == false) {
-        header("location: index.php");
+        header("location: ../index.php");
     }
+    require("navbar-tonery.php");
+    require("connection_tonery.php");
+    require("../test_input.php");
 ?>
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
-    <title>Dodaj toner</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <style>
-
-    </style>
+    <title>Dodaj toner do bazy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="../style/main.css">
+    
 </head>
 
 <body>
     <div class="container">
         <header>
-            <ul class="nav justify-content-center">
-                <li class="nav-item">
-                    <b><a class="nav-link active" href="/inwentaryzacja/main.php">str. gł</a></b>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="tonery_tabela.php">tonery tabela</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="dodaj_toner.php">dodaj toner do magazynu</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="wydaj_toner.php">wydaj toner</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="dodaj_rekord.php">dodaj rekord do bazy SQL</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="wydane_tonery.php">wydane tonery</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="dodaj_drukarke.php">dodaj drukarkę</a>
-                </li>
-                <li>
-				    <b><a class="nav-link" href="/inwentaryzacja/logout.php">Wyloguj się</a></b>
-			    </li>
-            </ul>
+        <?php
+            show_navbar();
+         ?>
         </header>
         <hr>
         <h4>Dodaj toner</h4><br>
@@ -54,11 +37,10 @@
             <input type="text" name="kod">
             <label>ilość:</label>
             <input type="number" name="ilosc" value="1" min="1" max="50" style="width: 60px"/>
-            <input type="submit" class="btn btn-success" value="dodaj" name="dodaj"/>
+            <button class="btn btn-outline-success" type="submit" name="dodaj">Dodaj</button>
         </form>
         <?php
-        require("connection_tonery.php");
-        require("../test_input.php");
+       
 
         if(isset($_POST['dodaj'])){
 
@@ -74,7 +56,9 @@
                 $query_update = "UPDATE tonery_tab SET ilosc = ilosc + $ilosc WHERE kod = '$kod'";
                 $result_updete = mysqli_query($conn, $query_update);   
                
-               header("location: dodano_toner.html");
+                echo '<script type="text/javascript">
+                alert("Dodano toner/część do bazy.");
+                </script>';
             }
         }   
         mysqli_close($conn);
