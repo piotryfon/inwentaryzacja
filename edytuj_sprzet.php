@@ -45,7 +45,7 @@
 			    </li>
             </ul>
         </header><br>
-        <h4>Edycja sprzętu</h4>
+        <h4>Edytuj sprzęt i przypisz do pracownika.</h4>
         <hr>
         <p>Wyszukaj sprzęt</p>
         <br>
@@ -79,12 +79,12 @@
                 echo "<h4 style='color: red'>Zostawiłeś puste pole...</h4>";
             } else {
                 
-                $query = "SELECT * FROM sprzet 
+                $query = "SELECT * FROM sprzet LEFT JOIN pracownicy ON sprzet.id_pracownika = pracownicy.id_pracownika
                         WHERE $opcjonalna_wartosc LIKE '%$wartosc_input%'";
                 if($opcjonalna_wartosc === "wszystko"){
-                    $query = "SELECT * FROM sprzet 
-                        WHERE (SN = '$wartosc_input') or (NI LIKE '%$wartosc_input%') or 
-                        (status_sprz LIKE '%$wartosc_input%') or (rodzaj LIKE '%$wartosc_input%') or (opis LIKE '%$wartosc_input%')";
+                    $query = "SELECT * FROM sprzet LEFT JOIN pracownicy ON sprzet.id_pracownika = pracownicy.id_pracownika
+                        WHERE (SN = '$wartosc_input') or (NI LIKE '%$wartosc_input%') or (status_sprz LIKE '%$wartosc_input%')
+                        or (rodzaj LIKE '%$wartosc_input%') or (opis LIKE '%$wartosc_input%') or (login_pracownika LIKE '%$wartosc_input%')";
                 }
 
                 $result = mysqli_query($conn, $query);
@@ -101,7 +101,7 @@
             ?>
                         <form method="post" action="edytuj_sprzet.php">
                             <div class="row">
-                                <div class="col-lg-5">
+                                <div class="col-md-4">
                                     <div>
                                         <div>
                                             <label>ID sprzętu</label>
@@ -126,6 +126,9 @@
                                         </div>
                                         <input type="text" name="model" class="bg-success text-white" value="<?php echo $row['model'] ?>" />
                                     </div><br>
+                                    
+                                </div>
+                                <div class="col-md-4">
                                     <div>
                                         <div>
                                             <label>N/I</label>
@@ -138,8 +141,6 @@
                                         </div>
                                         <input type="text" name="sn" class="bg-success text-white" value="<?php echo $row['SN'] ?>" />
                                     </div><br>
-                                </div>
-                                <div class="col-lg-5">
                                     <div>
                                         <div>
                                             <label>procesor</label>
@@ -158,11 +159,29 @@
                                         </div>
                                         <input type="text" name="dysk" class="bg-success text-white" value="<?php echo $row['dysk'] ?>" />
                                     </div><br>
+                                    
+                                </div>
+                                <div class="col-md-4">
                                     <div>
                                         <div>
                                             <label>status</label>
                                         </div>
-                                        <input type="text" name="status" class="bg-success text-white" value="<?php echo $row['status_sprz'] ?>" />
+                                        <select name="status" class="bg-success text-white status">
+											<option><?php echo $row['status_sprz'] ?></option>
+											<option>magazyn</option>
+											<option>nowy</option>
+											<option>w przygotowaniu</option>
+											<option>do wydania</option>
+											<option>wydany</option>
+											<option>pożyczony</option>
+											<option>prezentacja</option>
+										</select>
+                                    </div><br>
+                                    <div>
+                                        <div>
+                                            <label>login</label>
+                                        </div>
+                                        <input type="text" name="login" class="bg-success text-white" value="<?php echo $row['login_pracownika'] ?>" />
                                     </div><br>
                                     <div>
                                         <div>
@@ -170,13 +189,13 @@
                                         </div>
                                         <input type="number" min="0" max="999" name="nr_dostawy" class="bg-success text-white" value="<?php echo $row['nr_dostawy'] ?>" />
                                     </div><br>
-                                    <input class="btn btn-warning" type="submit" value="zapisz zmiany" name="zatwierdz">
                                     <div>
                                         <div>
                                             <label>opis</label>
                                         </div>
                                         <textarea rows="2" cols="25" type="text" name="opis" class="bg-success text-white"><?php echo $row['opis'] ?></textarea>
-                                    </div>
+                                    </div><br>
+                                    <input class="btn btn-warning" type="submit" value="zapisz zmiany" name="zatwierdz">
                                 </div>
                             </div>
 
@@ -200,17 +219,34 @@
             $ram = test_input($_POST['ram']);
             $dysk = test_input($_POST['dysk']);
             $status = test_input($_POST['status']);
+            $login = test_input($_POST['login']);
 
-            $query = "UPDATE sprzet SET 
-                            rodzaj = '$rodzaj', opis = '$opis', pin = '$pin', model = '$model', SN = '$sn', NI = '$ni', nr_dostawy = '$nr_dostawy',
-                            procesor = '$procesor', ram = '$ram', dysk = '$dysk', status_sprz = '$status'
+            $query_login = "SELECT * FROM pracownicy WHERE login_pracownika = '$_POST[login]'";
+			$result_login = mysqli_query($conn, $query_login);
+
+			if (mysqli_num_rows($result_login) === 0) {
+				 echo '<h5 style="color: red">Nie ma takiego pracownika lub nieprawidłowa wartość!</h5>';
+			} else {
+              
+                $row_id = '';
+                foreach ($result_login as $row) 
+                {
+                        $row_id = $row['id_pracownika'];
+                }
+                $row_id = (int)$row_id;
+    
+                $query = "UPDATE sprzet SET 
+                                rodzaj = '$rodzaj', opis = '$opis', pin = '$pin', model = '$model', SN = '$sn', NI = '$ni', nr_dostawy = '$nr_dostawy',
+                                procesor = '$procesor', ram = '$ram', dysk = '$dysk', status_sprz = '$status', id_pracownika = '$row_id'
                             WHERE id_sprzetu ='" . $_POST['id'] . "' ";
 
-            $result = mysqli_query($conn, $query);
-            if ($result) {
-                header("location: sprzet_edytowany.html");
-            } else {
-                echo "<h4>Błąd zapytania</h4>";
+                $result = mysqli_query($conn, $query) or die(mysqli_error());
+                if ($result) {
+                    header("location: sprzet_edytowany.html");
+                } else {
+                    echo "<h4>Błąd zapytania</h4>";
+                    
+                }
             }
         }
         ?>
