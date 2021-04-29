@@ -60,10 +60,7 @@
                 <li>edytuj pracownika</li>
             </a>
             <a href="edytuj_sprzet.php">
-                <li>edytuj sprzęt</li>
-            </a>
-            <a href="edytuj_status.php">
-                <li><b>przypisz sprzęt do pracownika</b></li>
+                <li><b>edytuj sprzęt i przypisz do pracownika</b></li>
             </a>
         </ul>
         <h5>Skorzystaj z aplikacji inwentaryzującej tonery</h5>

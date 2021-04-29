@@ -4,6 +4,8 @@
     if(isset($_SESSION['login_user']) == false) {
         header("location: index.php");
     }
+	require("connection.php");
+	require("test_input.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,8 +53,7 @@
 		</header>
 		<?php
 
-require("connection.php");
-require("test_input.php");
+
 if (isset($_POST['submit'])) {
 	
 		$rodzaj = test_input($_POST["rodzaj"]);
@@ -67,6 +68,7 @@ if (isset($_POST['submit'])) {
 		$opis = test_input($_POST["opis"]);
 		$nr_dostawy = test_input($_POST["nr_dostawy"]);
 		$data = test_input($_POST["data"]);
+		$login = test_input($_POST["login"]);
 
 	if (($sn === "") or ($ni === "")) {
 		echo '<div class="alert alert-danger" role="alert">Zostawiłeś puste pole!</div>';
@@ -76,16 +78,33 @@ if (isset($_POST['submit'])) {
 		if(mysqli_num_rows($sql_check_result)){
 			echo '<div class="alert alert-danger" role="alert">Taki S/N lub N/I już istnieje i nie może być ponownie dodany!</div>';
 		} else {
-			$sql = "INSERT INTO sprzet (rodzaj, pin, model, SN, NI, procesor, ram, dysk, status_sprz, opis, nr_dostawy, data_dodania) 
-			VALUES ('$rodzaj', '$pin', '$model','$sn', '$ni', '$procesor', '$ram', '$dysk', '$status','$opis', '$nr_dostawy', '$data')";
-			if (mysqli_query($conn, $sql)) {
+			$query_login = "SELECT * FROM pracownicy WHERE login_pracownika = '$_POST[login]'";
+			$result_login = mysqli_query($conn, $query_login);
 				
-				echo '<script type="text/javascript">
-				alert("Sprzęt dodany.");
-				</script>';
-			} else {
-				echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
-			}
+			if (mysqli_num_rows($result_login) === 0) {
+				echo '<div class="alert alert-danger" role="alert">Nie ma takiego pracownika lub nieprawidłowa wartość!</div>';
+		   } else {
+			 
+			   $row_id = '';
+			   foreach ($result_login as $row) 
+			   {
+					   $row_id = $row['id_pracownika'];
+			   }
+			   $row_id = (int)$row_id;
+			   
+			   $sql = "INSERT INTO sprzet (rodzaj, pin, model, SN, NI, procesor, ram, dysk, status_sprz, opis, nr_dostawy, data_dodania, id_pracownika) 
+			   VALUES ('$rodzaj', '$pin', '$model','$sn', '$ni', '$procesor', '$ram', '$dysk', '$status','$opis', '$nr_dostawy', '$data', $row_id)";
+			   if (mysqli_query($conn, $sql)) {
+				   
+				   echo '<script type="text/javascript">
+				   alert("Sprzęt dodany.");
+				   </script>';
+			   } else {
+				   echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+			   }
+			   
+		   }
+			
 		}
 		mysqli_close($conn);
 	}
@@ -168,6 +187,10 @@ if (isset($_POST['submit'])) {
 							<option>pożyczony</option>
 							<option>prezentacja</option>
 						</select>
+					</p>
+					<p>
+						<label for="login">login</label><br>
+						<input type="text" name="login" id="login" placeholder="login pracownika" value="magazyn">
 					</p>
 					<p>
 						<label for="opis">opis</label><br>
