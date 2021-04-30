@@ -61,10 +61,11 @@
                 $NI = $_POST['NI'][$i];
                 $SN = $_POST['SN'][$i];
                 $dodatki = $_POST['dodatki'][$i];
+                $uwagi = $_POST['uwagi'][$i];
                 $status = $_POST['status_sprz'][$i];
                 $miejsce = $_POST['miejsce'][$i];
-                $sql="INSERT INTO protokol_wydania_komputera (imie, nazwisko, rodzaj, model, procesor, ram, dysk, ni, sn, dodatki, status_sprz, miejsce)
-                VALUES('$imie', '$nazwisko', '$rodzaj', '$model', '$procesor', '$ram', '$dysk', '$NI', '$SN','$dodatki', '$status', '$miejsce')";
+                $sql="INSERT INTO protokol_wydania_komputera (imie, nazwisko, rodzaj, model, procesor, ram, dysk, ni, sn, dodatki, status_sprz, miejsce, uwagi)
+                VALUES('$imie', '$nazwisko', '$rodzaj', '$model', '$procesor', '$ram', '$dysk', '$NI', '$SN','$dodatki', '$status', '$miejsce', '$uwagi')";
                 
                 $result=$conn->prepare($sql);
                 $result->execute();
@@ -96,9 +97,7 @@
                 <h5>Miejsce użytkowania: <?php echo $miejsce?></h5><br>
                 <h5>Sprzęt wydany:</h5>
             <?php
-                } else {
-                    echo '<h4>Brak sprzętu do wydania.</h4><hr>';
-                }
+                } 
             ?>          
             <?php
                 $query = "SELECT * FROM protokol_wydania_komputera WHERE status_sprz = 'sprzęt wydawany'";
@@ -115,6 +114,7 @@
                         <th>numer inwentarzowy</th>
                         <th>numer seryjny</th>
                         <th>dodatkowe wyposażenie</th>
+                        <th>uwagi</th>
                     </tr>
                 <?php
                     while($row = mysqli_fetch_array($result)){     
@@ -128,6 +128,7 @@
                         <td><?php echo $row['ni'] ?></td>
                         <td><?php echo $row['sn'] ?></td>
                         <td><?php echo $row['dodatki'] ?></td>
+                        <td><?php echo $row['uwagi'] ?></td>
                     </tr>
                     <?php
                         } //while end
@@ -154,7 +155,7 @@
                             <th>numer inwentarzowy</th>
                             <th>numer seryjny</th>
                             <th>dodatkowe wyposażenie</th>
-
+                            <th>uwagi</th>
                         </tr>
                     <?php
                         while($row = mysqli_fetch_array($resultZwrot)){       
@@ -168,6 +169,7 @@
                             <td><?php echo $row['ni'] ?></td>
                             <td><?php echo $row['sn'] ?></td>
                             <td><?php echo $row['dodatki'] ?></td>
+                            <td><?php echo $row['uwagi'] ?></td>
                         </tr>
                     <?php
                         }//while end
@@ -177,10 +179,6 @@
                     
                 <?php
                     }//end while
-                    else 
-                    {
-                        echo '<h4>Brak sprzętu do zwrócenia.</h4>';
-                    }
                 ?>
                 <div id="sig-container">
                     <div class="sig">Data: <?php echo date("Y-m-d") ?> Podpis osoby wydającej/przyjmującej sprzęt</div> 

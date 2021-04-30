@@ -73,7 +73,7 @@ require("test_input.php");
                     WHERE $opcjonalna_wartosc LIKE '%$wartosc_input%'";
             if($opcjonalna_wartosc === "wszystko") {
                 $query = "SELECT * FROM sprzet LEFT JOIN pracownicy ON sprzet.id_pracownika = pracownicy.id_pracownika
-                    WHERE (login_pracownika LIKE '%$wartosc_input%') or (NI LIKE '%$wartosc_input%') or (SN = '$wartosc_input') or (rodzaj = '$wartosc_input')";
+                    WHERE (login_pracownika LIKE '%$wartosc_input%') or (rodzaj LIKE '%$wartosc_input%') or (NI LIKE '%$wartosc_input%') or (SN = '$wartosc_input') ";
             }
                 $result = mysqli_query($conn, $query);
                 if(mysqli_num_rows($result)===0){
@@ -93,6 +93,7 @@ require("test_input.php");
                                         <label>Miejsce użytkowania sprzętu</label>
                                         <input type="text" class="bg-dark text-white" value="Centrala NFZ" name="miejsce[]"/>
                                     </p>
+                                        <label>Wybierz wydanie lub zwrot</label>
                                         <select name="status_sprz[]" class="bg-dark text-white">
                                             <option>sprzęt wydawany</option>
                                             <option>sprzęt zwracany</option>
@@ -115,12 +116,12 @@ require("test_input.php");
                                         <label>Model:</label><br>
                                         <input type="text" class="mid-input" name="model[]" value="<?php echo $row['model']?>">
                                     </p>
-                                </div>
-                                <div class="col-lg-3">
                                     <p>
                                         <label>Procesor:</label><br>
                                         <input type="text" class="mid-input" name="procesor[]" value="<?php echo $row['procesor']?>">
                                     </p>
+                                </div>
+                                <div class="col-lg-3">
                                     <p>
                                         <label>RAM:</label><br>
                                         <input type="text" class="mid-input" name="ram[]" value="<?php echo $row['ram']?>">
@@ -129,8 +130,6 @@ require("test_input.php");
                                         <label>Dysk:</label><br>
                                         <input type="text" class="mid-input" name="dysk[]" value="<?php echo $row['dysk']?>">
                                     </p>
-                                </div>
-                                <div class="col-lg-3">
                                     <p>
                                         <label>N/I:</label><br>
                                         <input type="text" class="mid-input" name="NI[]" value="<?php echo $row['NI']?>">
@@ -139,13 +138,19 @@ require("test_input.php");
                                         <label>S/N:</label><br>
                                         <input type="text" class="mid-input" name="SN[]" value="<?php echo $row['SN']?>">
                                     </p>
+                                </div>
+                                <div class="col-lg-3">
+                                    
                                     <p>
                                         <label>Dodatkowe wyposażenie:</label><br>
-                                        <textarea type="text" name="dodatki[]" rows="2" cols="20" value=""></textarea>
+                                        <textarea type="text" name="dodatki[]" rows="3" cols="20"></textarea>
                                     </p> 
-                                    
+                                    <p>
+                                        <label>Uwagi:</label><br>
+                                        <textarea type="text"  name="uwagi[]" rows="3" cols="20"></textarea>
+                                    </p>
                                 </div>  
-                                <input type="button" style="width: 200px" class="btnRemove btn btn-danger" value="Usuń ten rekord"/>
+                                <input type="button" style="width: 200px" class="btnRemove btn btn-danger" value="Usuń z protokołu"/>
                             </div>
                             <hr>
                         <?php
