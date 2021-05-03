@@ -30,7 +30,31 @@
             show_navbar();
          ?>
         </header>
-        <hr>
+        <?php
+            if(isset($_POST['dodaj'])){
+
+                $ilosc = $_POST['ilosc'];
+                $kod = test_input($_POST['kod']);
+                $query_is_value = "SELECT id FROM tonery_tab WHERE kod = '$kod'";
+                $result_is_value = mysqli_query($conn, $query_is_value);
+
+                if(mysqli_num_rows($result_is_value)===0){
+                    echo'<br><div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Nieprawidłowy kod...</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>';
+                } 
+                else {
+                    $query_update = "UPDATE tonery_tab SET ilosc = ilosc + $ilosc WHERE kod = '$kod'";
+                    $result_updete = mysqli_query($conn, $query_update);   
+                
+                    echo '<script type="text/javascript">
+                    alert("Dodano toner/część do bazy.");
+                    </script>';
+                }
+            }   
+            mysqli_close($conn);
+        ?>
         <h4>Dodaj toner</h4><br>
         <form method="POST" action="dodaj_toner.php">
             <label>kod</label>
@@ -39,31 +63,6 @@
             <input type="number" name="ilosc" value="1" min="1" max="50" style="width: 60px"/>
             <button class="btn btn-outline-success" type="submit" name="dodaj">Dodaj</button>
         </form>
-        <?php
-       
-
-        if(isset($_POST['dodaj'])){
-
-            $ilosc = $_POST['ilosc'];
-            $kod = test_input($_POST['kod']);
-            $query_is_value = "SELECT id FROM tonery_tab WHERE kod = '$kod'";
-            $result_is_value = mysqli_query($conn, $query_is_value);
-
-            if(mysqli_num_rows($result_is_value)===0){
-                echo '<h5 style="color: red">Nieprawidłowy kod!</h5>';
-            } 
-            else {
-                $query_update = "UPDATE tonery_tab SET ilosc = ilosc + $ilosc WHERE kod = '$kod'";
-                $result_updete = mysqli_query($conn, $query_update);   
-               
-                echo '<script type="text/javascript">
-                alert("Dodano toner/część do bazy.");
-                </script>';
-            }
-        }   
-        mysqli_close($conn);
-       
-        ?>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript">

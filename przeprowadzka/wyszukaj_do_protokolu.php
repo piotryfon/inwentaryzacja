@@ -83,13 +83,13 @@ require("../test_input.php");
                             $counter = $counter + 1;
                             ?>
                             <div>
-                                <input type="text" class="mid-input" style="width: 40px" name="lp" value="<?php echo $counter ?>" readonly="">
-                                <input type="text" class="mid-input" name="login" value="<?php echo $row['login_pracownika']?>">
-                                <input type="text" class="mid-input" name="rodzaj[]" value="<?php echo $row['rodzaj']?>">
-                                <input type="text" class="mid-input" name="model[]" value="<?php echo $row['model']?>">
-                                <input type="text" class="mid-input" name="NI[]" value="<?php echo $row['NI']?>">
-                                <input type="text" class="mid-input" name="SN[]" value="<?php echo $row['SN']?>">
-                                <input type="text" style="width: 60px" name="pokoj[]" value="<?php echo $row['pokoj']?>">
+                                <input type="text" class="mid-input readonly" style="width: 40px" name="lp" value="<?php echo $counter ?>" readonly>
+                                <input type="text" class="mid-input" name="login" placeholder="login" value="<?php echo $row['login_pracownika']?>">
+                                <input type="text" class="mid-input" name="rodzaj[]" placeholder="rodzaj" value="<?php echo $row['rodzaj']?>">
+                                <input type="text" class="mid-input" name="model[]" placeholder="model" value="<?php echo $row['model']?>">
+                                <input type="text" class="mid-input" name="NI[]" placeholder="N/I" value="<?php echo $row['NI']?>">
+                                <input type="text" class="mid-input" name="SN[]" placeholder="S/N" value="<?php echo $row['SN']?>">
+                                <input type="text" style="width: 60px" name="pokoj[]" placeholder="pokój" value="<?php echo $row['pokoj']?>">
                                 <input type="button" class="btnRemove btn btn-danger" value="Usuń"/>
                             </div>
                             <br>

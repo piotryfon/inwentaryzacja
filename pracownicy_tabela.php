@@ -5,11 +5,11 @@
         header("location: index.php");
     }
 
-require("connection.php");
+    require("connection.php");
+    require('navbar.php');
 
-$query = "SELECT * FROM pracownicy";
-$result = mysqli_query($conn, $query);
-
+    $query = "SELECT * FROM pracownicy";
+    $result = mysqli_query($conn, $query);
 
 ?>
 <!DOCTYPE html>
@@ -18,43 +18,26 @@ $result = mysqli_query($conn, $query);
 <head>
     <meta charset="utf-8">
     <title>Pracownicy - tabela</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
-    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="style/table.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="./style/main.css">
 </head>
 
 <body>
 
     <div class="container">
         <header>
-            <ul class="nav justify-content-center">
-                <li class="nav-item">
-                    <b><a class="nav-link active" href="main.php">str. gł</a></b>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="dodajpracownika.php">dodaj pracownika</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="dodajsprzet.php">dodaj sprzęt</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="pracownicy_tabela.php">pracownicy - tabela</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="sprzet_pracownik_tab.php">sprzęt - pracownik</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="historia.php">historia zmian</a>
-                </li>
-                <li>
-				    <b><a class="nav-link" href="logout.php">Wyloguj się</a></b>
-			    </li>
-            </ul>
+            <?php
+                showNavbar();
+            ?>
         </header>
-        <h3>Pracownicy - tabela</h3>
-        <p style="color: green">Aby wyszukać użyj Ctrl + f</p>
-        <table>
-            <tr>
+        <h4>Pracownicy - tabela</h4>
+        <p>Aby wyszukać użyj Ctrl + f</p>
+        <table class="table table-dark table-striped">
+            <tr class="table-success">
                 <th>id pracownika</th>
                 <th>login</th>
                 <th>imię</th>

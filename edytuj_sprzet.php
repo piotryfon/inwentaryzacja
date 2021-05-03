@@ -4,6 +4,7 @@
     if(isset($_SESSION['login_user']) == false) {
         header("location: index.php");
     }
+    require('navbar.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -11,39 +12,20 @@
 <head>
     <meta charset="utf-8">
     <title>edytuj sprzęt</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <style>
-
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="./style/main.css">
 </head>
 
 <body>
     <div class="container">
         <header>
-            <ul class="nav justify-content-center">
-
-                <li class="nav-item">
-                    <b><a class="nav-link active" href="main.php">str. gł</a></b>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="dodajpracownika.php">dodaj pracownika</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="dodajsprzet.php">dodaj sprzęt</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="pracownicy_tabela.php">pracownicy - tabela</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="sprzet_pracownik_tab.php">sprzęt - pracownik</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="historia.php">historia zmian</a>
-                </li>
-                <li>
-				    <b><a class="nav-link" href="logout.php">Wyloguj się</a></b>
-			    </li>
-            </ul>
+            <?php
+                showNavbar();
+            ?>
         </header><br>
         <h4>Edytuj sprzęt i przypisz do pracownika.</h4>
         <hr>
@@ -62,7 +44,7 @@
             </div><br>
             <div>
                 <input type="text" name="wartosc" placeholder="Wpisz wartość"> 
-                <input class="btn btn-primary" type="submit" name="search" value="przeszukaj dane">
+                <button class="btn btn-outline-success" type="submit" name="search">Znajdź sprzęt</button>
             </div>
         </form>
         <hr>
@@ -76,7 +58,10 @@
             $opcjonalna_wartosc = $_POST['opcja'];
             $wartosc_input = test_input($_POST['wartosc']);
             if($_POST['wartosc']=='') {
-                echo "<h4 style='color: red'>Zostawiłeś puste pole...</h4>";
+                echo'<br><div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Zostawiłeś puste pole...</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>';
             } else {
                 
                 $query = "SELECT * FROM sprzet LEFT JOIN pracownicy ON sprzet.id_pracownika = pracownicy.id_pracownika
@@ -93,7 +78,10 @@
                 }
                 $row = mysqli_num_rows($result);
                 if ($row < 1) {
-                    echo "Nie ma takiego sprzętu.";
+                    echo'<br><div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Nie ma takiego sprzętu...</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>';
                     mysqli_free_result($result);
                 } else {
 
@@ -195,7 +183,7 @@
                                         </div>
                                         <textarea rows="2" cols="25" type="text" name="opis" class="bg-success text-white"><?php echo $row['opis'] ?></textarea>
                                     </div><br>
-                                    <input class="btn btn-warning" type="submit" value="zapisz zmiany" name="zatwierdz">
+                                    <button class="btn btn-outline-warning" type="submit" name="zatwierdz">Zapisz zmiany</button>
                                 </div>
                             </div>
 
@@ -225,7 +213,10 @@
 			$result_login = mysqli_query($conn, $query_login);
 
 			if (mysqli_num_rows($result_login) === 0) {
-				 echo '<h5 style="color: red">Nie ma takiego pracownika lub nieprawidłowa wartość!</h5>';
+                echo'<br><div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Nie ma takiego pracownika lub nieprawidłowa wartość...</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>';
 			} else {
               
                 $row_id = '';
@@ -242,10 +233,11 @@
 
                 $result = mysqli_query($conn, $query) or die(mysqli_error());
                 if ($result) {
-                    header("location: sprzet_edytowany.html");
+                    echo '<script type="text/javascript">
+                    alert("Poprawnie edytowano sprzęt.");
+                    </script>';
                 } else {
                     echo "<h4>Błąd zapytania</h4>";
-                    
                 }
             }
         }

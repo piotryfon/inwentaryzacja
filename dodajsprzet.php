@@ -6,6 +6,7 @@
     }
 	require("connection.php");
 	require("test_input.php");
+	require('navbar.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +14,12 @@
 <head>
 	<meta charset="UTF-8">
 	<title>dodaj sprzet</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+    </script>
+	<link rel="stylesheet" href="./style/main.css">
 	<style>
 		#identyfikacja{
 			border: 1px solid grey;
@@ -27,29 +33,9 @@
 <body>
 	<div class="container">
 		<header>
-			<ul class="nav justify-content-center">
-				<li class="nav-item">
-					<b><a class="nav-link active" href="main.php">str. gł</a></b>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link active" href="dodajpracownika.php">dodaj pracownika</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link active" href="dodajsprzet.php">dodaj sprzęt</a>
-				</li>
-				<li class="nav-item">
-                    <a class="nav-link active" href="pracownicy_tabela.php">pracownicy - tabela</a>
-				</li>
-				<li class="nav-item">
-                    <a class="nav-link active" href="sprzet_pracownik_tab.php">sprzęt - pracownik</a>
-                </li>
-				<li class="nav-item">
-                    <a class="nav-link active" href="historia.php">historia zmian</a>
-                </li>
-				<li>
-				    <b><a class="nav-link" href="logout.php">Wyloguj się</a></b>
-			    </li>
-			</ul>
+			<?php
+				showNavbar();
+			?>
 		</header>
 		<?php
 
@@ -71,18 +57,27 @@ if (isset($_POST['submit'])) {
 		$login = test_input($_POST["login"]);
 
 	if (($sn === "") or ($ni === "")) {
-		echo '<div class="alert alert-danger" role="alert">Zostawiłeś puste pole!</div>';
+		echo'<br><div class="alert alert-warning alert-dismissible fade show" role="alert">
+		<strong>Zostawiłeś puste pole...</strong>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>';
 	} else {
 		$sql_check = "SELECT * FROM sprzet WHERE (SN = '$sn') OR (NI = '$ni')";
 		$sql_check_result = mysqli_query($conn, $sql_check);
 		if(mysqli_num_rows($sql_check_result)){
-			echo '<div class="alert alert-danger" role="alert">Taki S/N lub N/I już istnieje i nie może być ponownie dodany!</div>';
+			echo'<br><div class="alert alert-warning alert-dismissible fade show" role="alert">
+			<strong>Taki S/N lub N/I już istnieje i nie może być ponownie dodany!</strong>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>';
 		} else {
 			$query_login = "SELECT * FROM pracownicy WHERE login_pracownika = '$_POST[login]'";
 			$result_login = mysqli_query($conn, $query_login);
 				
 			if (mysqli_num_rows($result_login) === 0) {
-				echo '<div class="alert alert-danger" role="alert">Nie ma takiego pracownika lub nieprawidłowa wartość!</div>';
+				echo'<br><div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Nie ma takiego pracownika lub nieprawidłowa wartość!</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>';
 		   } else {
 			 
 			   $row_id = '';
@@ -97,7 +92,7 @@ if (isset($_POST['submit'])) {
 			   if (mysqli_query($conn, $sql)) {
 				   
 				   echo '<script type="text/javascript">
-				   alert("Sprzęt dodany.");
+				   alert("Poprawnie dodano sprzęt.");
 				   </script>';
 			   } else {
 				   echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
@@ -110,9 +105,7 @@ if (isset($_POST['submit'])) {
 	}
 }
 ?>
-		<h3>Dodaj sprzęt</h3>
-		<p style="color: green">Sprzęt aytomatycznie doda się jako użytkownik "magazyn".<br>
-		 Jeżeli jest z nowej dostawy, dla ułatwienia wyszukiwania zaznacz status "nowy".</p>
+		<h4>Dodaj sprzęt</h4>
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 			<div class="row">
 				<div class="col-md-4">
@@ -140,7 +133,7 @@ if (isset($_POST['submit'])) {
 						<input type="text" name="model" id="model">
 					</p>
 					<div id="identyfikacja">
-						<p style="color: green">Oba pola muszą być wypełnione.</p>
+						<p>Oba pola muszą być wypełnione.</p>
 						<p>
 							<label for="ni">N/I</label><br>
 							<input type="text" name="ni" id="ni">
@@ -204,7 +197,7 @@ if (isset($_POST['submit'])) {
 						<label for="data">data</label>
 					</div>
 					<input readonly type="text" id="data" name="data" value="<?php echo date("Y-m-d") ?>">
-					<input class="btn btn-primary" type="submit" name="submit" value="dodaj sprzęt">
+					<button class="btn btn-outline-success" type="submit" name="submit">Dodaj sprzęt</button>
 				</div>
 			</div>
 		</form>

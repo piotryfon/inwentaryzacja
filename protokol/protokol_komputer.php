@@ -2,36 +2,29 @@
     session_start();
 
     if(isset($_SESSION['login_user']) == false) {
-        header("location: index.php");
+        header("location: ../index.php");
     }
+    require("../connection.php");
+    require("navbar_proto.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
-    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="style/protokol.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="../style/protokol.css">
     <title>Protokół wydania sprzętu komputerowego w Centrali NFZ</title>
 </head>
 <body>
     <div class="container">
-        
-            <ul class="nav justify-content-center">
-                <li class="nav-item">
-                    <b><a class="nav-link active" href="main.php">str. gł</a></b>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="wyszukaj_komputer_proto.php">wyszukaj sprzęt do protokołu</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="protokol_komputer.php">protokół wydania sprzętu</a>
-                </li>
-                <li>
-				    <b><a class="nav-link" href="/inwentaryzacja/logout.php">Wyloguj się</a></b>
-			    </li>
-            </ul>
+        <?php
+            showNavbarProto();
+        ?>
         <hr>
         <input type="submit" class="btn btn-primary" style="width: 250px" 
                         name ="print" value="drukuj protokół" onclick="printDiv()"><br><br>
@@ -40,7 +33,6 @@
         </form>
         <hr>
     <?php
-        require("connection.php");
         if(isset($_POST['clear'])){
             $sql = "DELETE FROM protokol_wydania_komputera";
             if(mysqli_query($conn, $sql)){
@@ -61,11 +53,11 @@
                 $NI = $_POST['NI'][$i];
                 $SN = $_POST['SN'][$i];
                 $dodatki = $_POST['dodatki'][$i];
-                $uwagi = $_POST['uwagi'][$i];
+                $uwagi = $_POST['dodatki'][$i];
                 $status = $_POST['status_sprz'][$i];
                 $miejsce = $_POST['miejsce'][$i];
-                $sql="INSERT INTO protokol_wydania_komputera (imie, nazwisko, rodzaj, model, procesor, ram, dysk, ni, sn, dodatki, status_sprz, miejsce, uwagi)
-                VALUES('$imie', '$nazwisko', '$rodzaj', '$model', '$procesor', '$ram', '$dysk', '$NI', '$SN','$dodatki', '$status', '$miejsce', '$uwagi')";
+                $sql="INSERT INTO protokol_wydania_komputera (imie, nazwisko, rodzaj, model, procesor, ram, dysk, ni, sn, status_sprz, miejsce, dodatki, uwagi)
+                VALUES('$imie', '$nazwisko', '$rodzaj', '$model', '$procesor', '$ram', '$dysk', '$NI', '$SN', '$status', '$miejsce', '$dodatki','$uwagi')";
                 
                 $result=$conn->prepare($sql);
                 $result->execute();
@@ -92,10 +84,10 @@
                     $nazwisko = $dane['nazwisko'];
                     $miejsce = $dane['miejsce'];
             ?>
-                <h5>Osoba której powierza się opiekę nad środkiem trwałym:</h5>
-                <h4>Nazwisko i imię: <b><?php echo ucfirst($nazwisko)?> <?php echo ucfirst($imie)?></b></h4>
-                <h5>Miejsce użytkowania: <?php echo $miejsce?></h5><br>
-                <h5>Sprzęt wydany:</h5>
+                <h5>Osoba której powierza się opiekę nad środkiem trwałym:
+                <b><?php echo ucfirst($nazwisko)?> <?php echo ucfirst($imie)?></b></h5>
+                <h5>Miejsce użytkowania: <?php echo $miejsce?></h5>
+                <h6>Sprzęt wydany:</h6>
             <?php
                 } 
             ?>          
@@ -104,15 +96,15 @@
                 $result = mysqli_query($conn, $query);
                 if(mysqli_num_rows($result)){
                 ?>
-                <table class="tabela-protokol">
+                <table class="table table-striped">
                     <tr>
                         <th>rodzaj</th>
                         <th>model</th>
                         <th>procesor</th>
                         <th>RAM</th>
                         <th>dysk</th>
-                        <th>numer inwentarzowy</th>
-                        <th>numer seryjny</th>
+                        <th>nr inw.</th>
+                        <th>nr seryjny</th>
                         <th>dodatkowe wyposażenie</th>
                         <th>uwagi</th>
                     </tr>
@@ -133,7 +125,7 @@
                     <?php
                         } //while end
                     ?>
-                    </table><hr>
+                    </table><br>
                 <?php
                     }//if end
                 ?>
@@ -142,18 +134,18 @@
                     $resultZwrot = mysqli_query($conn, $queryZwrot);
                     if(mysqli_num_rows($resultZwrot)){
                 ?>
-                    <h5>Osoba zwracająca sprzęt:</h5>
-                    <h4>Nazwisko i imię: <b><?php echo ucfirst($nazwisko)?> <?php echo ucfirst($imie)?></b></h4>
-                    <h5>Sprzęt zwrócony:</h5>
-                    <table class="tabela-protokol">
+                    <h5>Osoba zwracająca sprzęt:
+                    <b><?php echo ucfirst($nazwisko)?> <?php echo ucfirst($imie)?></b></h5>
+                    <h6>Sprzęt zwrócony:</h6>
+                    <table class="table table-striped">
                         <tr>
                             <th>rodzaj</th>
                             <th>model</th>
                             <th>procesor</th>
                             <th>RAM</th>
                             <th>dysk</th>
-                            <th>numer inwentarzowy</th>
-                            <th>numer seryjny</th>
+                            <th>nr inw.</th>
+                            <th>nr seryjny</th>
                             <th>dodatkowe wyposażenie</th>
                             <th>uwagi</th>
                         </tr>
@@ -180,12 +172,13 @@
                 <?php
                     }//end while
                 ?>
+                
+            </div><br>
+            <footer>
                 <div id="sig-container">
                     <div class="sig">Data: <?php echo date("Y-m-d") ?> Podpis osoby wydającej/przyjmującej sprzęt</div> 
                     <div class="sig">Data: <?php echo date("Y-m-d") ?> Podpis osoby otrzymującej/zwracającej sprzęt</div>
-                </div>
-            </div>
-            <footer>
+                </div><hr style="border: 1px solid black">
                 <p>Narodowy Fundusz Zdrowia | ul. Rakowiecka 26/30 02-528 Warszawa</p>
             </footer>
         </div>
@@ -210,7 +203,7 @@
             $('td').each(function() {
                 let el = $(this);
                 if (el.text() === '') {
-                    el.text('--------');
+                    el.text('------');
                 }
             });
         });

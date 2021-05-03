@@ -2,17 +2,23 @@
     session_start();
 
     if(isset($_SESSION['login_user']) == false) {
-        header("location: index.php");
+        header("location: ../index.php");
     }
-require("connection.php");
-require("test_input.php");
+require("../connection.php");
+require("../test_input.php");
+require("navbar.php");
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <title>Wyszukaj komputer do protokołu</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="../style/main.css">
     <style>
     .mid-input {
          width: 180px;
@@ -21,28 +27,21 @@ require("test_input.php");
 </head>
 <body>
     <div class="container">
-    <?php
-        $sql = "SELECT * FROM protokol_wydania_komputera";
-        $wynik = mysqli_num_rows(mysqli_query($conn, $sql));
-        if ((int)$wynik > 0) echo '<div class="alert alert-info" role="alert">Protokół jest w trakcie tworzenia.</div>';
-        
-    ?>
         <header>
-            <ul class="nav justify-content-center">
-                <li class="nav-item">
-                    <b><a class="nav-link active" href="main.php">str. gł</a></b>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="wyszukaj_komputer_proto.php">wyszukaj sprzęt do protokołu</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="protokol_komputer.php">protokół wydania sprzętu</a>
-                </li>
-                <li>
-				    <b><a class="nav-link" href="/inwentaryzacja/logout.php">Wyloguj się</a></b>
-			    </li>
-            </ul><hr>
+            <?php
+                showNavbar();
+            ?>
         </header>
+        <?php
+            $sql = "SELECT * FROM protokol_wydania_komputera";
+            $wynik = mysqli_num_rows(mysqli_query($conn, $sql));
+            if ((int)$wynik > 0) {
+                echo'<br><div class="alert alert-primary alert-dismissible fade show" role="alert">
+                    <strong>Protokół jest w trakcie tworzenia...</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>';
+            }
+        ?>
         <h4>Wyszukaj sprzęt do protokołu przekazania i odebrania sprzętu.</h4>
 		<form method="POST">
 			<div>
@@ -57,7 +56,7 @@ require("test_input.php");
 			</div><br>
 			<div>
 				<input type="text" name="wartosc" placeholder="Wpisz wartość">
-                <input class="btn btn-primary" type="submit" name="search" value="przeszukaj dane">
+                <button class="btn btn-outline-success" type="submit" name="search">Znajdź sprzęt</button>
 			</div>
 		</form>
 		<hr>
@@ -65,7 +64,10 @@ require("test_input.php");
         <?php
         if (isset($_POST['search'])) {
             if($_POST['wartosc']===''){
-                echo '<h5 style="color: red">Wpisz wartość!</h5>';
+                echo'<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Wpisz wartość...</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>';
             } else {
 			$opcjonalna_wartosc = $_POST['opcja'];
 			$wartosc_input = test_input($_POST['wartosc']);
@@ -77,11 +79,14 @@ require("test_input.php");
             }
                 $result = mysqli_query($conn, $query);
                 if(mysqli_num_rows($result)===0){
-                    echo '<h5 style="color: red">Brak danych!</h5>';
+                    echo'<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Nie znaleziono takiego sprzętu...</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>';
                 }else {
                     ?>
                     <form method="post" action="protokol_komputer.php">
-                    <p style="color: green">Imię, nazwisko i miejsce użytkowania sprzętu, pierwszego dodanego rekordu, umieszczone będą w protokole.</p>
+                    <p style="color: red">Imię, nazwisko i miejsce użytkowania sprzętu, pierwszego dodanego rekordu, umieszczone będą w protokole.</p>
                         <?php
                         $counter = 0;
                         while($row = mysqli_fetch_array($result)){
@@ -155,9 +160,7 @@ require("test_input.php");
                             <hr>
                         <?php
                         }
-                      
                         ?>
-                        
                     <label>ilość rekordów:</label>
                     <input type="text" style="width: 40px" name="rows" id="selected-rows" readonly value="<?php echo mysqli_num_rows($result)?>">
                     <input type="submit" name="dodaj" class="btn btn-success" value="dodaj do protokołu">

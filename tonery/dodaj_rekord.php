@@ -29,7 +29,33 @@
             show_navbar();
          ?>
         </header>
-        <hr>
+        <?php
+            if(isset($_POST['dodaj'])){
+                $kod = test_input($_POST['kod']);
+                $oznaczenie = test_input($_POST['oznaczenie']);
+                $kolor = test_input($_POST['kolor']);
+                $firma = test_input($_POST['firma']);
+                $opis = test_input($_POST['opis']);
+
+                $sql = "INSERT INTO tonery_tab (kod, oznaczenie, kolor, firma, opis) 
+                VALUES ('$kod', '$oznaczenie', '$kolor', '$firma', '$opis')";
+                if($kod == "") {
+                    echo'<br><div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Zostawiłeś puste pole...</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>';
+                } else {
+                    if (mysqli_query($conn, $sql)) {
+                        echo '<script type="text/javascript">
+                                alert("Rekord dodany.")
+                            </script>';
+                    } else {
+                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+                    }
+                }
+            }
+            mysqli_close($conn);
+       ?>
         <h4>Dodaj rekord - toner</h4><br>
         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <div class="row">
@@ -61,31 +87,7 @@
                 </div>
             </div>
         </form>
-        <?php
        
-        if(isset($_POST['dodaj'])){
-            $kod = test_input($_POST['kod']);
-            $oznaczenie = test_input($_POST['oznaczenie']);
-            $kolor = test_input($_POST['kolor']);
-            $firma = test_input($_POST['firma']);
-            $opis = test_input($_POST['opis']);
-
-            $sql = "INSERT INTO tonery_tab (kod, oznaczenie, kolor, firma, opis) 
-            VALUES ('$kod', '$oznaczenie', '$kolor', '$firma', '$opis')";
-            if($kod == "") {
-                echo '<h3 style="color: red">Zostawiłeś puste pole!</h3>';
-            } else {
-                if (mysqli_query($conn, $sql)) {
-                    echo '<script type="text/javascript">
-                            alert("Rekord dodany.")
-                        </script>';
-                } else {
-                    echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
-                }
-            }
-        }
-        mysqli_close($conn);
-        ?>
     </div>
     <script type="text/javascript">
         if ( window.history.replaceState ) {

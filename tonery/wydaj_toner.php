@@ -35,23 +35,69 @@
             show_navbar();
          ?>
         </header>
-      
-        <h4>Wydaj toner</h4><br>
-        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-            <div>
-                <label for="kod">kod</label>
-            </div>
-            <input type="text" id="kod" name="kod"><br><br>
-            <div>
-                <label for="ni">N/I drukarki</label>
-            </div>
-            <input name="NI_drukarki" id="NI_drukarki"></input>
-            <select id="ni" name="NI_drukarki_wybierz">
             <?php
-                while ($row = mysqli_fetch_array($result_drukarki)) {
-                    echo "<option>$row[NI]</option>";
+        
+            if(isset($_POST['wydaj_toner'])){
+                $kod = test_input($_POST['kod']);
+                $query_is_value = "SELECT id FROM tonery_tab WHERE kod = '$kod'";
+                $result_is_value = mysqli_query($conn, $query_is_value);
+
+                if(mysqli_num_rows($result_is_value)===0){
+                    echo'<br><div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Nieprawidłowy kod...</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>';
+                } 
+                else {
+
+                    $query_ilosc = "SELECT ilosc from tonery_tab WHERE kod = '$kod'";
+                    $result_ilosc = mysqli_query($conn, $query_ilosc);
+                    $row = mysqli_fetch_array($result_ilosc);
+                    
+                    $NI_drukarki = mysqli_real_escape_string($conn, $_REQUEST['NI_drukarki']);
+                    if($NI_drukarki===""){
+                        echo'<br><div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Nie wybrałeś drukarki...</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>';
+                    } else {
+                        if($row['ilosc'] < 1) {
+                            echo'<br><div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong>Toner lub część nie może być wydana - brak w magazynie...</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>';
+                        } else {
+                            $query_odejmij = "UPDATE tonery_tab SET ilosc = ilosc-1 WHERE kod = '$kod'";
+                            $result_odejmij = mysqli_query($conn, $query_odejmij);  
+                            $query_dodaj_do_wydanych = "INSERT INTO wydane_tonery (kod, NI_drukarki, data_wydania) 
+                            VALUES ('$kod', '$_POST[NI_drukarki]', '$_POST[data]')"; 
+                            $result_wydane = mysqli_query($conn, $query_dodaj_do_wydanych);
+                            echo '<script type="text/javascript">
+                            alert("Wydano toner / część.");
+                            </script>';
+                        }  
+                    }
                 }
+            }   
+            mysqli_close($conn);
+        
             ?>
+            <h4>Wydaj toner</h4><br>
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                <div>
+                    <label for="kod">kod</label>
+                </div>
+                <input type="text" id="kod" name="kod"><br><br>
+                <div>
+                    <label for="ni">N/I drukarki</label>
+                </div>
+                <input name="NI_drukarki" id="NI_drukarki"></input>
+                <select id="ni" name="NI_drukarki_wybierz">
+                <?php
+                    while ($row = mysqli_fetch_array($result_drukarki)) {
+                        echo "<option>$row[NI]</option>";
+                    }
+                ?>
             </select><label><-wybierz z listy lub wpisz nazwę drukarki</label><br><br>
             <div>
                 <label for="data">data</label>
@@ -59,50 +105,7 @@
             <input readonly type="text" id="data" name="data" value="<?php echo date("Y-m-d") ?>"><br><br>
             <button class="btn btn-outline-success" type="submit" name="wydaj_toner">Wydaj toner</button>
         </form>
-        <?php
-    
-        if(isset($_POST['wydaj_toner'])){
-            $kod = test_input($_POST['kod']);
-            $query_is_value = "SELECT id FROM tonery_tab WHERE kod = '$kod'";
-            $result_is_value = mysqli_query($conn, $query_is_value);
-
-            if(mysqli_num_rows($result_is_value)===0){
-                echo '
-                <h5 style="color: red">Nieprawidłowy kod!</h5>
-                ';
-            } 
-            else {
-
-                $query_ilosc = "SELECT ilosc from tonery_tab WHERE kod = '$kod'";
-                $result_ilosc = mysqli_query($conn, $query_ilosc);
-                $row = mysqli_fetch_array($result_ilosc);
-                
-                $NI_drukarki = mysqli_real_escape_string($conn, $_REQUEST['NI_drukarki']);
-                if($NI_drukarki===""){
-                    echo '
-                    <h5 style="color: red">Nie wybrałeś drukarki!</h5>
-                    ';
-                } else {
-                    if($row['ilosc'] < 1) {
-                        echo '
-                            <h5 style="color: red">Toner nie może być wydany - brak w magazynie!</h5>
-                            ';
-                    } else {
-                        $query_odejmij = "UPDATE tonery_tab SET ilosc = ilosc-1 WHERE kod = '$kod'";
-                        $result_odejmij = mysqli_query($conn, $query_odejmij);  
-                        $query_dodaj_do_wydanych = "INSERT INTO wydane_tonery (kod, NI_drukarki, data_wydania) 
-                        VALUES ('$kod', '$_POST[NI_drukarki]', '$_POST[data]')"; 
-                        $result_wydane = mysqli_query($conn, $query_dodaj_do_wydanych);
-                        echo '<script type="text/javascript">
-                        alert("Wydano toner / część.");
-                        </script>';
-                    }  
-                }
-            }
-        }   
-        mysqli_close($conn);
        
-        ?>
     </div>
    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
