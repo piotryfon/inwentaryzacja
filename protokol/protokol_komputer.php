@@ -38,7 +38,10 @@
             if(mysqli_query($conn, $sql)){
                 $sql_AI = "ALTER TABLE protokol_wydania_komputera AUTO_INCREMENT=1";
                 mysqli_query($conn, $sql_AI);
-                echo '<div class="alert alert-success" role="alert">Dane usunięte.</div>';
+                echo'<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Dane usunięte...</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>';
             } else echo '<div class="alert alert-danger" role="alert">Coś poszło nie tak!</div>';
         }
         if(isset($_POST['dodaj'])){
@@ -53,7 +56,7 @@
                 $NI = $_POST['NI'][$i];
                 $SN = $_POST['SN'][$i];
                 $dodatki = $_POST['dodatki'][$i];
-                $uwagi = $_POST['dodatki'][$i];
+                $uwagi = $_POST['uwagi'][$i];
                 $status = $_POST['status_sprz'][$i];
                 $miejsce = $_POST['miejsce'][$i];
                 $sql="INSERT INTO protokol_wydania_komputera (imie, nazwisko, rodzaj, model, procesor, ram, dysk, ni, sn, status_sprz, miejsce, dodatki, uwagi)
