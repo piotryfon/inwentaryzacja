@@ -29,9 +29,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="sprzet_pracownik_tab.php">Sprzęt - pracownik</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="historia.php">Historia zmian</a>
-                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">

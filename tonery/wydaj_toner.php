@@ -91,19 +91,17 @@
                 <div>
                     <label for="ni">N/I drukarki</label>
                 </div>
-                <input name="NI_drukarki" id="NI_drukarki"></input>
-                <select id="ni" name="NI_drukarki_wybierz">
+                <select id="ni" name="NI_drukarki" id="ni">
+                <option></option>
                 <?php
                     while ($row = mysqli_fetch_array($result_drukarki)) {
                         echo "<option>$row[NI]</option>";
                     }
                 ?>
-            </select><label><-wybierz z listy lub wpisz nazwę drukarki</label><br><br>
-            <div>
-                <label for="data">data</label>
-            </div>
-            <input readonly type="text" id="data" name="data" value="<?php echo date("Y-m-d") ?>"><br><br>
-            <button class="btn btn-outline-success" type="submit" name="wydaj_toner">Wydaj toner</button>
+                </select>
+                <button style="margin-left: 20px" class="btn btn-outline-success" type="submit" name="wydaj_toner">Wydaj toner</button>
+            <input class="invisible" type="text" id="data" name="data" value="<?php echo date("Y-m-d") ?>">
+            
         </form>
        
     </div>
