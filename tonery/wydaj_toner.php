@@ -112,11 +112,6 @@
         if ( window.history.replaceState ) {
             window.history.replaceState( null, null, window.location.href );
         }
-        $(document).ready(function(){
-            $("select").change(function(){
-                $("#NI_drukarki:text").val($("select").val());
-            });
-        });
     </script>
     
 </body>

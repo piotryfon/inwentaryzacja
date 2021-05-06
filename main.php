@@ -50,12 +50,12 @@
         </ul>
         <h5>Przydatne linki</h5>
         <ul>
-            <a href="#" target="_blank">
+            <a href="" target="_blank">
                 <li>SharePoint - strona główna</li>
             </a>
         </ul>
         <ul>
-            <a href="#" target="_blank">
+            <a href="" target="_blank">
                 <li>SharePoint - macierz</li>
             </a>
         </ul>

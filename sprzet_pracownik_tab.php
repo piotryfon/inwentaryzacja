@@ -35,26 +35,28 @@
     <div class="container-fluid">
         
         <br>
-        <h4>Wyszukaj pracownika lub sprzęt</h4>
-		<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-			<div>
-				<label for="opcja">Wybierz parametr:</label><br>
-				<select name="opcja" id="opcja">
-                    <option value="wszystko">wszystko</option>
-                    <option value="nr_dostawy">nr dostawy</option>
-					<option value="login_pracownika">login pracownika</option>
-                    <option value="NI">N/I sprzętu</option>
-                    <option value="SN">S/N sprzętu</option>
-                    <option value="model">model</option>
-                    <option value="rodzaj">rodzaj</option>
-                    <option value="status_sprz">status</option>
-				</select>
-			</div><br>
-			<div>
-				<input type="text" name="wartosc" placeholder="Wpisz wartość">
-                <button class="btn btn-outline-success" type="submit" name="search">Znajdź sprzęt</button>
-			</div>
-		</form>
+        <div class="container">
+            <h4>Wyszukaj pracownika lub sprzęt</h4>
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                <div>
+                    <label for="opcja">Wybierz parametr:</label><br>
+                    <select name="opcja" id="opcja">
+                        <option value="wszystko">wszystko</option>
+                        <option value="nr_dostawy">nr dostawy</option>
+                        <option value="login_pracownika">login pracownika</option>
+                        <option value="NI">N/I sprzętu</option>
+                        <option value="SN">S/N sprzętu</option>
+                        <option value="model">model</option>
+                        <option value="rodzaj">rodzaj</option>
+                        <option value="status_sprz">status</option>
+                    </select>
+                </div><br>
+                <div>
+                    <input type="text" name="wartosc" placeholder="Wpisz wartość">
+                    <button class="btn btn-outline-success" type="submit" name="search">Znajdź sprzęt</button>
+                </div>
+            </form>
+        </div>
 		<hr>
 		<br>
         

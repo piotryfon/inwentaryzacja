@@ -184,6 +184,7 @@
                                         <textarea rows="2" cols="25" type="text" name="opis" class="bg-success text-white"><?php echo $row['opis'] ?></textarea>
                                     </div><br>
                                     <button class="btn btn-outline-warning" type="submit" name="zatwierdz">Zapisz zmiany</button>
+                                    <input name="data" class="invisible" value="<?php echo date("Y-m-d") ?>"/>
                                 </div>
                             </div>
 
@@ -208,6 +209,7 @@
             $dysk = test_input($_POST['dysk']);
             $status = test_input($_POST['status']);
             $login = test_input($_POST['login']);
+            $data = $_POST['data'];
 
             $query_login = "SELECT * FROM pracownicy WHERE login_pracownika = '$_POST[login]'";
 			$result_login = mysqli_query($conn, $query_login);
@@ -233,6 +235,11 @@
 
                 $result = mysqli_query($conn, $query) or die(mysqli_error());
                 if ($result) {
+                    $query_historia = "INSERT INTO sprzet_historia (SN, NI, rodzaj, status_sprz, login, data_zmiany) 
+                        VALUES ('$sn', '$ni', '$rodzaj', '$status', '$login', '$data')";
+                        if ($query_historia) {
+                            mysqli_query($conn, $query_historia);
+                        }
                     echo '<script type="text/javascript">
                     alert("Poprawnie edytowano sprzęt.");
                     </script>';
