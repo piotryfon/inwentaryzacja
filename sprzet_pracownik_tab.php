@@ -102,25 +102,31 @@
                 <th>nr dostawy</th>
                 <th>opis</th>
                 <th>data dodania sprzętu</th>
+                <th>edycja</th>
             </tr>
         <?php
 			while ($row = mysqli_fetch_array($result)) {
-                echo "<tr>";
-                echo "<td>$row[id_sprzetu]</td>";
-                echo "<td>$row[rodzaj]</td>";
-                echo "<td>$row[model]</td>";
-                echo "<td>$row[pin]</td>";
-                echo "<td>$row[procesor]</td>";
-                echo "<td>$row[ram]</td>";
-                echo "<td>$row[dysk]</td>";
-                echo "<td>$row[NI]</td>";
-                echo "<td>$row[SN]</td>";
-                echo "<td>$row[login_pracownika]</td>";
-                echo "<td>$row[status_sprz]</td>";
-                echo "<td>$row[nr_dostawy]</td>";
-                echo "<td>$row[opis]</td>";
-                echo "<td>$row[data_dodania]</td>";
-                echo "</tr>";
+                echo '<form method="POST" action="edytuj_sprzet_tab.php">';
+                    echo "<tr>";
+                    ?>
+                        <td><input style="width: 55px" readonly name="id_sprz" value="<?php echo $row['id_sprzetu']?>" /></td>
+                        <td><?php echo $row['rodzaj'] ?></td>
+                        <td><?php echo $row['model'] ?></td>
+                        <td><?php echo $row['pin'] ?></td>
+                        <td><?php echo $row['procesor'] ?></td>
+                        <td><?php echo $row['ram'] ?></td>
+                        <td><?php echo $row['dysk'] ?></td>
+                        <td><?php echo $row['NI'] ?></td>
+                        <td><?php echo $row['SN'] ?></td>
+                        <td><?php echo $row['login_pracownika'] ?></td>
+                        <td><?php echo $row['status_sprz'] ?></td>
+                        <td><?php echo $row['nr_dostawy'] ?></td>
+                        <td><?php echo $row['opis'] ?></td>
+                        <td><?php echo $row['data_dodania'] ?></td>
+                        <td><?php echo '<button class="btn btn-outline-warning" type="submit" name="edit">Edytuj</button>' ?></td>
+                    <?php
+                    echo "</tr>";
+                echo '</form>';
             }
 		?>
         </table>

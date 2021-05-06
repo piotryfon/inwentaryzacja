@@ -28,49 +28,14 @@
             <?php
                 showNavbar();
             ?>
-        </header><br>
+        </header>
         <h4>Edytuj sprzęt i przypisz do pracownika.</h4>
-        <hr>
-        <p>Wyszukaj sprzęt</p>
-        <br>
-        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-            <div>
-                <label for="opcja">Wybierz parametr:</label><br>
-                <select name="opcja" id="opcja">
-                    <option value="wszystko">wszystko</option>
-                    <option value="NI">numer inwentarzowy</option>
-                    <option value="SN">S/N</option>
-                    <option value="status_sprz">status</option>
-                    <option value="rodzaj">rodzaj</option>
-                </select>
-            </div><br>
-            <div>
-                <input type="text" name="wartosc" placeholder="Wpisz wartość"> 
-                <button class="btn btn-outline-success" type="submit" name="search">Znajdź sprzęt</button>
-            </div>
-        </form>
-        <hr>
-        <br>
-
         <?php
 
-        if (isset($_POST['search'])) {
-            $opcjonalna_wartosc = $_POST['opcja'];
-            $wartosc_input = test_input($_POST['wartosc']);
-            if($_POST['wartosc']=='') {
-                echo'<br><div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <strong>Zostawiłeś puste pole...</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>';
-            } else {
+        if(isset($_POST['edit'])){
                 
                 $query = "SELECT * FROM sprzet LEFT JOIN pracownicy ON sprzet.id_pracownika = pracownicy.id_pracownika
-                        WHERE $opcjonalna_wartosc LIKE '%$wartosc_input%'";
-                if($opcjonalna_wartosc === "wszystko"){
-                    $query = "SELECT * FROM sprzet LEFT JOIN pracownicy ON sprzet.id_pracownika = pracownicy.id_pracownika
-                        WHERE (SN = '$wartosc_input') or (NI LIKE '%$wartosc_input%') or (status_sprz LIKE '%$wartosc_input%')
-                        or (rodzaj LIKE '%$wartosc_input%') or (opis LIKE '%$wartosc_input%') or (login_pracownika LIKE '%$wartosc_input%')";
-                }
+                        WHERE id_sprzetu = '$_POST[id_sprz]'";
 
                 $result = mysqli_query($conn, $query);
                 if (!$result) {
@@ -195,7 +160,7 @@
                     }
                 }
             }
-        }
+        
         if (isset($_POST['zatwierdz'])) {
 
             $rodzaj = test_input($_POST['rodzaj']);
