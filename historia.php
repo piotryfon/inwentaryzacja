@@ -58,7 +58,7 @@
                         <th>NI</th>
                         <th>rodzaj</th>
                         <th>login</th>
-                        <th>obecny status</th>
+                        <th>status</th>
                         <th>data zmiany</th>
                     </tr>
                     <?php

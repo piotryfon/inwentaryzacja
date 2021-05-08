@@ -29,7 +29,6 @@
                 showNavbar();
             ?>
         </header>
-        <h4>Edytuj sprzęt i przypisz do pracownika.</h4>
         <?php
 
         if(isset($_POST['edit'])){
@@ -52,7 +51,7 @@
 
                     while ($row = mysqli_fetch_array($result)) {
             ?>
-                        <form method="post" action="edytuj_sprzet.php">
+                        <form method="post" action="edytuj_sprzet_tab.php">
                             <div class="row">
                                 <div class="col-md-4">
                                     <div>
@@ -206,9 +205,10 @@
                         if ($query_historia) {
                             mysqli_query($conn, $query_historia);
                         }
-                    echo '<script type="text/javascript">
-                    alert("Poprawnie edytowano sprzęt.");
-                    </script>';
+                        echo'<br><div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Poprawnie edytowano sprzęt.</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>';
                 } else {
                     echo "<h4>Błąd zapytania</h4>";
                 }
