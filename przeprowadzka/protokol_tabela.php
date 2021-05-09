@@ -37,7 +37,7 @@ require("../connection.php");
 
 <body>
 	<div class="container">
-		<header>
+		<header><br>
         <nav class="navbar navbar-expand-lg navbar-light bg-transparent border border-success">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"

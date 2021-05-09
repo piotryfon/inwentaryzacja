@@ -25,7 +25,7 @@ require("../test_input.php");
 </head>
 <body>
     <div class="container">
-        <header>
+        <header><br>
         <nav class="navbar navbar-expand-lg navbar-light bg-transparent border border-success">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -75,7 +75,10 @@ require("../test_input.php");
         <?php
         if (isset($_POST['search'])) {
             if($_POST['wartosc']===''){
-                echo '<h5 style="color: red">Wpisz wartość!</h5>';
+                echo'<div class="alert alert-primary alert-dismissible fade show" role="alert">
+                <strong>Wpisz wartość w pole formularza...</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>';
             } else {
 			$opcjonalna_wartosc = $_POST['opcja'];
 			$wartosc_input = test_input($_POST['wartosc']);

@@ -38,7 +38,7 @@
             if(mysqli_query($conn, $sql)){
                 $sql_AI = "ALTER TABLE protokol_wydania_komputera AUTO_INCREMENT=1";
                 mysqli_query($conn, $sql_AI);
-                echo'<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                echo'<div class="alert alert-primary alert-dismissible fade show" role="alert">
                 <strong>Dane usunięte...</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';

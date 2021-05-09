@@ -25,9 +25,7 @@
     </script>
     <link rel="stylesheet" href="./style/main.css">
 </head>
-
 <body>
-
     <div class="container">
         <header>
             <?php
