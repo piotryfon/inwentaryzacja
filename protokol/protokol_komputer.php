@@ -193,7 +193,7 @@
             let divElements = document.getElementById('proto').innerHTML;
             let oldPage = document.body.innerHTML;
             document.body.innerHTML = 
-                '<html><head><meta charset="UTF-8"><title>Protokół przeniesienia sprzętu komputerowego.</title></head><body>' + 
+                '<html><head><meta charset="UTF-8"><title>Protokół wydania/zwrotu sprzętu.</title></head><body>' + 
                 divElements + "</body>";
             window.print();
             document.body.innerHTML = oldPage;
