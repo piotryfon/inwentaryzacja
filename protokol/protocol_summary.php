@@ -80,31 +80,24 @@
                 </header>
                 <hr>
             <?php
-                $queryName = "SELECT * FROM protokol_wydania_komputera WHERE status_sprz = 'sprzęt wydawany'";
-                $resultName = mysqli_query($conn, $queryName);
-                $firstname = "";
-                $lastname = "";
-                $place = "";
-                if($dane = mysqli_fetch_array($resultName)){
-                    while($row = mysqli_fetch_array($resultName)){
-                        $firstname = $row['imie'];
-                        $lastname = $row['nazwisko'];
-                        $place = $row['miejsce'];
-                    }
-            ?>
-                <h5>Osoba której powierza się opiekę nad środkiem trwałym:
+               $query = "SELECT * FROM protokol_wydania_komputera WHERE id = 1";
+               $result = mysqli_query($conn, $query);
+               $firstname = "";
+               $lastname = "";
+               $miejsce = "";
+               while($row = mysqli_fetch_array($result)){
+                   $firstname = $row['imie'];
+                   $lastname = $row['nazwisko'];
+                   $place = $row['miejsce'];
+               }
+                $queryWydanie = "SELECT * FROM protokol_wydania_komputera WHERE status_sprz = 'sprzęt wydawany'";
+                $resultWydanie = mysqli_query($conn, $queryWydanie);
+                if(mysqli_num_rows($resultWydanie)){
+                ?>
+				<h5>Osoba, której powierza się opiekę nad środkiem trwałym:<br>
                 <b><?php echo ucfirst($lastname)?> <?php echo ucfirst($firstname)?></b></h5>
                 <h5>Miejsce użytkowania: <?php echo $place?></h5>
                 <h6>Sprzęt wydany:</h6>
-            <?php
-                } 
-            ?>          
-            <?php
-                $query = "SELECT * FROM protokol_wydania_komputera WHERE status_sprz = 'sprzęt wydawany'";
-                $result = mysqli_query($conn, $query);
-                if(mysqli_num_rows($result)){
-                ?>
-				
                 <table class="table table-striped">
                     <tr>
                         <th>rodzaj</th>
