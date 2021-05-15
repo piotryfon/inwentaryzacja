@@ -6,9 +6,6 @@
     }
     require("../connection.php");
     require("navbar_proto.php");
-	
-//	include("../function.php");
-	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,11 +26,8 @@
             showNavbarProto();
         ?>
         <hr>
-		<form method="post" action="protocol_summary.php">
-			<input type="submit" class="btn btn-primary" style="width: 250px" 
-                        name ="print" value="podsumowanie protokołu">
-		</form>
-			<br><br>
+        <input type="submit" class="btn btn-primary" style="width: 250px" 
+                        name ="print" value="drukuj protokół" onclick="printDiv()"><br><br>
         <form method="post">
             <input type="submit" class="btn btn-danger" name ="clear" value="wyczyść protokół">
         </form>
@@ -44,7 +38,7 @@
             if(mysqli_query($conn, $sql)){
                 $sql_AI = "ALTER TABLE protokol_wydania_komputera AUTO_INCREMENT=1";
                 mysqli_query($conn, $sql_AI);
-                echo'<div class="alert alert-primary alert-dismissible fade show" role="alert">
+                echo'<div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <strong>Dane usunięte...</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';
@@ -73,24 +67,8 @@
                 
             }
         }
-    ?>
-	
-	  <! -- Usuwanie rekordu z protokołu przed drukowaniem -->
-	  <?php
-        if(isset($_POST['delete_sprzet']))
-		{				 
-			$delete_id =  $_POST['delete_sprzet'];		 
-			$sql = "DELETE FROM protokol_wydania_komputera where id=$delete_id";
-			$result=$conn->prepare($sql);
-			
-			 if (!$result) {
-                    echo "Nieprwidłowe zapytanie";
-                }							
-            $result->execute();
-			}				
-			?>
-			
-		<div id="proto">
+    ?>		
+        <div id="proto">
             <div id="main-proto">
                 <header>
                     <img src="./img/nfz_logo.jpg" id="nfz-logo"/>
@@ -102,23 +80,31 @@
                 </header>
                 <hr>
             <?php
-                $query = "SELECT * FROM protokol_wydania_komputera WHERE status_sprz = 'sprzęt wydawany'";
-                $result = mysqli_query($conn, $query);
+                $queryName = "SELECT * FROM protokol_wydania_komputera WHERE status_sprz = 'sprzęt wydawany'";
+                $resultName = mysqli_query($conn, $queryName);
                 $firstname = "";
                 $lastname = "";
-                $miejsce = "";
-                if(mysqli_num_rows($result)){
-                   
-                    while($row = mysqli_fetch_array($result)){
+                $place = "";
+                if($dane = mysqli_fetch_array($resultName)){
+                    while($row = mysqli_fetch_array($resultName)){
                         $firstname = $row['imie'];
                         $lastname = $row['nazwisko'];
                         $place = $row['miejsce'];
                     }
-                ?>
+            ?>
                 <h5>Osoba której powierza się opiekę nad środkiem trwałym:
-                <b><?php echo ucfirst($lastname)?> <?php echo ($firstname)?></b></h5>
+                <b><?php echo ucfirst($lastname)?> <?php echo ucfirst($firstname)?></b></h5>
                 <h5>Miejsce użytkowania: <?php echo $place?></h5>
                 <h6>Sprzęt wydany:</h6>
+            <?php
+                } 
+            ?>          
+            <?php
+                $query = "SELECT * FROM protokol_wydania_komputera WHERE status_sprz = 'sprzęt wydawany'";
+                $result = mysqli_query($conn, $query);
+                if(mysqli_num_rows($result)){
+                ?>
+				
                 <table class="table table-striped">
                     <tr>
                         <th>rodzaj</th>
@@ -130,11 +116,9 @@
                         <th>nr seryjny</th>
                         <th>dodatkowe wyposażenie</th>
                         <th>uwagi</th>
-						<th>usuń</th>			
                     </tr>
+					
                 <?php
-                $query = "SELECT * FROM protokol_wydania_komputera WHERE status_sprz = 'sprzęt wydawany'";
-                $result = mysqli_query($conn, $query);
                     while($row = mysqli_fetch_array($result)){     
                 ?>
                     <tr>
@@ -147,12 +131,6 @@
                         <td><?php echo $row['sn'] ?></td>
                         <td><?php echo $row['dodatki'] ?></td>
                         <td><?php echo $row['uwagi'] ?></td>
-						 <! -- Usuwanie rekordu z protokołu przed drukowaniem -->
-						<td>
-						  <form method="post" action="protokol_komputer.php">					 
-						    <button class="btn btn-outline-warning" type="submit" name="delete_sprzet" value="<?php echo $row['id'] ?>">Usuń sprzęt</button>	
-						  </form>
-						</td>					 
                     </tr>
                     <?php
                         } //while end
@@ -180,7 +158,6 @@
                             <th>nr seryjny</th>
                             <th>dodatkowe wyposażenie</th>
                             <th>uwagi</th>
-							<th>usuń</th>
                         </tr>
                     <?php
                         while($row = mysqli_fetch_array($resultZwrot)){       
@@ -194,21 +171,16 @@
                             <td><?php echo $row['ni'] ?></td>
                             <td><?php echo $row['sn'] ?></td>
                             <td><?php echo $row['dodatki'] ?></td>
-                            <td><?php echo $row['uwagi'] ?></td> 
-								  	 <! -- Usuwanie rekordu z protokołu przed drukowaniem -->
-						 <td>
-						  <form method="post" action="protokol_komputer.php">
-						    <button class="btn btn-outline-warning" type="submit" name="delete_sprzet" value="<?php echo $row['id'] ?>">Usuń sprzęt</button>
-							</form>
-						 </td>
-								  
+                            <td><?php echo $row['uwagi'] ?></td>
                         </tr>
                     <?php
                         }//while end
                     ?>
                     </table>
+                    
                 <?php
                     }//end while
+                    mysqli_close($conn);
                 ?>
                 
             </div><br>
@@ -222,14 +194,13 @@
         </div>
        
     </div><!--end container-->
-	
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript">
         function printDiv(proto) {
             let divElements = document.getElementById('proto').innerHTML;
             let oldPage = document.body.innerHTML;
             document.body.innerHTML = 
-                '<html><head><meta charset="UTF-8"><title>Protokół wydania/zwrotu sprzętu.</title></head><body>' + 
+                '<html><head><meta charset="UTF-8"><title>Protokół przeniesienia sprzętu komputerowego.</title></head><body>' + 
                 divElements + "</body>";
             window.print();
             document.body.innerHTML = oldPage;
@@ -247,5 +218,6 @@
             });
         });
     </script>
+
 </body>
 </html>

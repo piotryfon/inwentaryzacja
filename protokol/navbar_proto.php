@@ -18,7 +18,7 @@
                             <a class="nav-link" href="wyszukaj_komputer_proto.php">Wyszukaj sprzęt do protokołu</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="protokol_komputer.php">Protokół sprzęt</a>
+                            <a class="nav-link" href="protokol_komputer.php">Przygotuj protokół</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="../logout.php"><b>Wyloguj się</b></a>

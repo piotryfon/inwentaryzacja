@@ -84,10 +84,12 @@
                     </div>';
                     mysqli_free_result($result);
                 } else {
-
+                    ?>
+                    <p>Ilość znalezionych rekordów: <?php echo mysqli_num_rows($result)?></p><hr>
+                    <?php
                     while ($row = mysqli_fetch_array($result)) {
             ?>
-                        <form method="post" action="edytuj_sprzet.php">
+                        <form method="POST" action="edytuj_sprzet.php">
                             <div class="row">
                                 <div class="col-md-4">
                                     <div>
