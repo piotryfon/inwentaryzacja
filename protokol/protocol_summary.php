@@ -80,7 +80,7 @@
                 </header>
                 <hr>
             <?php
-               $query = "SELECT * FROM protokol_wydania_komputera WHERE id = 1";
+               $query = "SELECT * FROM protokol_wydania_komputera ORDER BY id DESC";
                $result = mysqli_query($conn, $query);
                $firstname = "";
                $lastname = "";
@@ -90,6 +90,7 @@
                    $lastname = $row['nazwisko'];
                    $place = $row['miejsce'];
                }
+                mysqli_free_result($result);
                 $queryWydanie = "SELECT * FROM protokol_wydania_komputera WHERE status_sprz = 'sprzęt wydawany'";
                 $resultWydanie = mysqli_query($conn, $queryWydanie);
                 if(mysqli_num_rows($resultWydanie)){
@@ -112,7 +113,7 @@
                     </tr>
 					
                 <?php
-                    while($row = mysqli_fetch_array($result)){     
+                    while($row = mysqli_fetch_array($resultWydanie)){     
                 ?>
                     <tr>
                         <td><?php echo $row['rodzaj'] ?></td>
