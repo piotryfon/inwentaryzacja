@@ -4,17 +4,21 @@
     if(isset($_SESSION['login_user']) == false) {
         header("location: index.php");
     }
-
+    
     require("connection.php");
     require('navbar.php');
-
-    $query = "SELECT * FROM pracownicy";
+	
+	//wyświetlanie protokołów w zależności do ID pracownika
+	if(isset($_POST["submit"]))
+	{
+	$id_pracownika_post = $_POST["submit"];
+    $query = "SELECT * FROM protocol_transmission where id_pracownika = $id_pracownika_post";
+//	$query = "SELECT * FROM protocol_transmission"; 
     $result = mysqli_query($conn, $query);
-
+	};
 ?>
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <title>Pracownicy - tabela</title>
@@ -32,37 +36,29 @@
                 showNavbar();
             ?>
         </header>
-        <h4>Pracownicy - tabela</h4>
-        <p>Aby wyszukać użyj Ctrl + f</p>
+   
         <table class="table table-dark table-striped">
             <tr class="table-success">
-			<form method="post" action="/inwentaryzacja/show_protocols.php">
-                <th>id pracownika</th>
-                <th>login</th>
-                <th>imię</th>
-                <th>nazwisko</th>
-                <th>departament</th>
-                <th>pokój</th>
-				<th>protokoły<th>
+			<form method="post" action="show_protocol.php">
+                <th>id protokołu</th>
+                <th>Nazwa protokołu</th>
+                <th>Data utworzenia protokołu</th>
+				<th>wyświetl ptotokół</th>
             </tr>
             <?php
+		
             while ($row = mysqli_fetch_array($result)) {
                 echo "<tr>";
-                echo "<td>$row[id_pracownika]</td>";
-                echo "<td>$row[login_pracownika]</td>";
-                echo "<td>$row[imie]</td>";
-                echo "<td>$row[nazwisko]</td>";
-                echo "<td>$row[departament]</td>";
-                echo "<td>$row[pokoj]</td>";
-				echo "<td><button class='btn btn-outline-success' type='submit' name='submit' value='$row[id_pracownika]' >wyświetl</button></td>";				
-                echo "</tr>";
+                echo "<td>$row[id]</td>";
+                echo "<td>$row[protocol_name]</td>";
+                echo "<td>$row[protocol_date]</td>";
+				echo "<td><button class='btn btn-outline-success' type='submit' name='submit_id_protokolu' value='$row[id]'>wyświetl</button></td>";				
+                echo "</tr>";			
             }
             ?>
-			</form>
-			
+			</form>		
         </table>
         <?php
             mysqli_close($conn);
         ?>
-
     </div>

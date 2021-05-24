@@ -73,7 +73,7 @@
 
                 while ($row = mysqli_fetch_array($result)) {
             ?>
-                    <form method="post" action="edytuj_pracownika.php">
+                    <form method="post" action="edytuj_pracownika.php" accept-charset="utf-8" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-lg-4">
                             <div>
@@ -101,7 +101,14 @@
                                     <label>nazwisko<label>
                                 </div>
                                 <input type="text" name="nazwisko" class="bg-success text-white" value="<?php echo $row['nazwisko'] ?>" />
-                            </div><br>
+                            </div><br>													
+							       <div>
+                                <div>
+                                    <label>Wybierz protokół przekazania sprzętu (MAX 4 MB)<label>
+                                </div>                           
+							  	<input type="file" name="pdf_file" accept=".pdf"/>
+								<input type="hidden" name="MAX_FILE_SIZE" value="67108864"/> 						  
+                            </div><br>					
                         </div>
                         <div class="col-lg-4">
                             <div>
@@ -116,7 +123,7 @@
                                 </div>
                                 <input type="text" name="pokoj" class="bg-success text-white" value="<?php echo $row['pokoj'] ?>" />
                             </div><br>
-                            <button class="btn btn-outline-warning" type="submit" name="zatwierdz">Zapisz zmiany</button>
+                            <button class="btn btn-outline-warning" type="submit" name="zatwierdz">Zapisz zmiany</button>						
                         </div>
                     </div>
                     </form>
@@ -125,26 +132,82 @@
                 }
             }
         }
-        if (isset($_POST['zatwierdz'])) {
-         
-           $login = test_input($_POST['login_pracownika']);
-           $imie = test_input($_POST['imie']);
-           $nazwisko = test_input($_POST['nazwisko']);
-           $pokoj = test_input($_POST['pokoj']);
-           $departament = test_input($_POST['departament']);
-            $query = "UPDATE pracownicy SET login_pracownika = '$login', imie = '$imie', nazwisko = '$nazwisko', departament = '$departament', pokoj = '$pokoj'
+		
+		
+		if (isset($_POST['zatwierdz']) && !empty($_FILES['pdf_file']['name']) && isset($_POST['id']))
+		{
+		
+				$login = test_input($_POST['login_pracownika']);
+				$date = date("Y/m/d"); 
+		//	echo $login;
+			
+			//Dodanie Formularza i zmiana watości definjujących użytkownika
+			
+			//odwołujemy się do kontrolki ładującej pliki przez $_FILES
+			//$filename = $_FILES['pdf_file']['name'];
+			
+			$filename = $login . ' ' . $date;
+			
+			
+			// echo $filename;
+			$file_tmp = $_FILES['pdf_file']['tmp_name'];
+
+		if ($pdf_blob = fopen($file_tmp, "rb")) 
+		{
+		try {
+			
+			require_once __DIR__ ."/test/database.php";
+					
+			//przekazanie id pracownika  
+			$id_pracownika_post = $_POST['id'];
+			
+			$userQuery = $db->prepare("INSERT INTO protocol_transmission (protocol_name, pdf_doc, protocol_date, id_pracownika) VALUES(:protocol_name, :pdf_doc, :protocol_date, :id_pracownika)");
+			$userQuery ->bindParam(':protocol_name', $filename);
+			$userQuery ->bindParam(':pdf_doc', $pdf_blob, PDO::PARAM_LOB);
+			$userQuery ->bindParam(':protocol_date', $date);
+			$userQuery ->bindParam(':id_pracownika', $id_pracownika_post);
+					
+			if ($userQuery->execute() === FALSE) 
+			{
+				echo 'Nie można było dodać protokołu do bazy';
+			} else {
+						echo 'Protokół został doadny do bazy';
+				   }
+		} catch (Exception $e) 
+				{
+					echo "Nie można dodać pliku do bazy.<br>".$e->getMessage();
+				}
+		}
+		else 
+			{	
+				//fopen() was not successful in opening the .pdf file for reading.
+				echo 'Could not open the attached pdf file';
+			}
+		}
+		else
+			{
+				    if (isset($_POST['zatwierdz'])) 
+					{
+						$login = test_input($_POST['login_pracownika']);
+						$imie = test_input($_POST['imie']);
+						$nazwisko = test_input($_POST['nazwisko']);
+						$pokoj = test_input($_POST['pokoj']);
+						$departament = test_input($_POST['departament']);
+						$query = "UPDATE pracownicy SET login_pracownika = '$login', imie = '$imie', nazwisko = '$nazwisko', departament = '$departament', pokoj = '$pokoj'
                         WHERE id_pracownika ='".$_POST['id']."' ";
-        
-                $result = mysqli_query($conn, $query);
-                if ($result){
-                    echo '<script type="text/javascript">
-                    alert("Poprawnie edytowano pracownika.");
-                    </script>';
-                } else {
-                     echo "<h4>Błąd zapytania</h4>";
-                    }
-                }
-        ?>
+       
+						$result = mysqli_query($conn, $query);
+						if ($result)
+						{
+							echo '<script type="text/javascript">
+							alert("Poprawnie edytowano pracownika.");
+							</script>';
+						} else  {
+									echo "<h4>Błąd zapytania</h4>";
+								}
+                }			
+			}
+		    ?>
     </div>
     <?php
     mysqli_close($conn);
