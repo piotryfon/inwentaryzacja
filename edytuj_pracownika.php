@@ -44,7 +44,7 @@
                 </select>
             </div><br>
             <div>
-                <input type="text" name="wartosc" placeholder="Wpisz wartość">
+                <input type="text" name="wartosc" required placeholder="Wpisz wartość">
                 <button class="btn btn-outline-success" type="submit" name="search">Znajdź pracownika</button>
             </div>
         </form>

@@ -136,11 +136,11 @@ if (isset($_POST['submit'])) {
 						<p>Oba pola muszą być wypełnione.</p>
 						<p>
 							<label for="ni">N/I</label><br>
-							<input type="text" name="ni" id="ni">
+							<input type="text" required name="ni" id="ni">
 						</p>
 						<p>
 							<label for="sn">S/N</label><br>
-							<input type="text" name="sn" id="sn">
+							<input type="text" required name="sn" id="sn">
 						</p>
 					</div>
 				</div>

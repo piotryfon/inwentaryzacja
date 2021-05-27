@@ -74,7 +74,7 @@
 				<div class="col-md-4 offset-4">
 					<p>
 						<label for="login_pracownika">*login:</label><br>
-						<input type="text" name="login_pracownika" id="login_pracownika">
+						<input type="text" required name="login_pracownika" id="login_pracownika">
 					</p>
 					<p>
 						<label for="imie">imie:</label><br>
