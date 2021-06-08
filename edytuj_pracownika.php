@@ -135,55 +135,36 @@
 		
 		
 		if (isset($_POST['zatwierdz']) && !empty($_FILES['pdf_file']['name']) && isset($_POST['id']))
-		{
-		
-				$login = test_input($_POST['login_pracownika']);
-				$date = date("Y/m/d"); 
-		//	echo $login;
-			
-			//Dodanie Formularza i zmiana watości definjujących użytkownika
-			
-			//odwołujemy się do kontrolki ładującej pliki przez $_FILES
-			//$filename = $_FILES['pdf_file']['name'];
-			
-			$filename = $login . ' ' . $date;
-			
-			
-			// echo $filename;
+		{		
+			$login = test_input($_POST['login_pracownika']);			
+			$date = date("Y/m/d"); 			
+			$filename = $login . ' ' . $date;			
 			$file_tmp = $_FILES['pdf_file']['tmp_name'];
 
-		if ($pdf_blob = fopen($file_tmp, "rb")) 
-		{
-		try {
+			require_once __DIR__ ."/include/function.php";
 			
-			require_once __DIR__ ."/test/database.php";
-					
-			//przekazanie id pracownika  
-			$id_pracownika_post = $_POST['id'];
+			addProtocolToDatabase($file_tmp, $_POST['id'], $login, $file_tmp);
 			
-			$userQuery = $db->prepare("INSERT INTO protocol_transmission (protocol_name, pdf_doc, protocol_date, id_pracownika) VALUES(:protocol_name, :pdf_doc, :protocol_date, :id_pracownika)");
-			$userQuery ->bindParam(':protocol_name', $filename);
-			$userQuery ->bindParam(':pdf_doc', $pdf_blob, PDO::PARAM_LOB);
-			$userQuery ->bindParam(':protocol_date', $date);
-			$userQuery ->bindParam(':id_pracownika', $id_pracownika_post);
-					
-			if ($userQuery->execute() === FALSE) 
-			{
-				echo 'Nie można było dodać protokołu do bazy';
-			} else {
-						echo 'Protokół został doadny do bazy';
-				   }
-		} catch (Exception $e) 
-				{
-					echo "Nie można dodać pliku do bazy.<br>".$e->getMessage();
-				}
+			$login = test_input($_POST['login_pracownika']);
+						$imie = test_input($_POST['imie']);
+						$nazwisko = test_input($_POST['nazwisko']);
+						$pokoj = test_input($_POST['pokoj']);
+						$departament = test_input($_POST['departament']);
+						$query = "UPDATE pracownicy SET login_pracownika = '$login', imie = '$imie', nazwisko = '$nazwisko', departament = '$departament', pokoj = '$pokoj'
+                        WHERE id_pracownika ='".$_POST['id']."' ";
+       
+						$result = mysqli_query($conn, $query);
+						if ($result)
+						{
+							echo '<script type="text/javascript">
+							alert("Poprawnie edytowano pracownika.");
+							</script>';
+						} else  {
+									echo "<h4>Błąd zapytania</h4>";
+								}
+			
 		}
-		else 
-			{	
-				//fopen() was not successful in opening the .pdf file for reading.
-				echo 'Could not open the attached pdf file';
-			}
-		}
+		
 		else
 			{
 				    if (isset($_POST['zatwierdz'])) 
@@ -205,8 +186,9 @@
 						} else  {
 									echo "<h4>Błąd zapytania</h4>";
 								}
-                }			
+                }	
 			}
+			
 		    ?>
     </div>
     <?php

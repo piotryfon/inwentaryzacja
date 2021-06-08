@@ -10,7 +10,6 @@
 
     $query = "SELECT * FROM pracownicy";
     $result = mysqli_query($conn, $query);
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,7 +35,7 @@
         <p>Aby wyszukać użyj Ctrl + f</p>
         <table class="table table-dark table-striped">
             <tr class="table-success">
-			<form method="post" action="/inwentaryzacja/show_protocols.php">
+			<form method="GET" action="/inwentaryzacja/show_protocols.php">
                 <th>id pracownika</th>
                 <th>login</th>
                 <th>imię</th>
