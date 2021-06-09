@@ -4,16 +4,20 @@
     if(isset($_SESSION['login_user']) == false) {
         header("location: index.php");
     }
-
+    
     require("connection.php");
     require('navbar.php');
-
-    $query = "SELECT * FROM pracownicy";
+	
+	//wyświetlanie protokołów w zależności do ID pracownika
+	if(isset($_GET["submit"]))
+	{
+	$id_pracownika_post = $_GET["submit"];
+    $query = "SELECT * FROM protocol_transmission where id_pracownika = $id_pracownika_post";
     $result = mysqli_query($conn, $query);
+	};
 ?>
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <title>Pracownicy - tabela</title>
@@ -22,6 +26,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
     </script>
+	
     <link rel="stylesheet" href="./style/main.css">
 </head>
 <body>
@@ -31,37 +36,28 @@
                 showNavbar();
             ?>
         </header>
-        <h4>Pracownicy - tabela</h4>
-        <p>Aby wyszukać użyj Ctrl + f</p>
         <table class="table table-dark table-striped">
             <tr class="table-success">
-			<form method="GET" action="/inwentaryzacja/show_protocols.php">
-                <th>id pracownika</th>
-                <th>login</th>
-                <th>imię</th>
-                <th>nazwisko</th>
-                <th>departament</th>
-                <th>pokój</th>
-				<th>protokoły<th>
+			<form method="GET" action="show_protocol.php" target="_blank">
+                <th>id protokołu</th>
+                <th>Nazwa protokołu</th>
+                <th>Data utworzenia protokołu</th>
+				<th>Wyświetl ptotokół</th>
             </tr>
             <?php
+		
             while ($row = mysqli_fetch_array($result)) {
                 echo "<tr>";
-                echo "<td>$row[id_pracownika]</td>";
-                echo "<td>$row[login_pracownika]</td>";
-                echo "<td>$row[imie]</td>";
-                echo "<td>$row[nazwisko]</td>";
-                echo "<td>$row[departament]</td>";
-                echo "<td>$row[pokoj]</td>";
-				echo "<td><button class='btn btn-outline-success' type='submit' name='submit' value='$row[id_pracownika]' >wyświetl</button></td>";				
-                echo "</tr>";
+                echo "<td>$row[id]</td>";
+                echo "<td>$row[protocol_name]</td>";
+                echo "<td>$row[protocol_date] $row[protocol_time]</td>";
+				echo "<td><button class='btn btn-outline-success' type='submit' name='submit_id_protokolu' value='$row[id]'>wyświetl</button></td>";				
+                echo "</tr>";			
             }
             ?>
-			</form>
-			
+			</form>		
         </table>
         <?php
             mysqli_close($conn);
         ?>
-
     </div>

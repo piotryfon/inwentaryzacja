@@ -73,7 +73,7 @@
 
                 while ($row = mysqli_fetch_array($result)) {
             ?>
-                    <form method="post" action="edytuj_pracownika.php">
+                    <form method="post" action="edytuj_pracownika.php" accept-charset="utf-8" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-lg-4">
                             <div>
@@ -101,7 +101,14 @@
                                     <label>nazwisko<label>
                                 </div>
                                 <input type="text" name="nazwisko" class="bg-success text-white" value="<?php echo $row['nazwisko'] ?>" />
-                            </div><br>
+                            </div><br>													
+							       <div>
+                                <div>
+                                    <label>Wybierz protokół przekazania sprzętu (MAX 4 MB)<label>
+                                </div>                           
+							  	<input type="file" name="pdf_file" accept=".pdf"/>
+								<input type="hidden" name="MAX_FILE_SIZE" value="67108864"/> 						  
+                            </div><br>					
                         </div>
                         <div class="col-lg-4">
                             <div>
@@ -116,7 +123,7 @@
                                 </div>
                                 <input type="text" name="pokoj" class="bg-success text-white" value="<?php echo $row['pokoj'] ?>" />
                             </div><br>
-                            <button class="btn btn-outline-warning" type="submit" name="zatwierdz">Zapisz zmiany</button>
+                            <button class="btn btn-outline-warning" type="submit" name="zatwierdz">Zapisz zmiany</button>						
                         </div>
                     </div>
                     </form>
@@ -125,26 +132,64 @@
                 }
             }
         }
-        if (isset($_POST['zatwierdz'])) {
-         
-           $login = test_input($_POST['login_pracownika']);
-           $imie = test_input($_POST['imie']);
-           $nazwisko = test_input($_POST['nazwisko']);
-           $pokoj = test_input($_POST['pokoj']);
-           $departament = test_input($_POST['departament']);
-            $query = "UPDATE pracownicy SET login_pracownika = '$login', imie = '$imie', nazwisko = '$nazwisko', departament = '$departament', pokoj = '$pokoj'
+		
+		
+		if (isset($_POST['zatwierdz']) && !empty($_FILES['pdf_file']['name']) && isset($_POST['id']))
+		{		
+			$login = test_input($_POST['login_pracownika']);			
+			$date = date("Y/m/d"); 			
+			$filename = $login . ' ' . $date;			
+			$file_tmp = $_FILES['pdf_file']['tmp_name'];
+
+			require_once __DIR__ ."/include/function.php";
+			
+			addProtocolToDatabase($file_tmp, $_POST['id'], $login, $file_tmp);
+			
+			$login = test_input($_POST['login_pracownika']);
+						$imie = test_input($_POST['imie']);
+						$nazwisko = test_input($_POST['nazwisko']);
+						$pokoj = test_input($_POST['pokoj']);
+						$departament = test_input($_POST['departament']);
+						$query = "UPDATE pracownicy SET login_pracownika = '$login', imie = '$imie', nazwisko = '$nazwisko', departament = '$departament', pokoj = '$pokoj'
                         WHERE id_pracownika ='".$_POST['id']."' ";
-        
-                $result = mysqli_query($conn, $query);
-                if ($result){
-                    echo '<script type="text/javascript">
-                    alert("Poprawnie edytowano pracownika.");
-                    </script>';
-                } else {
-                     echo "<h4>Błąd zapytania</h4>";
-                    }
-                }
-        ?>
+       
+						$result = mysqli_query($conn, $query);
+						if ($result)
+						{
+							echo '<script type="text/javascript">
+							alert("Poprawnie edytowano pracownika.");
+							</script>';
+						} else  {
+									echo "<h4>Błąd zapytania</h4>";
+								}
+			
+		}
+		
+		else
+			{
+				    if (isset($_POST['zatwierdz'])) 
+					{
+						$login = test_input($_POST['login_pracownika']);
+						$imie = test_input($_POST['imie']);
+						$nazwisko = test_input($_POST['nazwisko']);
+						$pokoj = test_input($_POST['pokoj']);
+						$departament = test_input($_POST['departament']);
+						$query = "UPDATE pracownicy SET login_pracownika = '$login', imie = '$imie', nazwisko = '$nazwisko', departament = '$departament', pokoj = '$pokoj'
+                        WHERE id_pracownika ='".$_POST['id']."' ";
+       
+						$result = mysqli_query($conn, $query);
+						if ($result)
+						{
+							echo '<script type="text/javascript">
+							alert("Poprawnie edytowano pracownika.");
+							</script>';
+						} else  {
+									echo "<h4>Błąd zapytania</h4>";
+								}
+                }	
+			}
+			
+		    ?>
     </div>
     <?php
     mysqli_close($conn);
