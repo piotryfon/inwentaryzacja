@@ -32,15 +32,25 @@
 						
 				if ($userQuery->execute() === FALSE) 
 				{
-					echo 'Nie można było dodać protokołu do bazy';
+					echo'<br><div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Nie można dodać protokołu do bazy</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>';
 				} 
 				else 
 				{
-					echo 'Protokół został doadny do bazy';
+					echo'<br><div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Protokół został doadny do bazy</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>';
 				}
 			}
 			catch (Exception $e) 
 			{
+				echo'<br><div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Nie można dodać protokołu do bazy</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>';
 				echo "Nie można dodać pliku do bazy.<br>".$e->getMessage();
 			}		
 	}
