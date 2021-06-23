@@ -166,6 +166,7 @@
 											<option>pożyczony</option>
 											<option>prezentacja</option>
                                             <option>NIE RUSZAĆ</option>
+                                            <option></option>
 										</select>
                                     </div><br>
                                     <div>
@@ -176,9 +177,9 @@
                                     </div><br>
                                     <div>
                                         <div>
-                                            <label>nr dostawy</label>
+                                            <label>nr faktury</label>
                                         </div>
-                                        <input type="number" min="0" max="999" name="nr_dostawy" class="bg-success text-white" value="<?php echo $row['nr_dostawy'] ?>" />
+                                        <input type="text" name="nr_faktury" class="bg-success text-white" value="<?php echo $row['nr_faktury'] ?>" />
                                     </div><br>
                                     <div>
                                         <div>
@@ -206,7 +207,7 @@
             $model = test_input($_POST['model']);
             $sn = test_input($_POST['sn']);
             $ni = test_input($_POST['ni']);
-            $nr_dostawy = test_input($_POST['nr_dostawy']);
+            $nr_faktury = test_input($_POST['nr_faktury']);
             $procesor = test_input($_POST['procesor']);
             $ram = test_input($_POST['ram']);
             $dysk = test_input($_POST['dysk']);
@@ -232,7 +233,7 @@
                 $row_id = (int)$row_id;
     
                 $query = "UPDATE sprzet SET 
-                                rodzaj = '$rodzaj', opis = '$opis', pin = '$pin', model = '$model', SN = '$sn', NI = '$ni', nr_dostawy = '$nr_dostawy',
+                                rodzaj = '$rodzaj', opis = '$opis', pin = '$pin', model = '$model', SN = '$sn', NI = '$ni', nr_faktury = '$nr_faktury',
                                 procesor = '$procesor', ram = '$ram', dysk = '$dysk', status_sprz = '$status', id_pracownika = '$row_id'
                             WHERE id_sprzetu ='" . $_POST['id'] . "' ";
 

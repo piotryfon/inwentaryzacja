@@ -63,11 +63,11 @@
                     <div>
                         <label>*kod</label>
                     </div>
-                    <input type="text" name="kod"><br><br>
+                    <input type="text" required name="kod"><br><br>
                     <div>
-                        <label>oznaczenie</label>
+                        <label>*oznaczenie</label>
                     </div>
-                    <input type="text" name="oznaczenie"><br><br>
+                    <input type="text" required name="oznaczenie"><br><br>
                     <div>
                         <label>kolor</label>
                     </div>

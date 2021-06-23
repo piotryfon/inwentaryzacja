@@ -87,11 +87,11 @@
                 <div>
                     <label for="kod">kod</label>
                 </div>
-                <input type="text" id="kod" name="kod"><br><br>
+                <input type="text" required id="kod" name="kod"><br><br>
                 <div>
                     <label for="ni">N/I drukarki</label>
                 </div>
-                <select id="ni" name="NI_drukarki" id="ni">
+                <select id="ni" required name="NI_drukarki" id="ni">
                 <option></option>
                 <?php
                     while ($row = mysqli_fetch_array($result_drukarki)) {

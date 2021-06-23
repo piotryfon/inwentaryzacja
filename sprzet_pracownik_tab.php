@@ -36,8 +36,9 @@
                     <label for="opcja">Wybierz parametr:</label><br>
                     <select name="opcja" id="opcja">
                         <option value="wszystko">wszystko</option>
-                        <option value="nr_dostawy">nr dostawy</option>
+                        <option value="nr_faktury">nr faktury</option>
                         <option value="login_pracownika">login pracownika</option>
+                        <option value="nazwisko">nazwisko</option>
                         <option value="NI">N/I sprzętu</option>
                         <option value="SN">S/N sprzętu</option>
                         <option value="model">model</option>
@@ -68,12 +69,12 @@
                             WHERE $opcjonalna_wartosc LIKE '%$wartosc_input%'";
                     if($opcjonalna_wartosc === "wszystko") {
                         $query = "SELECT * FROM sprzet LEFT JOIN pracownicy ON sprzet.id_pracownika = pracownicy.id_pracownika
-                            WHERE (login_pracownika LIKE '%$wartosc_input%') or (NI LIKE '%$wartosc_input%') or 
-                            (SN = '$wartosc_input') or (model LIKE '%$wartosc_input%') or (status_sprz LIKE '%$wartosc_input%') or (rodzaj LIKE '%$wartosc_input%')";
+                            WHERE (pracownicy.login_pracownika LIKE '%$wartosc_input%') or (sprzet.NI LIKE '%$wartosc_input%') or (sprzet.nr_faktury = '$wartosc_input') 
+                            or (pracownicy.nazwisko LIKE '%$wartosc_input%') or (sprzet.SN = '$wartosc_input') or (sprzet.model LIKE '%$wartosc_input%') or (sprzet.rodzaj LIKE '%$wartosc_input%')";
                     }
                 
                 $result = mysqli_query($conn, $query);
-                if(mysqli_num_rows($result)===0){
+                if(!mysqli_num_rows($result)){
                     echo'<br><div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <strong>Brak danych...</strong>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -93,7 +94,7 @@
                 <th>S/N</th>
                 <th>login</th>
                 <th>status</th>
-                <th>nr dostawy</th>
+                <th>nr faktury</th>
                 <th>opis</th>
                 <th>data dodania sprzętu</th>
                 <th>edycja</th>
@@ -114,7 +115,7 @@
                         <td><?php echo $row['SN'] ?></td>
                         <td><?php echo $row['login_pracownika'] ?></td>
                         <td><?php echo $row['status_sprz'] ?></td>
-                        <td><?php echo $row['nr_dostawy'] ?></td>
+                        <td><?php echo $row['nr_faktury'] ?></td>
                         <td><?php echo $row['opis'] ?></td>
                         <td><?php echo $row['data_dodania'] ?></td>
                         <td><?php echo '<button class="btn btn-outline-warning" type="submit" name="edit">Edytuj</button>' ?></td>

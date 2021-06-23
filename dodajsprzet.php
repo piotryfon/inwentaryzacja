@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
 		$dysk = test_input($_POST["dysk"]);
 		$status = test_input($_POST["status"]);
 		$opis = test_input($_POST["opis"]);
-		$nr_dostawy = test_input($_POST["nr_dostawy"]);
+		$nr_faktury = test_input($_POST["nr_faktury"]);
 		$data = test_input($_POST["data"]);
 		$login = test_input($_POST["login"]);
 
@@ -87,8 +87,8 @@ if (isset($_POST['submit'])) {
 			   }
 			   $row_id = (int)$row_id;
 			   
-			   $sql = "INSERT INTO sprzet (rodzaj, pin, model, SN, NI, procesor, ram, dysk, status_sprz, opis, nr_dostawy, data_dodania, id_pracownika) 
-			   VALUES ('$rodzaj', '$pin', '$model','$sn', '$ni', '$procesor', '$ram', '$dysk', '$status','$opis', '$nr_dostawy', '$data', $row_id)";
+			   $sql = "INSERT INTO sprzet (rodzaj, pin, model, SN, NI, procesor, ram, dysk, status_sprz, opis, nr_faktury, data_dodania, id_pracownika) 
+			   VALUES ('$rodzaj', '$pin', '$model','$sn', '$ni', '$procesor', '$ram', '$dysk', '$status','$opis', '$nr_faktury', '$data', $row_id)";
 			   if (mysqli_query($conn, $sql)) {
 				   
 				   echo '<script type="text/javascript">
@@ -125,6 +125,7 @@ if (isset($_POST['submit'])) {
 							<option>głośnik</option>
 							<option>pendrive</option>
 							<option>zestaw konferencyjny</option>
+							<option>tablet</option>
 							<option>inne</option>
 						</select>
 					</p>
@@ -156,7 +157,7 @@ if (isset($_POST['submit'])) {
 					<p>
 						<label for="ram">RAM</label><br>
 						<select id="ram" name="ram">
-							<option>brak</option>
+							<option></option>
 							<option>4 GB</option>
 							<option>8 GB</option>
 							<option>16 BG</option>
@@ -190,8 +191,8 @@ if (isset($_POST['submit'])) {
 						<textarea style="width: 250px" name="opis" id="opis"></textarea>
 					</p>
 					<p>
-						<label for="nr_dostawy">nr dostawy</label><br>
-						<input type="number" min="0" max="999" name="nr_dostawy" id="nr_dostawy">
+						<label for="nr_faktury">nr faktury</label><br>
+						<input type="text" name="nr_faktury" id="nr_faktury">
 					</p>
 					<div>
 						<label for="data">data</label>

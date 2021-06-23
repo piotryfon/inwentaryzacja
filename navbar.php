@@ -17,11 +17,15 @@
                         <li class="nav-item">
                             <a class="nav-link" href="tonery/tonery_tabela.php"><b>Tonery - Drukarki</b></a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="dodajpracownika.php">Dodaj pracownika</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="dodajsprzet.php">Dodaj sprzęt</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Dodaj
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="dodajsprzet.php">Dodaj sprzęt</a></li>
+                                <li><a class="dropdown-item" href="dodajpracownika.php">Dodaj pracownika</a></li>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="pracownicy_tabela.php">Pracownicy - tabela</a>

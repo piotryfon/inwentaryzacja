@@ -58,7 +58,7 @@
         <h4>Dodaj toner</h4><br>
         <form method="POST" action="dodaj_toner.php">
             <label>kod</label>
-            <input type="text" name="kod">
+            <input type="text" required name="kod">
             <label>ilość:</label>
             <input type="number" name="ilosc" value="1" min="1" max="50" style="width: 60px"/>
             <button class="btn btn-outline-success" type="submit" name="dodaj">Dodaj</button>

@@ -63,7 +63,7 @@
             <div>
                 <label>Nazwa w domenie np. 00P2254</label>
             </div>
-            <input type="text" name="NI"><br><br>
+            <input type="text" required name="NI"><br><br>
             <button class="btn btn-outline-success" type="submit" name="dodaj">Dodaj drukarkę</button>
         </form>
     </div>

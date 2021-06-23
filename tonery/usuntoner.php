@@ -32,7 +32,7 @@
         <h4>Usuń toner</h4><br>
         <form method="POST">
             <label>kod</label>
-            <input type="text" name="kod">
+            <input type="text" required name="kod">
             <input type="submit" class="btn btn-danger" value="usuń toner" name="usun"/>
         </form>
         <?php
