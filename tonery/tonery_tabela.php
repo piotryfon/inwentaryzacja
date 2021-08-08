@@ -34,12 +34,14 @@
             <table class="table table-dark table-striped">
                 
                     <tr class="table-success">
+                        <th>id</th>
                         <th>kod</th>
                         <th><a href="?orderBy=oznaczenie">oznaczenie</a></th>
                         <th><a href="?orderBy=firma">firma</a></th>
                         <th>kolor</th>
                         <th>opis</th>
                         <th><a href="?orderBy=ilosc">ilość</a></th>
+                        <th>akcja</th>
                     </tr>
                
                 <?php
@@ -56,18 +58,24 @@
                 }
                 while ($row = mysqli_fetch_array($result)) {
                     echo "<tr>";
+                    echo "<form method='post' action='edytuj_toner.php'>";
+                    echo "<td><input readonly name='id' style='width: 40px' value='$row[id]'/></td>";
                     echo "<td>$row[kod]</td>";
                     echo "<td>$row[oznaczenie]</td>";
                     echo "<td>$row[firma]</td>";
                     echo "<td>$row[kolor]</td>";
                     echo "<td>$row[opis]</td>";
                     echo "<td>$row[ilosc]</td>";
+                    echo '<td><button class="btn btn-outline-warning" type="submit" name="edit">Edytuj</button></td>';
+                    echo "</form>";
                     echo "</tr>";
                 }
                 ?>
             </table>
         </div><br>
-        <button style="width: 220px" id="drukuj" class="btn btn-primary" onclick="printDiv()">Drukuj tabelę</button>
+        <!--
+            <button style="width: 220px" id="drukuj" class="btn btn-primary" onclick="printDiv()">Drukuj tabelę</button>
+        -->
         <br><hr><br>
     </div>
     <?php

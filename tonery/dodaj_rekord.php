@@ -45,13 +45,23 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>';
                 } else {
-                    if (mysqli_query($conn, $sql)) {
-                        echo '<script type="text/javascript">
-                                alert("Rekord dodany.")
-                            </script>';
+                    $query = "SELECT * FROM tonery_tab WHERE kod = '$kod'";
+                    $res = mysqli_query($conn, $query);
+                    if(mysqli_num_rows($res)>0){
+                        echo'<br><div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Taki kod już istnieje w bazie i nie może być ponownie dodany!</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>';
                     } else {
-                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+                        if (mysqli_query($conn, $sql)) {
+                            echo '<script type="text/javascript">
+                                    alert("Rekord dodany.")
+                                </script>';
+                        } else {
+                            echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+                        }
                     }
+                    
                 }
             }
             mysqli_close($conn);
