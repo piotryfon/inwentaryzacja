@@ -173,10 +173,7 @@ if (isset($_POST['submit'])) {
 					<p>
 						<label for="status">status</label><br>
 						<select id="status" name="status">
-							<option>nowy</option>
 							<option>magazyn</option>
-							<option>w przygotowaniu</option>
-							<option>do wydania</option>
 							<option>wydany</option>
 							<option>pożyczony</option>
 							<option>prezentacja</option>

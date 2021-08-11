@@ -118,24 +118,13 @@
                                         <div>
                                             <label>status</label>
                                         </div>
-                                        <select name="status" class="bg-success text-white status">
-											<option><?php echo $row['status_sprz'] ?></option>
-											<option>magazyn</option>
-											<option>nowy</option>
-											<option>w przygotowaniu</option>
-											<option>do wydania</option>
-											<option>wydany</option>
-											<option>pożyczony</option>
-											<option>prezentacja</option>
-                                            <option>NIE RUSZAĆ</option>
-                                            <option></option>
-										</select>
+                                        <input name="status" id="status" readonly value="<?php echo $row['status_sprz'] ?>"/>
                                     </div><br>
                                     <div>
                                         <div>
                                             <label>login</label>
                                         </div>
-                                        <input type="text" name="login" class="bg-success text-white" value="<?php echo $row['login_pracownika'] ?>" />
+                                        <input type="text" id="login-input" name="login" class="bg-success text-white" value="<?php echo $row['login_pracownika'] ?>" />
                                     </div><br>
                                     <div>
                                         <div>
@@ -156,6 +145,26 @@
 
                         </form>
                         <hr>
+                        <!---Modal-->
+                        <div id="login-alert-modal" class="modal" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 style="color: red" class="modal-title">Uwaga!</h5>
+                            </div>
+                            <div class="modal-body">
+                                <p style="color: black">Wybierz status sprzętu po zmianie loginu.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="magazyn" class="btn-sm btn-primary" data-dismiss="modal">magazyn</button>
+                                <button type="button" id="wydany" class="btn-sm btn-success" data-dismiss="modal">wydany</button>
+                                <button type="button" id="pozyczony" class="btn-sm btn-secondary" data-dismiss="modal">pożyczony</button>
+                                <button type="button" id="prezentacja" class="btn-sm btn-dark" data-dismiss="modal">prezentacja</button>
+                                <button type="button" id="close-button" class="btn-sm btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
             <?php
                     }
                 }
@@ -231,6 +240,32 @@
         })
             $('form').on('blur', 'input[type=number]', function (e) {
             $(this).off('wheel.disableScroll')
+        })
+      
+        $('#login-input').change(function(){
+            $('#login-alert-modal').modal('show')     
+        })
+        $('#close-button').click(function(){
+            $('#login-alert-modal').modal('hide')     
+        })
+        $('#login-alert-modal').on('shown.bs.modal', function () {
+            $('#close-button').trigger('focus')
+        })
+        $('#wydany').click(function(){
+            $('#status').val('wydany')
+            $('#login-alert-modal').modal('hide')         
+        })
+        $('#pozyczony').click(function(){
+            $('#status').val('pożyczony')
+            $('#login-alert-modal').modal('hide')         
+        })
+        $('#prezentacja').click(function(){
+            $('#status').val('prezentacja')
+            $('#login-alert-modal').modal('hide')         
+        })
+        $('#magazyn').click(function(){
+            $('#status').val('magazyn')
+            $('#login-alert-modal').modal('hide')         
         })
     });
 </script>
